@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+
+<config>
+    <tabs>
+        <gorilla translate="label" module="heartbeat">
+            <label>Gorilla InStore</label>
+            <sort_order>100</sort_order>
+        </gorilla>
+    </tabs>
+    <sections>
+        <heartbeat translate="label" module="heartbeat">
+            <label>Heart Beat (Pingdom Integration)</label>
+            <tab>gorilla</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>30</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <general translate="label">
+                    <label>General</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <enable translate="label">
+                            <label>Enable module</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                        </enable>
+                        <tests translate="label">
+                            <label>Enabled Test Types</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <source_model>heartbeat/system_config_source_tests</source_model>
+                            <can_be_empty>1</can_be_empty>
+                        </tests>
+                        <email translate="label">
+                            <label>Warning Email Receiver</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </email>
+                        <email_schedule translate="label">
+                            <label>Warning Email Frequency</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <source_model>heartbeat/system_config_source_Schedule</source_model>
+                        </email_schedule>
+                    </fields>
+                </general>
+            </groups>
+        </heartbeat>
+    </sections>
+</config>

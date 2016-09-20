@@ -1,0 +1,74 @@
+<?php
+/**
+ * MageWorkshop
+ * Copyright (C) 2016 MageWorkshop <mageworkshophq@gmail.com>
+ *
+ * @category   MageWorkshop
+ * @package    MageWorkshop_DRReminder
+ * @copyright  Copyright (c) 2016 MageWorkshop Co. (http://mage-workshop.com)
+ * @license    http://opensource.org/licenses/gpl-3.0.html GNU General Public License, version 3 (GPL-3.0)
+ * @author     MageWorkshop <mageworkshophq@gmail.com>
+ */
+
+/** @var $this MageWorkshop_DRReminder_Block_Review_Reminder_List */
+
+$productsCollection = $this->getNewProductsToReview();
+$_helper = Mage::helper('catalog/output');
+?>
+
+<h3><?php echo $this->__('Products without review from your last order'); ?></h3>
+<div class="category-products" >
+    <ul class = "products-grid category-products-grid itemgrid itemgrid-3cols equal-height">
+        <?php $count = 0; ?>
+        <?php foreach ($productsCollection as $product): ?>
+            <li class="item" style="width:250px;">
+                    <a href="<?php echo $product->getProductUrl() . '#review-form'  ?>" title="<?php echo $this->stripTags($this->getImageLabel($product, 'small_image'), null, true) ?>" class="product-image" target="_blank">
+                <img id="product-collection-image-<?php echo $product->getId(); ?>"
+                src="<?php echo $this->helper('catalog/image')->init($product, 'small_image')->resize(250, 250); ?>"
+                alt="<?php echo $this->stripTags($this->getImageLabel($product, 'small_image'), null, true) ?>" />
+                </a>
+                <div class="product-shop">
+                    <div class="f-fix">
+                        <div class="product-primary">
+                            <?php $productNameStripped = $this->stripTags($product->getName(), null, true); ?>
+                            <h2 class="product-name"><a href="<?php echo $product->getProductUrl() ?>" title="<?php echo $productNameStripped; ?>"><?php echo $_helper->productAttribute($product, $product->getName() , 'name'); ?></a></h2>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <?php $count++ ?>
+        <?php endforeach ?>
+        <?php if(($count < 1)): ?>
+            <li><span class="error"><?php echo $this->__('There are no purchased products without your review');?></span></li>
+        <?php endif; ?>
+    </ul>
+</div>
+
+
+<?php $products = $this->getAllProductsToReview(); ?>
+
+<?php if ($products && count($products->getAllIds()) && $productsIds = $products->getAllIds()): ?>
+    <?php $productsCollection = $this->getProductCollectionByIds($productsIds); ?>
+    <h3><?php echo $this->__('Your other purchases without review') ?></h3>
+    <div class="category-products" >
+        <ul class = "products-grid category-products-grid itemgrid itemgrid-3cols equal-height">
+            <?php foreach ($productsCollection as $product): ?>
+                <li class="item" style="width:250px;">
+                        <a href="<?php echo $product->getProductUrl() . '#review-form'  ?>" title="<?php echo $this->stripTags($this->getImageLabel($product, 'small_image'), null, true) ?>" class="product-image" target="_blank">
+                            <img id="product-collection-image-<?php echo $product->getId(); ?>"
+                                 src="<?php echo $this->helper('catalog/image')->init($product, 'small_image')->resize(250, 250); ?>"
+                                 alt="<?php echo $this->stripTags($this->getImageLabel($product, 'small_image'), null, true) ?>" />
+                        </a>
+                        <div class="product-shop">
+                            <div class="f-fix">
+                                <div class="product-primary">
+                                    <?php $productNameStripped = $this->stripTags($product->getName(), null, true); ?>
+                                    <h2 class="product-name"><a href="<?php echo $product->getProductUrl() ?>" title="<?php echo $productNameStripped; ?>"><?php echo $_helper->productAttribute($product, $product->getName() , 'name'); ?></a></h2>
+                                </div>
+                            </div>
+                        </div>
+                </li>
+            <?php endforeach ?>
+        </ul>
+    </div>
+<?php endif; ?>

@@ -1,0 +1,78 @@
+<?php
+/**
+ * MageWorkshop
+ * Copyright (C) 2016 MageWorkshop <mageworkshophq@gmail.com>
+ *
+ * @category   MageWorkshop
+ * @package    MageWorkshop_DetailedReview
+ * @copyright  Copyright (c) 2016 MageWorkshop Co. (http://mage-workshop.com)
+ * @license    http://opensource.org/licenses/gpl-3.0.html GNU General Public License, version 3 (GPL-3.0)
+ * @author     MageWorkshop <mageworkshophq@gmail.com>
+ */
+
+$helper = Mage::helper('detailedreview');
+$urlJs = $helper->getDetailReviewJsUrl();
+$ie7fix = "<script type='text/javascript' src='".$urlJs."/ie7fix.js'><\/script>";
+if(Mage::getStoreConfig('detailedreview/settings/enable_jquery')) :
+    $easingSpy = false;
+    $jqui = true;
+    if (Mage::getStoreConfig('detailedreview/category_options/all_reviews') || Mage::getStoreConfig('detailedreview/category_options/category_reviews')) {
+        $easingSpy = true;
+    }
+    if (Mage::getStoreConfig('detailedreview/category_options/all_reviews')) {
+        $jqui = true;
+    }
+    if ($jqui && $easingSpy) {
+        $drjs = 'dr.full.min.js';
+        $pnorify = 'pnotify.custom.min.js';
+    } elseif ($jqui) {
+        $drjs = 'dr.without.easing.spy.min.js';
+    } elseif ($easingSpy) {
+        $drjs = 'dr.without.jqui.min.js';
+    } else {
+        $drjs = 'dr.without.jqui.easing.spy.min.js';
+    }
+    $detailedreview = "<script type='text/javascript' src='$urlJs/$drjs'></script><script type='text/javascript' src='$urlJs/$pnorify'></script>";
+    ?>
+    <?php echo $detailedreview; ?>
+<?php else: ?>
+    <script type="text/javascript">
+        if (typeof jQuery === 'undefined') {
+            alert("<?php echo $this->__("jQuery is not installed. Please enable jQuery in Detailed Review plugin settings."); ?>");
+        } else {
+            var vernums = jQuery.fn.jquery.split('.');
+            if (!(parseInt(vernums[0]) > 0 && parseInt(vernums[1]) > 8)) {
+                if (!(parseInt(vernums[0]) > 0 && parseInt(vernums[1]) >= 8 && parseInt(vernums[2]) > 3)) {
+                    alert("<?php echo $this->__("Version of included jQuery by some other plugin is lower then 1.8.x. Please enable jQuery in Detailed Review plugin settings."); ?>");
+                }
+            }
+        }
+    </script>
+<?php endif; ?>
+
+<?php echo "<script type='text/javascript' src='$urlJs/jquery.browser.min.js'></script>"; ?>
+
+<?php if (Mage::getStoreConfig('detailedreview/social_share_optios/bitly_enabled')): ?>
+    <?php echo "<script type='text/javascript' src='$urlJs/bitly.js'></script>"; ?>
+<?php endif; ?>
+<?php if (Mage::getStoreConfig('detailedreview/datetime_options/enable_to_set_timezone') && !Mage::getSingleton('customer/session')->getClientTimezone()): ?>
+    <?php echo "<script type='text/javascript' src='$urlJs/jstz.min.js'></script>"; ?>
+<?php endif; ?>
+
+<?php
+    $jsConfig = 'detailedreview.js';
+    $jsSelect = 'tamingselect.js';
+    $placeholder = 'placeholder.js';
+    $pseudoClassesCss = 'selectivizr.js';
+    $drConfig = "<script type='text/javascript' src='$urlJs/$jsConfig'></script>";
+    $selectConfig = "<script type='text/javascript' src='$urlJs/$jsSelect'></script>";
+    $pseudoClassesCssConfig = "<script type='text/javascript' src='$urlJs/$pseudoClassesCss'></script>";
+    $placeholderConfig = "<script type='text/javascript' src='$urlJs/$placeholder'></script>";
+?>
+<?php echo $drConfig; ?>
+<?php echo $selectConfig; ?>
+<?php echo $pseudoClassesCssConfig; ?>
+<?php echo $placeholderConfig; ?>
+<?php echo "<script type='text/javascript' src='$urlJs/ajaxLoadReview.js'></script>"; ?>
+<?php echo "<script type='text/javascript' src='$urlJs/drResponse.js'></script>"; ?>
+<?php echo "<script type='text/javascript' src='$urlJs/fbShare.js'></script>"; ?>

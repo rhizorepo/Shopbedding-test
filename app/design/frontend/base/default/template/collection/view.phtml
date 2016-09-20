@@ -1,0 +1,61 @@
+<?php
+/**
+ * Category view template
+ *
+ * @see Mage_Catalog_Block_Category_View
+ */
+
+$_helper = $this->helper('catalog/output');
+$_category = $this->getCurrentCategory();
+$params = Mage::app()->getRequest()->getParams();
+if (isset($params['id'])) {
+    unset($params['id']);
+}
+$helper = Mage::helper('cms');
+$processor = $helper->getBlockTemplateProcessor();
+?>
+<?php echo $this->getMessagesBlock()->toHtml() ?>
+<div id="category-content-container">
+    <?php if( (!empty($params)) && ((!$params['utm_source']) && (!$params['utm_medium']) && (!$params['utm_content']) && (!$params['utm_campaign'])) ): ?>
+        <?php //echo $this->getLayout()->createBlock('cms/block')->setBlockId($_category->getLandingPage())->toHtml() ?>
+        <?php echo $this->getProductListHtml(); ?>
+    <?php else: ?>
+        <?php
+			if( ($_sku = $_category->getProductSku()) && ($_id = Mage::getModel('catalog/product')->getIdBySku($_sku)) && ($product = Mage::getModel('catalog/product')->load($_id))): ?>
+				<div id="collection-container">
+					<div id="collection-photo">
+						<a href="<?php echo $product->getProductUrl() ?>">
+							<img src="<?php echo $this->helper('catalog/image')->init($product, 'category_image')->resize(380, 397); ?>" alt="<?php echo $product->getName() ?>" />
+						</a>
+					</div>
+					<div id="collection-info">
+						<?php echo $processor->filter($_category->getCollectionDescription()); ?>
+					</div>
+					<p><?php echo $this->getLayout()->createBlock('collection/media')->setProductId($product->getId())->setLimit('all')->setTemplate('collection/media-item-gallery.phtml')->toHtml() ?></p>
+					<p><?php echo $this->getLayout()->createBlock('catalog/product_list')->setCategoryId($_category->getId())->setLimit('all')->setTemplate('catalog/product/list-landing-collections.phtml')->toHtml() ?></p>
+				</div>	
+			<?php else: ?>
+				<?php if ($this->isContentMode()) :
+					$cmsHtml = $this->getCmsBlockHtml();
+					$regReplace = "&reg;";
+					if (strstr($cmsHtml, "<sup>&reg;</sup>")) {
+						$regReplace = "<sup>&reg;</sup>";
+					}
+					$cmsHtml = str_replace("&copy;","<sup>&#169;</sup>",str_replace($regReplace,"<sup>&#174;</sup>",$cmsHtml));
+					echo $cmsHtml;
+				elseif($this->isMixedMode()):
+					$cmsHtml = $this->getCmsBlockHtml();;
+					$regReplace = "&reg;";
+					if (strstr($cmsHtml, "<sup>&reg;</sup>")) {
+						$regReplace = "<sup>&reg;</sup>";
+					}
+					$cmsHtml = str_replace("&copy;","<sup>&#169;</sup>",str_replace($regReplace,"<sup>&#174;</sup>",$cmsHtml));
+					echo $cmsHtml;
+					echo $this->getProductListHtml();
+				else:
+					echo $this->getProductListHtml();
+				endif;
+			endif;	
+        ?>
+    <?php endif; ?>
+</div>

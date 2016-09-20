@@ -1,0 +1,162 @@
+<?php
+/**
+ * MageWorkshop
+ * Copyright (C) 2016 MageWorkshop <mageworkshophq@gmail.com>
+ *
+ * @category   MageWorkshop
+ * @package    MageWorkshop_DetailedReview
+ * @copyright  Copyright (c) 2016 MageWorkshop Co. (http://mage-workshop.com)
+ * @license    http://opensource.org/licenses/gpl-3.0.html GNU General Public License, version 3 (GPL-3.0)
+ * @author     MageWorkshop <mageworkshophq@gmail.com>
+ */
+
+$helperDetailedreview = $this->helper('detailedreview');
+$ratingsEnabled = Mage::helper('detailedreview')->checkEnabledRatings();
+?>
+<?php if( $this->getCollection() && $this->count()): ?>
+    <div class="box-collateral box-reviews" id="customer-reviews">
+        <div class="page-title">
+            <h1><?php echo $this->__('My Reviews') ?></h1>
+        </div>
+        <div class="review-hr"></div>
+        <?php echo $this->getChildHtml('info_review_customer_list'); ?>
+        <?php $reviewSizing = Mage::getSingleton('detailedreview/review_sizing'); ?>
+        <?php $reviewBodyType = Mage::getSingleton('detailedreview/review_bodyType'); ?>
+        <?php foreach ($this->getCollection() as $keyReview => $_review): ?>
+            <div class="review-hr"></div>
+            <div class="review-dt account">
+                <a href="<?php echo $_review->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_review, 'small_image'), null, true) ?>" class="product-image">
+                    <div class="review-image">
+                        <img src="<?php echo $this->helper('catalog/image')->init($_review, 'small_image')->resize(90); ?>" width="90" height="90" alt="<?php echo $this->stripTags($this->getImageLabel($_review, 'small_image'), null, true) ?>" />
+                    </div>
+                    <span><?php echo $this->__($this->htmlEscape($_review->getName())) ?></span>
+                </a>
+            </div>
+            <div class="review-dd">
+                <div class="header-reviews">
+                    <?php if ($ratingsEnabled): ?>
+                        <table class="ratings-table">
+                            <tr>
+                                <td>
+                                    <div class="rating-box">
+                                        <div class="rating" style="width:<?php if($_review->getSum() && $_review->getCount()){ echo $_review->getSum() / $_review->getCount();}else{echo 0;} ?>%;"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    <?php endif; ?>
+                    <?php
+                        $reviewStatus = Mage::getResourceModel('review/review_status_collection')
+                            ->addFieldToFilter('status_id',array('eq' => $_review->getStatusId()))
+                            ->load();
+                    ?>
+                    <div class="title status"><?php echo nl2br($this->__($reviewStatus->getFirstItem()->getStatusCode())); ?></div>
+                </div>
+                <div class="clearboth"></div>
+                <div class="images-box">
+                    <?php if ( $helperDetailedreview->checkFieldAvailable('image', 'form', $_review) ):
+                        $images = explode(",",$_review->getImage());
+                        foreach($images as $img):
+                            if ( isset($newImageUrl) ) unset ($newImageUrl);
+                            if ( $image = str_replace('\\','/',$img) ) {
+                                $image = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . $image;
+                                $newImageUrl = $this->helper('detailedreview')->getResizedImage($image,100,100);
+                            }
+                            if ( isset($newImageUrl) && $newImageUrl ): ?>
+                                <div class="image-review">
+                                    <a class="image-popup" href="<?php echo  $image;?>" >
+                                        <img src="<?php echo $newImageUrl;?>" alt=""/>
+                                    </a>
+                                    <div>click for full-size image</div>
+                                </div>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </div>
+                <div class="clearboth"></div>
+                <div class="title"><?php echo nl2br($this->htmlEscape($_review->getTitle())) ?></div>
+                <?php if ( $helperDetailedreview->checkFieldAvailable('sizing', 'form', $_review) && ($sizing = $_review->getSizing()) ):?>
+                    <div class="sizing">
+                        <label class="label-review-attr"><?php echo $this->__('Sizing:') ?></label>
+                        <div class="value-review-attr">
+                            <div class="sizing-bar">
+                                <div style="width:<?php echo $reviewSizing->getOptionWidth($sizing) ?>%;">
+                                </div>
+                            </div>
+                            <div><?php echo $reviewSizing->getOptionValue($sizing) ?></div>
+                        </div>
+                    </div>
+                <?php endif;?>
+                <div class="review-wrapper">
+                    <ul>
+                        <?php if ( $detail = $_review->getDetail() ):?>
+                            <li><div class="value-review-attr"><?php echo nl2br($this->escapeHtml($detail)) ?></div></li>
+                        <?php endif;?>
+                        <?php if ( $helperDetailedreview->checkFieldAvailable('good_and_bad_detail', 'form', $_review) ): ?>
+                            <?php if ($goodDetail = $_review->getGoodDetail()):?>
+                                <li><label class="label-review-attr"><?php echo $this->__('Good:') ?></label><div class="value-review-attr"><?php echo nl2br($this->escapeHtml($goodDetail)) ?></div></li>
+                            <?php endif;?>
+                            <?php if ( $noGoodDetail = $_review->getNoGoodDetail() ):?>
+                                <li><label class="label-review-attr"><?php echo $this->__('Bad:') ?></label><div class="value-review-attr"><?php echo nl2br($this->escapeHtml($noGoodDetail)) ?></div></li>
+                            <?php endif;?>
+                        <?php endif;?>
+                        <?php if ( $helperDetailedreview->checkFieldAvailable('pros_and_cons', 'form', $_review) ): ?>
+                            <?php if ( $goodDetail = $helperDetailedreview->getProsConsText($_review->getPros(), MageWorkshop_DetailedReview_Model_Source_EntityType::PROS) ):?>
+                                <li><label class="label-review-attr"><?php echo $this->__('Pros') ?>:</label><div class="value-review-attr"><?php echo nl2br($this->escapeHtml($goodDetail)) ?></div></li>
+                            <?php endif;?>
+                            <?php if ( $noGoodDetail = $helperDetailedreview->getProsConsText($_review->getCons(), MageWorkshop_DetailedReview_Model_Source_EntityType::CONS) ):?>
+                                <li><label class="label-review-attr"><?php echo $this->__('Cons') ?>:</label><div class="value-review-attr"><?php echo nl2br($this->escapeHtml($noGoodDetail)) ?></div></li>
+                            <?php endif;?>
+                        <?php endif;?>
+                        <?php if ( $helperDetailedreview->checkFieldAvailable('response', 'info', $_review) && ($response = $_review->getResponse()) ):?>
+                            <li><label class="label-review-attr"><?php echo $this->__('Administration Response:') ?></label><div class="value-review-attr"><?php echo nl2br($this->escapeHtml($response)) ?></div></li>
+                        <?php endif;?>
+                        <?php if ( $helperDetailedreview->checkFieldAvailable('video', 'form', $_review) && ($videoId = $_review->getVideo()) ):?>
+                            <li><a class="video-review" target="_blank" href="<?php echo $videoId;?>"><?php echo $this->__('Watch My Video') ?></a></li>
+                        <?php endif;?>
+                    </ul>
+                </div>
+                <div class="clearer"></div>
+                <?php if ($allVotes = $_review->getCountHelpful()+$_review->getCountUnhelpful()): ?>
+                <div class="helpful-block">
+                    <div class="helpful-info"><?php echo $this->__('%d of %d found this review helpful.',$_review->getCountHelpful(),$allVotes); ?></div>
+                </div>
+                <?php endif;?>
+            </div>
+        <?php endforeach; ?>
+    </div>
+    <div class="bottom-pager">
+        <?php echo $this->getChildHtml('toolbar') ?>
+    </div>
+    <script type="text/javascript">
+        //<![CDATA[
+        document.observe("dom:loaded", function() {
+            'use strict';
+            (function ($) {
+                $.noConflict();
+                $(document).ready(function () {
+                    $('.image-popup').magnificPopup({
+                        type: 'image',
+                        gallery: {
+                            enabled: true,
+                            navigateByImgClick: true,
+                            preload: [0]
+                        }
+                    });
+                });
+                $(document).keyup(function (e) {
+                    if (e.which == 27) {
+                        jQuery("#jquery-lightbox").fadeOut("slow");
+                        jQuery("#jquery-overlay").fadeOut("slow");
+                    }
+                });
+            })(DRjQuery)
+        });
+    //]]>
+    </script>
+<?php else: ?>
+    <p><?php echo $this->__('This Contributor has not submitted any reviews.') ?></p>
+<?php endif; ?>
+<div class="buttons-set">
+    <p class="back-link"><a href="<?php echo $this->escapeUrl($this->getBackUrl()) ?>"><small>&laquo; </small><?php echo $this->__('Back') ?></a></p>
+</div>

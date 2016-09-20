@@ -1,0 +1,103 @@
+<?php
+/**
+ * MageWorkshop
+ * Copyright (C) 2016 MageWorkshop <mageworkshophq@gmail.com>
+ *
+ * @category   MageWorkshop
+ * @package    MageWorkshop_DetailedReview
+ * @copyright  Copyright (c) 2016 MageWorkshop Co. (http://mage-workshop.com)
+ * @license    http://opensource.org/licenses/gpl-3.0.html GNU General Public License, version 3 (GPL-3.0)
+ * @author     MageWorkshop <mageworkshophq@gmail.com>
+ */
+
+if ($this->getReviewsCount()):
+    ?>
+    <div class="ratings">
+        <?php if ($this->getRatingSummary()):?>
+            <div class="rating-box">
+                <div class="rating" style="width:<?php echo $this->getRatingSummary() ?>%"></div>
+            </div>
+        <?php endif;?>
+        <p class="rating-links">
+            <a id="goto-reviews" href="<?php echo $this->getProduct()->getProductUrl() . '#feedback'; ?>"><?php echo $this->__('%d Review(s)', $this->getReviewsCount()) ?></a>
+            <span class="separator">|</span>
+            <a id="goto-reviews-form" href="<?php echo $this->getProduct()->getProductUrl() . '#feedback'; ?>"><?php echo $this->__('Add Your Review') ?></a>
+        </p>
+    </div>
+<?php elseif ($this->getDisplayIfEmpty()): ?>
+    <p class="rating-links no-rating"><a id="goto-reviews-form" href="<?php echo $this->getProduct()->getProductUrl() . '#feedback'; ?>"><?php echo $this->__('Be the first to review this product') ?></a></p>
+<?php endif; ?>
+<?php $isPopup = Mage::getStoreConfig('detailedreview/settings/review_form_popup');?>
+<?php $inTab = Mage::getStoreConfig('detailedreview/settings/reviews_in_tab'); ?>
+<script type="text/javascript">
+    //<![CDATA[
+    document.observe("dom:loaded", function() {
+        'use strict';
+        (function($) {
+            $(document).on('click', '.rating-links a', function(event) {
+                <?php if($inTab): ?>
+                    tabClick();
+                <?php endif; ?>
+                prepareToScroll(this);
+                event.preventDefault();
+            });
+
+            $(document).ready(function() {
+                <?php if ($inTab): ?>
+                    parseUrl();
+                <?php endif; ?>
+            });
+            function parseUrl() {
+                var url = window.location;
+                var hashs = ['#feedback', '#rw_'];
+                var hash = url.hash;
+                hash = hash.replace(/[0-9]/g, '');
+                if (hash && $.inArray(hash, hashs) !== -1) {
+                    tabClick();
+                }
+            }
+            function tabClick() {
+                var numberReviewTab = null,
+                    $containersOfTabs = $('.tab-container'),
+                    $tabs = $('.product-view .toggle-tabs li'),
+                    $containerTabReview = $('.reviews-wrapper').parents('dd.tab-container');
+
+                if ($containersOfTabs && $containerTabReview) {
+                    numberReviewTab = $containersOfTabs.index($containerTabReview);
+                }
+
+                if (numberReviewTab && $tabs) {
+                    $tabs.eq(numberReviewTab).click();
+                }
+
+                return false;
+            }
+            function reviewScroll(el, callback) {
+                var delay = 200;
+                $('body,html').animate({
+                    scrollTop: $(el).offset().top
+                }, delay);
+                if (callback) {
+                    setTimeout(function() {callback()}, delay + 500);
+                }
+            }
+
+            function prepareToScroll(el) {
+                if (el.id == 'goto-reviews-form') {
+                    reviewScroll('.reviews-wrapper', function() {
+                        $('.review-dialog').click();
+                    });
+                }
+                if (el.id == 'goto-reviews') {
+                    if ($('#buttonBack').is(":visible")) {
+                        $('#buttonBack').click();
+                        reviewScroll('.reviews-wrapper');
+                    } else {
+                        reviewScroll('.reviews-wrapper');
+                    }
+                }
+            }
+        })(DRjQuery);
+    });
+    //]]>
+</script>

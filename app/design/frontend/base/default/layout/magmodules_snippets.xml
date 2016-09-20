@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+        <reference name="breadcrumbs">
+            <action method="setTemplate" ifconfig="snippets/system/breadcrumbs"><template>magmodules/snippets/breadcrumbs.phtml</template></action>
+        </reference>
+		<reference name="head">
+			<action method="addCss" ifconfig="snippets/products/enabled"><stylesheet>magmodules/snippets.css</stylesheet> </action>
+		</reference>			
+    </default>   
+</layout> 

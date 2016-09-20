@@ -1,0 +1,39 @@
+
+<?php 
+/**
+ * Store switcher template
+ *
+ */
+?>
+<div class="switcher-store">
+    <label><?php echo $this->__('Shipping to') ?>:</label>
+    <div id="arrow-down"></div>
+    <ul id="select-store">
+    	<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('store-switcher')->toHtml() ?>
+    </ul>
+</div>
+
+<script type="text/javascript">
+	jQuery(document).ready(function(){
+		var switcherList = jQuery('.switcher-store #select-store');
+		var secondFlag = jQuery('.switcher-store li:last');
+		
+		secondFlag.hide();
+		jQuery('#arrow-down').toggle(function(){
+			switcherList.addClass('active');
+			secondFlag.show();
+		}, function(){
+			switcherList.removeClass('active');
+			secondFlag.hide();
+		})
+		
+		jQuery('.switcher-store li:first').toggle(function(){
+			switcherList.addClass('active');
+			secondFlag.show();
+		}, function(){
+			switcherList.removeClass('active');
+			secondFlag.hide();
+		})
+		
+	});
+</script>

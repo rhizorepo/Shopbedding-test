@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <sections>
+        <general>
+            <groups>
+                <defaults>
+                    <label>Promo Display</label>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <sort_order>110</sort_order>
+                    <fields>
+					
+                        <show_home>
+                            <label>Show on Home Page</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<comment>If set to "No", date range will no effect</comment>
+                        </show_home>
+                        <home_promo_cms>
+                            <label>Static Block Identifier for Home Page</label>
+                            <frontend_type>text</frontend_type>
+                            <!--<source_model>promodisplay/system_config_block</source_model>-->
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<comment>Static block identifier which will be displayed on home page.</comment>
+                        </home_promo_cms>
+                        <show_home_from_date>
+                            <label>From Date</label>
+                            <frontend_type>date</frontend_type>
+							<frontend_input_format>MM-DD-YYYY</frontend_input_format>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<comment>Home Page. Date format: MM-DD-YY</comment>
+                        </show_home_from_date>
+                        <show_home_to_date>
+                            <label>To Date</label>
+                            <frontend_type>date</frontend_type>
+							<frontend_input_format>MM-DD-YYYY</frontend_input_format>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<comment>Home Page</comment>
+                        </show_home_to_date>
+						
+                        <show_category>
+                            <label>Show on Category Page</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<comment>If set to "No", date range will no effect</comment>
+                        </show_category>
+                        <category_promo_cms>
+                            <label>Static Block Identifier for Category Page</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>11</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<comment>Static block identifier which will be displayed on category page.</comment>
+                        </category_promo_cms>
+                        <show_category_from_date>
+                            <label>From Date</label>
+                            <frontend_type>date</frontend_type>
+							<frontend_input_format>MM-DD-YYYY</frontend_input_format>
+                            <sort_order>12</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<comment>Category Page</comment>
+                        </show_category_from_date>
+                        <show_category_to_date>
+                            <label>To Date</label>
+                            <frontend_type>date</frontend_type>
+							<frontend_input_format>MM-DD-YYYY</frontend_input_format>
+                            <sort_order>13</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<comment>Category Page</comment>
+                        </show_category_to_date>
+						
+                        <show_product>
+                            <label>Show on Product Page</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<comment>If set to "No", date range will no effect</comment>
+                        </show_product>
+                        <product_promo_cms>
+                            <label>Static Block Identifier for Product Page</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>21</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<comment>Static block identifier which will be displayed on product page.</comment>
+                        </product_promo_cms>
+                        <show_product_from_date>
+                            <label>From Date</label>
+                            <frontend_type>date</frontend_type>
+							<frontend_input_format>MM-DD-YYYY</frontend_input_format>
+                            <sort_order>22</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<comment>Product Page</comment>
+                        </show_product_from_date>
+                        <show_product_to_date>
+                            <label>To Date</label>
+                            <frontend_type>date</frontend_type>
+							<frontend_input_format>MM-DD-YYYY</frontend_input_format>
+                            <sort_order>23</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<comment>Product Page</comment>
+                        </show_product_to_date>
+
+                    </fields>
+                </defaults>
+            </groups>
+        </general>
+    </sections>
+</config>

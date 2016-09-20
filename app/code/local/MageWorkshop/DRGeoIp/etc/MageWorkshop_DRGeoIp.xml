@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package>
+    <name>MageWorkshop_DRGeoIp</name>
+    <version>0.1.0</version>
+    <stability>stable</stability>
+    <license>GPL</license>
+    <channel>community</channel>
+    <extends/>
+    <summary>Detailed Review GeoIp. DO NOT UNINSTALL EXTENSION HERE. Go to extension configuration and uninstall it by clicking "Uninstall" button there.</summary>
+    <description>Detailed Review GeoIp.</description>
+    <notes>Detailed Review GeoIp added.&amp;#xD;&#xD;
+    </notes>
+    <authors><author><name>Default Value</name><user>DV</user><email>mageworkshophq@gmail.com</email></author></authors>
+    <date>2016-01-21</date>
+    <time>14:25:14</time>
+    <contents><target name="mageetc"><dir name="modules"><file name="MageWorkshop_DRGeoIp.xml" hash="529a457925fa763cadd6785586f690e3"/></dir></target><target name="magelocal"><dir name="MageWorkshop"><dir name="DRGeoIp"><dir name="Block"><dir name="Adminhtml"><dir name="Uninstall"><file name="Button.php" hash="334bfa4707c4537078cc24060bba735e"/></dir></dir></dir><dir name="Helper"><file name="Data.php" hash="76820facb06cafe53eacadffb2d1d115"/></dir><dir name="Model"><file name="GeoIp.php" hash="6eb33d44f076b9796b9a67206777eebc"/><file name="Observer.php" hash="92d37a31acee1b46772c824bdfb0f901"/></dir><dir name="etc"><file name="MageWorkshop_DRGeoIp.xml" hash="937b4db8814dbc769353007e83c6ffcf"/><file name="adminhtml.xml" hash="4922e85d4552418f01f511ad1f8d389f"/><file name="config.xml" hash="f811572618711390d79b2d0596672819"/><file name="system.xml" hash="a6dd608d0e20e6c9f6e24fcf47c8d7e1"/></dir></dir></dir></target><target name="magelocale"><dir name="en_US"><file name="MageWorkshop_DRGeoIp.csv" hash="61c989e816018da1e3aa813e9beabaff"/><dir name="template"><dir name="email"><dir name="mageworkshop"><dir name="drgeoip"><file name="review_new_to_admin.html" hash="089f7a32985cf0f2a2b658be5261a94a"/></dir></dir></dir></dir></dir></target></contents>
+    <compatible/>
+    <dependencies><required><php><min>5.3.0</min><max>7.0.0</max></php><package><name>Mage_Catalog</name><channel>community</channel><min/><max/></package></required></dependencies>
+</package>

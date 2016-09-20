@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package>
+    <name>MageWorkshop_Core</name>
+    <version>1.0.0</version>
+    <stability>stable</stability>
+    <license>GPL</license>
+    <channel>community</channel>
+    <extends/>
+    <summary>MageWorkshop Core. DO NOT UNINSTALL EXTENSION HERE. Go to extension configuration and uninstall it by clicking "Uninstall" button there.</summary>
+    <description>MageWorkshop Core module.</description>
+    <notes>Contains dependent parts of MageWorkshop modules - Detailed Review and Detailed Review Reminder.&amp;#xD;&#xD;
+    </notes>
+    <authors><author><name>Default Value</name><user>DV</user><email>mageworkshophq@gmail.com</email></author></authors>
+    <date>2015-12-22</date>
+    <time>14:21:06</time>
+    <contents><target name="mageetc"><dir name="modules"><file name="MageWorkshop_Core.xml" hash="16c968cc29197a6010f233ab285266e0"/></dir></target><target name="magelocal"><dir name="MageWorkshop"><dir name="Core"><dir name="Block"><dir name="System"><dir name="Config"><dir name="Form"><dir name="Fieldset"><dir name="Core"><file name="Extensions.php" hash="83a303539fd4bf4f8364a7fb15e2082e"/><file name="Info.php" hash="4133804a14dbf30f4145e210af959a48"/></dir></dir></dir></dir></dir></dir><dir name="Helper"><file name="Data.php" hash="8bd16ecc3791ee3983ac06bbfb176814"/></dir><dir name="Model"><file name="Observer.php" hash="327ee80b71ab910026320777ad7065f6"/><file name="Uninstall.php" hash="ca33e0213c9daa7f32d463ebd2b5131d"/></dir><dir name="controllers"><dir name="Adminhtml"><dir name="Mageworkshop"><dir name="Core"><file name="MainController.php" hash="06b2b97d69b030279b1f9978f4786ccb"/></dir></dir></dir></dir><dir name="etc"><file name="MageWorkshop_Core.xml" hash="8703afd7bbd8e9f6280db6fa5effe45b"/><file name="adminhtml.xml" hash="d6ca3b9d4c02a0da3f710f9041c08462"/><file name="config.xml" hash="abd8aade38bc3b8562fd06c0631e4b1a"/><file name="system.xml" hash="a3343ccbcb38210f4a66023fd4341b6d"/></dir></dir></dir></target><target name="magelocale"><dir name="en_US"><file name="MageWorkshop_Core.csv" hash="450b9731da5a15d61cfc38a6141afcfc"/></dir></target></contents>
+    <compatible/>
+    <dependencies><required><php><min>5.3.0</min><max>7.0.0</max></php><package><name>Mage_Catalog</name><channel>community</channel><min/><max/></package></required></dependencies>
+</package>

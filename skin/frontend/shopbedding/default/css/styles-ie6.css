@@ -1,0 +1,19 @@
+/* header */
+/*.nav-container #nav li.level-top.first { margin-left: 12px; }*/
+
+/* product detail */
+.product-view .quantity  { height: 25px; }
+#product-dropLengthChoices { height: 40px; }
+.nav-container #nav li.level-top a.level-top { height: 10px; }
+.nav-container #nav li.level-top ul li.first { margin-left: 0; }
+.product-img-box .more-views ul { height: 72px; }
+.product-view .review-selection { height: 32px; }
+
+.footer-container .footer-top-spiffs { height: 166px; }
+.footer-container .footer-top-spiffs li { height: 141px; }
+.footer-container .footer-top-spiffs .col3 { height: 145px; }
+.footer-container .footer-top-spiffs .col3 .form-subscribe input { width: 250px; }
+.footer-container .footer-top-spiffs .col3 .form-subscribe .field-wrapper { width: 120px; float: left; }
+.footer-container .footer-top-spiffs .col3 .form-subscribe .field-wrapper input  { width: 115px; margin-left: -10px; }
+.footer-container .footer-top-spiffs .col3 .form-subscribe .first { margin-right: 0; }
+.footer-container .footer-top-spiffs .col3 .form-subscribe .field-wrapper label { width: 80px; }

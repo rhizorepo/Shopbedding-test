@@ -1,0 +1,28 @@
+<?php
+/**
+ * MageWorkshop
+ * Copyright (C) 2016 MageWorkshop <mageworkshophq@gmail.com>
+ *
+ * @category   MageWorkshop
+ * @package    MageWorkshop_DetailedReview
+ * @copyright  Copyright (c) 2016 MageWorkshop Co. (http://mage-workshop.com)
+ * @license    http://opensource.org/licenses/gpl-3.0.html GNU General Public License, version 3 (GPL-3.0)
+ * @author     MageWorkshop <mageworkshophq@gmail.com>
+ */
+
+$currentUrl = preg_replace('/\?.*/', '', $this->helper('core/url')->getCurrentUrl());
+$isCustomerLogged = $this->helper('customer')->isLoggedIn();
+?>
+<div class="review-top no-reviews">
+    <div class="button-write-review">
+        <?php if ( !$this->helper('detailedreview')->isUserAbleToWriteReview() ): ?>
+        <span class="error"><?php echo $this->__('You are not Allowed to Write a Review.'); ?></span>
+        <?php else: ?>
+        <?php $redirectUrl = $currentUrl  . $this->helper('detailedreview')->getCurrentUrlWithNewParam('show_popup','1'); ?>
+        <p><?php echo $this->__('Tell us what you think about this item!') ?></p>
+        <input type="hidden" value="<?php echo htmlspecialchars($redirectUrl); ?>" />
+        <input type="hidden" value="<?php echo $this->helper('core/url')->getEncodedUrl($redirectUrl);?>" />
+        <input type="button" class="review-dialog" value="<?php echo $this->__('Write A Review') ?>" />
+        <?php endif; ?>
+    </div>
+</div>

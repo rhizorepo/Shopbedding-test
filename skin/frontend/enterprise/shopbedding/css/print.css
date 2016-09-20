@@ -1,0 +1,53 @@
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition License
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magentocommerce.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     enterprise_default
+ * @copyright   Copyright (c) 2010 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://www.magentocommerce.com/license/enterprise-edition
+ */
+*     { background:none !important; text-align:left !important; }
+body  { background:#fff !important; font-size:9pt !important; margin:15px !important; }
+
+.header-container,
+.footer-before-container,
+.footer-container,
+.widget,
+.pager,
+.toolbar,
+.actions,
+.buttons-set { display:none !important; }
+
+.page-print .data-table .cart-tax-total { background-position:100% -54px; }
+.page-print .data-table .cart-tax-info { display:block !important; }
+
+.sales-order-print  .print-head { margin-bottom: 25px; }
+.sales-order-print .order-info { display: none; }
+.sales-order-print .order-date { font-size: 12px; font-weight: bold; }
+.sales-order-print .col2-left-layout .my-account .col2-set { margin: 0 0 20px; }
+.sales-order-print  .col2-set h2 { margin-top: 15px; }
+.sales-order-print  .col2-set .col-1 { padding-right: 7px; }
+.sales-order-print  .col2-set .box-content { margin: 0 10px; }
+.sales-order-print  .col2-set table { text-align: left; }
+.sales-order-print  .col2-set table th { width: 140px; }
+.sales-order-print  .col2-set table th, .sales-order-print  .col2-set table td { padding: 4px 0; }
+#my-orders-table { margin: 0 0 10px; }
+#my-orders-table .product-name { font-size: 12px; }
+#my-orders-table dt, #my-orders-table dd { line-height: 16px; float: left; }
+#my-orders-table dt { clear: both; font-weight: bold; margin-right: 10px; } 

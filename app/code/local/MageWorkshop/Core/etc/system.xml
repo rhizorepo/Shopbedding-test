@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<config>
+    <tabs>
+        <mw>
+            <label>Mage Workshop</label>
+            <sort_order>200</sort_order>
+        </mw>
+    </tabs>
+    <sections>
+        <drcore translate="label">
+            <label>Core</label>
+            <tab>mw</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>100</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <info translate="label">
+                    <label>Info</label>
+                    <frontend_type>text</frontend_type>
+                    <frontend_model>drcore/system_config_form_fieldset_core_info</frontend_model>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                </info>
+                <advanced translate="label">
+                    <label>Advanced Options</label>
+                    <frontend_type>text</frontend_type>
+                    <frontend_model>drcore/system_config_form_fieldset_core_extensions</frontend_model>
+                    <sort_order>30</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                </advanced>
+            </groups>
+        </drcore>
+    </sections>
+</config>

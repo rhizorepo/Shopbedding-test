@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+
+<layout version="0.1.0">
+    <default>
+        <reference name="head">
+            <action method="addItem"><type>skin_js</type><script>js/snare_settings.js</script></action>  
+            <action method="addItem"><type>external_js</type><name>https://mpsnare.iesnare.com/snare.js</name></action>
+        </reference>
+    </default>
+    <checkout_onepage_index>
+        <reference name="head">
+            <action method="addItem"><type>skin_js</type><script>js/jquery-1.7.1.min.noConflict.js</script></action>  
+        </reference>
+        <reference name="content">
+            <block output="toHtml" type="core/template" before="-" template="borderpay/checkout/onepage/extension.phtml" name="borderpay.checkout.onepage.extension" />
+        </reference>
+    </checkout_onepage_index>
+    
+    <firecheckout_index_index>
+        <reference name="content">
+            <block output="toHtml" type="core/template" before="-" template="borderpay/checkout/onepage/extension.phtml" name="borderpay.checkout.onepage.extension.firecheckout" />
+            <block output="toHtml" type="core/template" after="borderpay.checkout.onepage.extension.firecheckout" template="borderpay/checkout/firecheckout/extension.phtml" name="borderpay.checkout.firecheckout.extension" />
+        </reference>
+    </firecheckout_index_index>
+    
+    <checkout_onepage_review>
+        <reference name="root">
+            <block type="borderpay/cart_totals" name="checkout.onepage.review.info.totals" as="totals" template="borderpay/checkout/onepage/review/totals.phtml"></block>s
+        </reference>
+    </checkout_onepage_review>
+    
+    <checkout_multishipping_index>
+        <reference name="head">
+            <action method="addItem"><type>skin_js</type><script>js/jquery-1.7.1.min.noConflict.js</script></action>  
+        </reference>
+    </checkout_multishipping_index>
+</layout>

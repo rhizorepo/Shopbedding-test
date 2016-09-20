@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!--
+/************************************************************************
+© 2014 Dydacomp Development Corporation.   All rights reserved.
+DYDACOMP, FREESTYLE COMMERCE, Channelbrain and all related logos and designs are 
+trademarks of Dydacomp or its affiliates. 
+All other product and company names mentioned herein are used for 
+identification purposes only, and may be trademarks of 
+their respective companies.  
+************************************************************************/
+-->
+<config>
+    <api>
+        <resources>
+            <bizSyncXL translate="title" module="bizSyncXL">
+                <model>bizSyncXL/api</model>
+                <title>BizSyncXL Resource API</title>
+                <acl>bizSyncXL</acl>
+                <methods>
+                    <syncData translate="title" module="bizSyncXL">
+                        <title>Sync Data for a SKU</title>
+                        <method>syncData</method>
+                        <acl>bizSyncXL/syncData</acl>
+                    </syncData>
+                </methods>
+                <faults module="bizSyncXL">
+                    <store_not_exists>
+                        <code>1001</code>
+                        <message>Can not perform operation because store does not exist</message>
+                    </store_not_exists>
+                    <bizSyncXL_invalid_data>
+                        <code>1101</code>
+                        <message>Data is not valid.</message>
+                    </bizSyncXL_invalid_data>
+                </faults>
+            </bizSyncXL>
+        </resources>
+        <acl>
+            <resources>
+                <bizSyncXL translate="title" module="bizSyncXL">
+                    <title>Sync Data</title>
+                    <syncData translate="title" module="bizSyncXL">
+                        <title>Sync Data for a SKU</title>
+                    </syncData>
+                </bizSyncXL>
+            </resources>
+        </acl>
+        <v2>
+            <resources_function_prefix>
+                <bizSyncXL>bizSyncXL</bizSyncXL>
+            </resources_function_prefix>
+        </v2>
+    </api>
+</config>

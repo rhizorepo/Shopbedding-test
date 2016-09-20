@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $this->getLang() ?>" lang="<?php echo $this->getLang() ?>">
+<head>
+<?php echo $this->getChildHtml('head') ?>
+</head>
+    <body>
+        <div class="byos byos-modal product-view">
+            <?php
+                $_id = $this->getRequest()->getParam('id');
+                $_storeId = Mage::app()->getStore()->getId();
+                $_product = Mage::getModel('catalog/product')
+                                            ->setStoreId($_storeId)
+                                            ->load($_id);
+                Mage::register('product', $_product);
+            ?>
+            <?php echo $this->getChildHtml('content') ?>
+        </div>
+							<script type="text/javascript">
+							jQuery('#back-to-top').click(function() {
+									var el = parent.document.getElementsByTagName("body")[0];
+									el.scrollTo(0,0);
+								});
+							
+							</script>
+    </body>
+    
+</html>

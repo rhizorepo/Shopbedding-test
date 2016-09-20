@@ -1,0 +1,457 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition License
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magentocommerce.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     enterprise_default
+ * @copyright   Copyright (c) 2010 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://www.magentocommerce.com/license/enterprise-edition
+ */
+
+/**
+ * Product view template
+ *
+ * @see Mage_Catalog_Block_Product_View
+ * @see Mage_Review_Block_Product_View
+ */
+?>
+<?php
+    $_helper = $this->helper('catalog/output');
+    $_product = $this->getProduct();
+
+    $_byosHelper = Mage::helper('catalog/byos');
+
+    $_wholeProductAlertUrl = Mage::helper('productalert')->getSaveUrl('stock');
+    $urlarray = preg_split( "/product_id/", $_wholeProductAlertUrl );
+
+    $firsthalfproductalerturl = $urlarray[0]."product_id/";
+    $secondhalfproductalerurl = $urlarray[1];
+    // now chop off the product ID, which we'll need to replace
+
+    $urlarray = preg_split("/\//",$secondhalfproductalerurl);
+
+    $currentProductId = $urlarray[1];
+
+    unset( $urlarray[1]);
+    unset( $urlarray[0]);
+
+    $secondhalfproductalerurl = '/'.implode('/',$urlarray);
+	
+	$_banneronsale = $_helper->productAttribute($_product, $_product->getOnSale(), 'on_sale');
+
+?>
+<script type="text/javascript">
+    // var optionsPrice = new Product.OptionsPrice(<?php // echo $this->getJsonConfig() ?>);
+    var optionsPrice = new Product.OptionsPrice(<?php echo $this->getChildHtml('scp_config'); ?>);
+    var productAlertUrl_firsthalf = '<?php echo $firsthalfproductalerturl; ?>';
+    var productAlertUrl_secondhalf = '<?php echo $secondhalfproductalerurl; ?>';
+    var productAlertUrl_currentproductid = '<?php echo $currentProductId; ?>';
+</script>
+<a name="top"></a>
+<div class="messages_product_view">
+    <!--<?php echo $this->getLayout()->getBlock('messages')->getGroupedHtml(array("error","warning","notice")); ?>-->
+    <?php echo $this->getMessagesBlock()->toHtml() ?>
+</div>
+ 
+<div class="product-view">
+    <div class="product-detail-wrapper">
+        <form action="<?php echo $this->getAddToCartUrl($_product) ?>" method="post" id="product_addtocart_form"<?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+            <div class="no-display">
+                <input type="hidden" name="product" value="<?php echo $_product->getId() ?>" />
+                <input type="hidden" name="related_product" id="related-products-field" value="" />
+            </div>
+            <div class="product-essential">
+                <div class="col-l">
+                    <p class="product-ids" id="product-sku"><?php echo $this->__('Item# %s', $this->htmlEscape($_product->getSku())); ?></p>
+                    <div class="product-img-box">
+                        <?php echo $this->getChildHtml('media') ?>
+                    </div>
+                </div>
+                <div class="col-r">
+                    <div class="product-shop">
+                        <div class="product-main-info">
+                            <div class="product-name">
+                                <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
+                                <?php if($_product->isGrouped()): ?>
+                                    <div class="sale-ribbon">
+                                        <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('BYOS_PROMO_RIBBON')->toHtml() ?>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                            <?php if ($_product->isConfigurable()) : ?>
+                                <?php $conf = Mage::getModel('catalog/product_type_configurable')->setProduct($_product);
+                                $col = $conf->getUsedProductCollection()->addAttributeToSelect('*')->addFilterByRequiredOptions();
+                                    $from =0;
+                                    $to = 0; $i=0;
+                                foreach($col as $simple_product){
+                                    if($i==0) $from = $simple_product->getFinalPrice();
+                                    if($simple_product->getFinalPrice() >=$to ) $to = $simple_product->getFinalPrice();
+                                    if($simple_product->getFinalPrice() <=$from ) $from = $simple_product->getFinalPrice();
+                                    $i++;
+
+                                }
+                                ?>
+                            <p class="price-summary"><?php echo Mage::helper('core')->currency($from);?> - <?php echo Mage::helper('core')->currency($to);?></p>
+
+                            <?php endif; ?>
+                            <?php if($_product->isGrouped()) : ?>
+
+                            <?php
+                            $from =0;
+                            $to = 0; $i=0;
+                            $_associatedProducts = $_product->getTypeInstance(true)->getAssociatedProducts($_product);
+                            foreach ($_associatedProducts as $as) {
+                                if ($as->isConfigurable()) {
+                                    $conf = Mage::getModel('catalog/product_type_configurable')->setProduct($as);
+                                    $col = $conf->getUsedProductCollection()->addAttributeToSelect('*')->addFilterByRequiredOptions();
+                                    $k=0;
+                                    foreach($col as $simple_product){
+                                        if($i==0 && $k==0) $from = $simple_product->getFinalPrice();
+                                        if($simple_product->getFinalPrice() >=$to ) $to = $simple_product->getFinalPrice();
+                                        if($simple_product->getFinalPrice() <=$from ) $from = $simple_product->getFinalPrice();
+                                        $k++;
+
+                                    }
+
+                                } elseif($as->getTypeId() == 'simple') {
+                                    if($i==0) $from = $as->getFinalPrice();
+                                    if($as->getFinalPrice() >=$to ) $to = $as->getFinalPrice();
+                                    if($as->getFinalPrice() <=$from ) $from = $as->getFinalPrice();
+
+                                }
+                                $i++;
+                            }
+
+                                ?>
+                                <p class="price-summary"><?php echo Mage::helper('core')->currency($from);?> - <?php echo Mage::helper('core')->currency($to);?></p>
+                            <?php endif; ?>
+
+                            <?php //if(!$_product->isGrouped()): ?>
+                                <div class="review-summary">
+                                    <?php echo $this->getReviewsSummaryHtml($_product, false, true)?>
+                                </div>
+                            <?php //endif; ?>
+                            <?php if ($_product->getTypeId() === 'grouped'):?>
+                            <?php echo $this->getLayout()->createBlock('collection/media')->setProductId($_product->getId())->setLimit('all')->setTemplate('collection/media-item-gallery.phtml')->toHtml() ?>
+                            <?php endif;?>
+                            <?php 
+                                $_byos = $_byosHelper->getByos($_product);
+                                if (!empty($_byos)):
+                            ?>
+                                <p class="build-your-own"><a id="byos-overlay-trigger" rel="#byos-overlay" href="/byos/index/set/id/<?php echo $_byos ?>" onclick="_gaq.push(['_trackEvent', 'lightbox', 'build-own-set', '<?php echo $this->htmlEscape($_product->getName())?>']);"><?php echo $this->__('Build Your Own Set! - Mix and Match!') ?></a></p>
+                            <?php endif; ?>
+                            
+                            <?php if ($shortDesc = $_product->getShortDescription()):?>
+                            <div class="short-description std">
+                                <?php //$shortDesc = strip_tags($_product->getShortDescription(), '<br>'); ?>
+                                <?php echo $_helper->productAttribute($_product, $shortDesc, 'short_description') ?>
+                            </div>
+                            <?php endif;?>
+                                                            
+                            <?php echo $this->getChildHtml('swatch_area'); ?>
+
+                            <?php if(!$_product->isGrouped()): ?>
+                            <div class="product-option quantity clearfix">
+                                <div class="titleFloat clearfix"><h4><?php echo $this->__('Qty:') ?></h4></div>
+                                <div class="attribute-wrapper">
+                                    <select id="qty-select">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                    <input type="text" name="qty" id="qty" maxlength="12" value="<?php echo $this->getMinimalQty($_product) ?>" title="<?php echo $this->__('Qty') ?>" class="input-text qty" />
+                                    <a href="#" class="toggle-large-qty"><?php echo $this->__('Enter Large Quantity') ?></a>
+                                </div>
+                            </div>
+                            <?php endif; ?>
+                            
+                            <?php echo $this->getChildHtml('alert_urls') ?>
+
+                            <?php if(!$_product->isGrouped()): ?>
+                                <div class="price-wrapper clearfix">
+                                    <?php echo $this->getChildHtml('product_type_data') ?>
+									
+									<div class="on-sale">							
+										<?php  echo $this->getLayout()->createBlock('cms/block')->setBlockId($_banneronsale)->toHtml() ?>
+                                    </div>
+									
+                                    <div class="add-to-cart">
+                                        <p class="review-selection no-hide"></p>
+                                        <p class="availability in-stock" style="<?php if($_product->isSaleable()): ?>display: block<?php else: ?>display: none<?php endif; ?>"><span><?php echo $this->__('In stock') ?></span></p>
+                                        <p class="availability out-of-stock" style="<?php if(!$_product->isSaleable()): ?>display: block<?php else: ?>display: none<?php endif; ?>">
+                                            <span><?php echo $this->__('Out of stock') ?></span>
+                                            <br />
+                                            <a class="notify-me" ></a>
+                                        </p>
+                                        <p class="availability not-available" style="display: none">
+                                            <span><?php echo $this->__('Not available') ?></span>
+                                        </p>
+                                    <?php if($_product->isSaleable()): ?>
+                                        <button type="button" title="<?php echo $this->__('Add to Cart') ?>" class="button btn-cart" onclick="_gaq.push(['_trackEvent', 'ActionButtons', 'Add_To_Cart']);productAddToCartForm.submit()"></button>
+                                    <?php endif; ?>
+                                    </div>
+                                    
+                                </div>
+                            <?php endif; ?>
+
+                        </div>
+                        
+                        <?php echo $this->getChildHtml('tierprices') ?>
+                        <?php echo $this->getChildHtml('extrahint') ?>
+                        <?php echo $this->getChildHtml('other');?>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </form>
+        <?php if(!$_product->isGrouped()): ?>
+            <div class="product-collateral">
+                <?php // if ($detailedInfoGroup = $this->getChildGroup('detailed_info', 'getChildHtml')):
+                $detailedInfoGroup = array();
+                if ( true ):
+                ?>
+
+                <?php // I'll add new content to the $detailedInfoGroup
+                //  Key is the name, value is the html
+
+                $customtabs = $this->getCustomTabs();
+
+
+                // echo print_r( $customtabs,1 )."<br>";
+                // echo count( $customtabs )."<br>";
+
+                if ( $customtabs )
+                {
+                    if ( count( $customtabs) > 0 )
+                    {
+
+                        foreach( $customtabs as $title => $content)
+                        {
+                            // Mage::log($title);
+                            $detailedInfoGroup[$title] = $content;
+                        }
+
+                    }
+                }
+
+                // Mage::log(count($customtabs));
+
+                ?>
+
+
+
+                    <dl id="collateral-tabs" class="collateral-tabs">
+                    <?php foreach ($detailedInfoGroup as $alias => $html):?>
+                        <dt class="tab"><span><?php 
+
+                        
+
+                        $str = $this->escapeHtml($this->getChildData($alias, 'title'));
+
+                        if ( $str )
+                            echo $str;
+                        else
+                            echo $alias;
+
+                                ?></span></dt>
+                        <dd class="tab-container">
+                           <div class="tab-content"><?php echo $html ?></div>
+                        </dd>
+                    <?php endforeach;?>
+
+                    </dl>
+                    <script type="text/javascript">new Enterprise.Tabs('collateral-tabs')</script>
+                <?php endif; ?>
+                <div class="clear"></div>
+            </div>
+        <?php else: ?>
+            <?php echo $this->getChildHtml('product_type_data') ?>
+        <?php endif; ?>
+    </div>
+    <?php if(!$_product->isGrouped()): ?>
+    <div class="related-products">
+		<?php echo $this->getChildHtml('relatedProducts') ?>
+		<?php echo $this->getChildHtml('upsell_products') ?>
+    </div>
+    <?php endif; ?>
+    <?php echo $this->getChildHtml('product_additional_data') ?>
+
+</div>
+
+<?php if(!$_product->isGrouped()): ?>
+<div id="byos-overlay">
+    <div class="loader-grey"></div>
+    <iframe class="content-frame" scrolling="no" frameborder="0"></iframe>
+</div>
+<?php endif; ?>
+
+<script type="text/javascript">
+
+    jQuery(document).ready(function() {
+        p = jQuery('.popup__overlay');
+        videoBlock = jQuery('#video-iframe').html();
+        jQuery('#popup__toggle').click(function() {
+            p.css('display', 'block');
+            jQuery('#video-iframe').html(videoBlock);
+            jQuery('.product-view .product-collateral dt').css({ position: 'static' });//.removeAttr('position');
+            jQuery('.header-container .account-links .right-actions').css({ position: 'static' });//.removeAttr('position');
+        })
+        p.click(function(event) {
+            e = event || window.event
+            if (e.target == this) {
+                jQuery('#video-iframe > iframe').attr("src", jQuery('#video-iframe > iframe').attr("src"));
+                jQuery(p).css('display', 'none');
+            }
+        })
+        function hideBg(){
+        	jQuery('.popup__overlay').css('display', 'none');
+            jQuery('#video-iframe').html('');
+
+            p.css('display', 'none');
+            jQuery('.product-view .product-collateral dt').css({ position: 'relative' });
+            jQuery('.header-container .account-links .right-actions').css({ position: 'absolute' });
+        }
+        jQuery('.popup__close').click(function() {
+			hideBg();
+        })
+        jQuery('.popup__overlay').click(function() {
+			hideBg();
+        })
+    });
+</script>
+<script type="text/javascript">
+
+	jQuery('.product-dropLengthChoice').click(function() {
+		jQuery('#product-error-dropLength').css('display', 'none');
+		jQuery('#product-error-bag').css('display', 'none');
+	});
+	jQuery('.product-depthChoice').click(function() {
+		jQuery('#product-error-depth').css('display', 'none');
+		jQuery('#product-error-bag').css('display', 'none');
+	});
+	jQuery('.productDtl-colorChip').click(function() {
+		jQuery('#product-error-color').css('display', 'none');
+		jQuery('#product-error-bag').css('display', 'none');
+	});
+	jQuery('.product-sizeChoice').click(function() {
+		jQuery('#product-error-size').css('display', 'none');
+		jQuery('#product-error-bag').css('display', 'none');
+	});
+	
+	
+</script>
+
+<script type="text/javascript">
+//<![CDATA[
+    var productAddToCartForm = new VarienForm('product_addtocart_form');
+    productAddToCartForm.submit = function() {
+		
+		var bag = 'product-error-bag';
+		var message = 'please select %s before adding to bag';
+		var attributes = {
+			size: 143,
+			color: 80,
+			depth: 142,
+			dropLength: 140
+		}
+		
+		try {
+			var errors = [];
+			for(var attribute in attributes) {
+				var obj = jQuery('#attribute' + attributes[attribute]);
+				if(obj && obj.hasClass('required-entry')) {
+					var value = obj.val();
+					if(!value || value.length <= 0) {
+						errors.push(attribute);
+						var elem = 'product-error-' + attribute;
+						var p = jQuery('#product-' + attribute + 'Choices').offset();
+						
+						if(jQuery('#' + elem).size() == 0) {
+							jQuery('body').append('<div id="' + elem + '" class="cssHide2 productError"><div>select</div><em></em></div>');
+						}
+						
+						jQuery('#' + elem).css({'left' : parseInt(p.left - 70), 'top' : parseInt(p.top + 10), 'display' : 'block'});
+					}
+				}
+			}
+			if(errors.length > 0) {
+				var button = jQuery('.add-to-cart .btn-cart');
+				var offset = button.offset();
+				
+				if(jQuery('#' + bag).size() == 0) {
+					jQuery('body').append('<div id="' + bag + '" class="cssHide2 productError"><div></div><span></span></div>');
+				}
+				
+				jQuery('#' + bag + ' div').text(message.replace('%s', errors.join(', ')));
+				var left = parseInt(offset.left + button.innerWidth() - jQuery('#' + bag).innerWidth());
+				jQuery('#' + bag).css({'left' : left, 'top' : parseInt(offset.top + 30), 'display' : 'block'});
+				
+				return;
+			}
+
+            <?php if($_product->getTypeId() == 'simple'): ?>
+                var productIsSimple = true;
+                var productSimpleQty = <?php echo $_product->getStockItem()->getQty(); ?>;
+            <?php else: ?>
+                var productIsSimple = false;
+            <?php endif;?>
+
+            if (!productIsSimple) {
+                var selectedProductId;
+                var currentConfig;
+                var optionsParent;
+                if (jQuery("#byos-block").length == 0){
+                    optionsParent = jQuery('.product-main-info');
+                    selectedProductId = jQuery("#product_addtocart_form input[name=product]:first").val();
+                    currentConfig = spConfig.config;
+                } else {
+                    optionsParent = jQuery('.byos-product');
+                    selectedProductId = jQuery(".hidden-selected-product", optionsParent).val();
+                    currentConfig = spConfig[jQuery(".hidden-spconfig-index", optionsParent).val()].config;
+                }
+
+                var currentProduct = currentConfig.childProducts[selectedProductId];
+                if(currentProduct.qty < jQuery("#qty-select").val() || currentProduct.qty < jQuery("#qty").val()) {
+                    alert('Quantity exceeds available units, current available '+currentProduct.qty+".");
+                    return;
+                }
+            } else {
+                if(productSimpleQty < jQuery("#qty-select").val() || productSimpleQty < jQuery("#qty").val()) {
+                    alert('Quantity exceeds available units, current available '+productSimpleQty+".");
+                    return;
+                }
+            }
+        } catch(e) {
+			alert(e.message);
+			return;
+		}
+		
+		if (this.validator.validate()) {
+				this.form.submit();
+		}
+    }.bind(productAddToCartForm);
+//]]>
+</script>

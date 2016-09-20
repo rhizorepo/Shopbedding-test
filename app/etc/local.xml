@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category   Mage
+ * @package    Mage_Core
+ * @copyright  Copyright (c) 2008 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+-->
+<config>
+  <global>
+    <install>
+      <date><![CDATA[Thu, 09 Sep 2010 16:57:33 +0000]]></date>
+    </install>
+    <crypt>
+      <key><![CDATA[509b5f3e211ee8236bb6730d5990bc2f]]></key>
+    </crypt>
+    <disable_local_modules>false</disable_local_modules>
+    <resources>
+      <db>
+        <table_prefix><![CDATA[]]></table_prefix>
+      </db>
+      <default_setup>
+        <connection>
+          <host><![CDATA[172.24.16.213]]></host>
+          <username><![CDATA[s20160610]]></username>
+          <password><![CDATA[6c603a63-e1fc-4a61-a583-ba39fba2244d]]></password>
+          <dbname><![CDATA[shopbedding_20160610]]></dbname>
+          <initStatements><![CDATA[SET NAMES utf8]]></initStatements>
+          <model><![CDATA[mysql4]]></model>
+          <type><![CDATA[pdo_mysql]]></type>
+          <pdoType><![CDATA[]]></pdoType>
+          <active>1</active>
+        </connection>
+      </default_setup>
+    </resources>
+	<session_save><![CDATA[files]]></session_save>
+
+<cache>
+<backend>Cm_Cache_Backend_Redis</backend>
+	       <backend>Cm_Cache_Backend_Redis</backend>
+               <backend_options>
+                <server>172.24.16.213</server>
+                <port>6379</port>
+                <database>2</database>
+                <force_standalone>0</force_standalone>
+                <connect_retries>5</connect_retries>
+                <read_timeout>5</read_timeout>
+                <automatic_cleaning_factor>0</automatic_cleaning_factor>
+                <compress_data>1</compress_data>
+                <compress_tags>1</compress_tags>
+                <compress_threshold>20480</compress_threshold>
+                <compression_lib>gzip</compression_lib>
+            </backend_options>
+     </cache>
+    
+    <full_page_cache>
+         <backend>Cm_Cache_Backend_Redis</backend>
+             <backend_options>
+             <server>172.24.16.213</server>
+             <port>6379</port>
+             <database>3</database>
+             <force_standalone>0</force_standalone>
+             <connect_retries>5</connect_retries>
+             <read_timeout>5</read_timeout>
+             <automatic_cleaning_factor>0</automatic_cleaning_factor>
+             <lifetimelimit>86400</lifetimelimit>
+             <compress_data>0</compress_data>
+             <compress_threshold>20480</compress_threshold>
+             <compression_lib>gzip</compression_lib>
+         </backend_options>
+    </full_page_cache>
+
+  </global>
+  <admin>
+    <routers>
+      <adminhtml>
+        <args>
+          <frontName><![CDATA[admin]]></frontName>
+        </args>
+      </adminhtml>
+    </routers>
+  </admin>
+</config>

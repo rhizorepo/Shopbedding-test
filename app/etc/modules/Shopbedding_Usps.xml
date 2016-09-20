@@ -1,0 +1,11 @@
+<config>
+    <modules>
+		<Shopbedding_Usps>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Mage_Usa />
+            </depends>
+        </Shopbedding_Usps>
+    </modules>
+</config>

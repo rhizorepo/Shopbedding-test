@@ -1,0 +1,8 @@
+<config>
+    <modules>
+		<Shopbedding_Canonical>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Shopbedding_Canonical>
+    </modules>
+</config>

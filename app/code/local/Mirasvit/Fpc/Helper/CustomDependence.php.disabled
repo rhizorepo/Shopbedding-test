@@ -1,0 +1,10 @@
+<?php
+
+class Mirasvit_Fpc_Helper_CustomDependence extends Mage_Core_Helper_Abstract
+{
+    public function getCustomDependence()
+    {
+        return true;
+    }
+
+}

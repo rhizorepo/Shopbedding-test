@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+
+<layout>
+
+    <default>
+        <reference name="head">
+            <action method="addJs"><script>detailedreview/dr.full.min.js</script></action>
+        </reference>
+    </default>
+
+    <adminhtml_mageworkshop_detailedreview_statistics_index>
+        <action method="addItem"><type>js_css</type><name>calendar/calendar-win2k-1.css</name><params/></action>
+        <action method="addItem"><type>js</type><name>calendar/calendar.js</name></action>
+        <action method="addItem"><type>js</type><name>calendar/calendar-setup.js</name></action>
+        <block type="core/html_calendar" name="head.calendar" as="calendar" template="page/js/calendar.phtml"/>
+
+
+        <reference name="content">
+            <block type="detailedreview/adminhtml_statistics" name="statistics" />
+        </reference>
+    </adminhtml_mageworkshop_detailedreview_statistics_index>
+
+    <adminhtml_catalog_category_edit>
+        <reference name="head">
+            <action method="addJs"><script>detailedreview/adminhtml.js</script></action>
+        </reference>
+    </adminhtml_catalog_category_edit>
+
+    <adminhtml_catalog_product_edit>
+        <reference name="head">
+            <action method="addJs" ifconfig="detailedreview/settings/deny_change_polarity_group">
+                <script>detailedreview/adminhtml_product_edit.js</script>
+            </action>
+        </reference>
+    </adminhtml_catalog_product_edit>
+
+</layout>

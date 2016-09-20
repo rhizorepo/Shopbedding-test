@@ -1,0 +1,11 @@
+<config>
+    <modules>
+		<Shopbedding_Title>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Mage_Page />
+            </depends>
+        </Shopbedding_Title>
+    </modules>
+</config>

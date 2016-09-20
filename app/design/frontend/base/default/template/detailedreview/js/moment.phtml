@@ -1,0 +1,20 @@
+<?php $urlJs = Mage::helper('detailedreview')->getDetailReviewJsUrl(); ?>
+<?php echo "<script type='text/javascript' src='$urlJs/moment.min.js'></script>"; ?>
+<script type="text/javascript">
+    window.addEventListener('updateDateDR', function (e) {
+        $$('.review-date').each(function(e) {
+            var d = new Date(),
+                date = {
+                utc: e.readAttribute('data-utc'),
+                offset: d.getTimezoneOffset() * -1,
+                format: e.readAttribute('data-format')
+            };
+            if (moment.utc(date.utc).utcOffset(date.offset).isValid()) {
+                e.innerHTML = moment.utc(date.utc).utcOffset(date.offset).format(date.format);
+            } else {
+                e.innerHTML = '';
+                console.log('Invalid date format');
+            }
+        });
+    });
+</script>

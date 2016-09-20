@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<layout>
+    <adminhtml_mageworkshop_drreminder_index_index>
+        <reference name="head">
+            <action method="addJs"><script>detailedreview/adminhtml.js</script></action>
+        </reference>
+        <reference name="content">
+            <block type="drreminder/adminhtml_reminder" name="reminder" />
+        </reference>
+    </adminhtml_mageworkshop_drreminder_index_index>
+    <adminhtml_mageworkshop_drreminder_index_view>
+        <reference name="content">
+            <block type="drreminder/adminhtml_reminder_view" name="reminder_view" />
+        </reference>
+    </adminhtml_mageworkshop_drreminder_index_view>
+</layout>

@@ -1,0 +1,150 @@
+<?php
+/**
+ * MageWorkshop
+ * Copyright (C) 2016 MageWorkshop <mageworkshophq@gmail.com>
+ *
+ * @category   MageWorkshop
+ * @package    MageWorkshop_DRReminder
+ * @copyright  Copyright (c) 2016 MageWorkshop Co. (http://mage-workshop.com)
+ * @license    http://opensource.org/licenses/gpl-3.0.html GNU General Public License, version 3 (GPL-3.0)
+ * @author     MageWorkshop <mageworkshophq@gmail.com>
+ */
+
+ $_reminder = $this->getReminder(); ?>
+<div class="entry-edit" id="reminder_view">
+
+    <div class="box-left" style="clear:left;">
+        <!--General Info-->
+        <div class="entry-edit">
+            <div class="entry-edit-head">
+                <h4 class="icon-head head-account">
+                    <?php echo Mage::helper('drreminder')->__('General Info') ?>
+                </h4>
+            </div>
+            <div class="fieldset">
+                <table cellspacing="0" class="form-list">
+                    <tr>
+                        <td class="label"><label><?php echo Mage::helper('drreminder')->__('Created At') ?></label></td>
+                        <td class="value">
+                            <strong><?php echo $this->formatDate($_reminder->getCreatingDate(), 'medium', true); ?></strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label"><label><?php echo Mage::helper('drreminder')->__('Expiration Date') ?></label></td>
+                        <td class="value">
+                            <strong><?php echo $this->formatDate($_reminder->getExpirationDate(), 'medium', true); ?></strong>
+                        </td>
+                    </tr>
+                    <?php if($_reminder->getSentAt()):?>
+                        <tr>
+                            <td class="label"><label><?php echo Mage::helper('drreminder')->__('Sent At') ?></label></td>
+                            <td class="value">
+                                <strong><?php echo $this->formatDate($_reminder->getSentAt(), 'medium', true); ?></strong>
+                            </td>
+                        </tr>
+                    <?php endif; ?>
+                    <tr>
+                        <td class="label"><label><?php echo Mage::helper('drreminder')->__('Status') ?></label></td>
+                        <td class="value"><strong>
+                            <span id="reminder_status"><?php echo $this->getStatusLabel($_reminder->getStatus()); ?></span>
+                        </strong></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-right">
+        <!--Recipient Info-->
+        <div class="entry-edit">
+            <div class="entry-edit-head">
+                <h4 class="icon-head head-account">
+                    <?php echo Mage::helper('drreminder')->__('Recipient Info') ?>
+                </h4>
+                <div class="tools"><a href="<?php echo $this->getEditUrl($_reminder->getId()); ?>"><?php echo Mage::helper('drreminder')->__('Edit') ?></a></div>
+            </div>
+            <div class="fieldset">
+                <table cellspacing="0" class="form-list">
+                    <tr>
+                        <td class="label"><label><?php echo Mage::helper('drreminder')->__('Recipient Name') ?></label></td>
+                        <td class="value">
+                            <strong><?php echo $_reminder->getCustomerName(); ?></strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label"><label><?php echo Mage::helper('drreminder')->__('Recipient Email') ?></label></td>
+                        <td class="value">
+                            <strong><?php echo $_reminder->getEmail(); ?></strong>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-left" style="clear:left;">
+        <!--Order Info-->
+        <div class="entry-edit">
+            <div class="entry-edit-head">
+                <h4 class="icon-head head-account">
+                    <?php echo Mage::helper('drreminder')->__('Order Info') ?>
+                </h4>
+            </div>
+            <?php $order = $this->getOrderInfo($_reminder->getOrderId());?>
+            <div class="fieldset">
+                <table cellspacing="0" class="form-list">
+                    <tr>
+                        <td class="label"><label><?php echo Mage::helper('drreminder')->__('Order #') ?></label></td>
+                        <td class="value">
+                            <strong><?php echo $_reminder->getIncrementId(); ?></strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label"><label><?php echo Mage::helper('drreminder')->__('Order Status') ?></label></td>
+                        <td class="value">
+                            <strong><?php echo $order->getStatus(); ?></strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label"><label><?php echo Mage::helper('drreminder')->__('Created At') ?></label></td>
+                        <td class="value">
+                            <strong><?php echo $order->getCreatedAt(); ?></strong>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-right">
+        <!--Items Info-->
+        <div class="entry-edit">
+            <div class="entry-edit-head">
+                <h4 class="icon-head head-account">
+                    <?php echo Mage::helper('drreminder')->__('Items Ordered') ?>
+                </h4>
+            </div>
+            <div class="fieldset">
+                <table cellspacing="0" class="form-list">
+                    <?php $items = $order->getAllItems();?>
+                    <?php foreach ($items as $item): ?>
+                        <?php  $visible = Mage::getModel('catalog/product')->load($item->getProductId())->isVisibleInSiteVisibility();?>
+                        <?php if($visible): ?>
+                            <tr>
+                                <td class="label">
+                                    <strong><?php echo $item->getName(); ?></strong>
+                                </td>
+                                <td class="value"><?php echo Mage::helper('drreminder')->__('SKU:') ?></td>
+                                <td class="value">
+                                    <?php echo $item->getSku(); ?>
+                                </td>
+                            </tr>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+

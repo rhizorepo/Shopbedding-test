@@ -1,0 +1,65 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition License
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magentocommerce.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     enterprise_default
+ * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://www.magentocommerce.com/license/enterprise-edition
+ */
+/* @var $this Enterprise_TargetRule_Block_Checkout_Cart_Crosssell */
+?>
+<?php if ($this->hasItems()):?>
+<div class="crosssell">
+    <h2><?php echo $this->__('Customers Who Bought Items In Your Shopping Cart Also Bought:') ?></h2>
+    <ul>
+    <?php foreach ($this->getItemCollection() as $_item): ?>
+		<?php
+			$options = array(
+				'_escape' => true
+			);
+			
+			$productUrl = $_item->getUrlModel()->getUrl($_item, $options);
+			
+            if($_item->getVisibility() == Mage_Catalog_Model_Product_Visibility::VISIBILITY_NOT_VISIBLE) {
+                $parentIds = Mage::getModel('catalog/product_type_configurable')->getParentIdsByChild($_item->getId());
+				
+                if(!empty($parentIds)) {
+                    $parent = Mage::getModel('catalog/product')->load($parentIds[0]);
+					
+					if($parent->getId()) {
+						$options['_query'] = sprintf('product_id=%s', $_item->getId());
+						$productUrl = $parent->getUrlModel()->getUrl($parent, $options);
+					}
+                }
+            }
+		?>
+		
+        <li class="item">
+            <a class="product-image" href="<?php echo $productUrl ?>"><img src="<?php echo $this->helper('catalog/image')->init($_item, 'image')->resize(200); ?>" width="200" alt="<?php echo $this->htmlEscape($_item->getName()) ?>" title="<?php echo $this->htmlEscape($_item->getName()) ?>" /></a>
+            <div class="product-shop">
+                <h3 class="product-name"><a href="<?php echo $productUrl ?>"><?php echo $this->htmlEscape($_item->getName()) ?></a></h3>
+                <?php echo $this->getPriceHtml($_item, true) ?>
+                <p><button class="button btn-cart" onclick="_gaq.push(['_trackEvent', 'ActionButtons', '<?php echo sprintf('Add_To_Cart_CrossSell_%s', $_item->getId())?>']);setLocation('<?php echo $this->getAddToCartUrl($_item) ?>')" type="button"></button></p>
+            </div>
+        </li>
+    <?php endforeach; ?>
+    </ul>
+</div>
+<?php endif;?>

@@ -1,0 +1,93 @@
+<?php
+/**
+ * MageWorkshop
+ * Copyright (C) 2016 MageWorkshop <mageworkshophq@gmail.com>
+ *
+ * @category   MageWorkshop
+ * @package    MageWorkshop_DetailedReview
+ * @copyright  Copyright (c) 2016 MageWorkshop Co. (http://mage-workshop.com)
+ * @license    http://opensource.org/licenses/gpl-3.0.html GNU General Public License, version 3 (GPL-3.0)
+ * @author     MageWorkshop <mageworkshophq@gmail.com>
+ */
+
+ /** @var $this MageWorkshop_DetailedReview_Block_Review_Products_List */
+
+    $productsCollection = $this->getCurrentOrderProducts();
+    $_helper = Mage::helper('catalog/output');
+?>
+
+<h3 class = "list-header"><?php echo $this->__('Products for review from your order'); ?></h3>
+<div class="category-products" >
+<ul class = "products-grid review">
+    <?php foreach ($productsCollection as $product): ?>
+        <?php $isReviewed = Mage::getBlockSingleton('detailedreview/review_page_view')->getReviewsPerProductByCustomer($product->getId());?>
+        <li class="item" style="width:250px;">
+            <?php if (!$isReviewed): ?>
+                <?php if(Mage::getStoreConfig('detailedreview/settings/review_form_separate')): ?>
+                    <a href="<?php echo Mage::getUrl("detailedreview/index/submitpage/", array('product' => $product->getId())); ?>" title="<?php echo $this->stripTags($this->getImageLabel($product, 'small_image'), null, true) ?>" class="product-image" target="_blank">
+                <?php else: ?>
+                    <a href="<?php echo $product->getProductUrl() . '#review-form'  ?>" title="<?php echo $this->stripTags($this->getImageLabel($product, 'small_image'), null, true) ?>" class="product-image" target="_blank">
+                <?php endif; ?>
+            <?php endif; ?>
+                <img id="product-collection-image-<?php echo $product->getId(); ?>"
+                     src="<?php echo $this->helper('catalog/image')->init($product, 'small_image')->resize(250, 250); ?>"
+                     alt="<?php echo $this->stripTags($this->getImageLabel($product, 'small_image'), null, true) ?>" />
+            </a>
+            <div class="product-shop">
+                <div class="f-fix">
+                    <div class="product-primary">
+                        <?php $productNameStripped = $this->stripTags($product->getName(), null, true); ?>
+                        <?php if (!$isReviewed): ?>
+                            <h2 class="product-name"><a href="<?php echo $product->getProductUrl() ?>" title="<?php echo $productNameStripped; ?>"><?php echo $_helper->productAttribute($product, $product->getName() , 'name'); ?></a></h2>
+                        <?php else: ?>
+                            <h2 class="product-name"><span title="<?php echo $productNameStripped; ?>"><?php echo $_helper->productAttribute($product, $product->getName() , 'name'); ?></span></h2>
+                            <span class="error"><?php echo $this->__('You have already reviewed this product');?></span>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </li>
+    <?php endforeach ?>
+</ul>
+</div>
+
+
+<?php $products = $this->getAllProductsForReview(); ?>
+
+<?php if ($products && count($products->getAllIds()) && $productsIds = $products->getAllIds()): ?>
+    <?php $productsCollection = $this->getProductCollectionByIds($productsIds);
+          $count = 0;
+    ?>
+    <h3 class = "list-header"><?php echo $this->__('Any other purchases for which you might want leave a review') ?></h3>
+    <div class="category-products" >
+        <ul class = "products-grid review">
+            <?php foreach ($productsCollection as $product): ?>
+                <?php if (!Mage::getBlockSingleton('detailedreview/review_page_view')->getReviewsPerProductByCustomer($product->getId())): ?>
+                    <li class="item" style="width:250px;">
+                        <?php if(Mage::getStoreConfig('detailedreview/settings/review_form_separate')): ?>
+                            <a href="<?php echo Mage::getUrl("detailedreview/index/submitpage/", array('product' => $product->getId())); ?>" title="<?php echo $this->stripTags($this->getImageLabel($product, 'small_image'), null, true) ?>" class="product-image" target="_blank">
+                        <?php else: ?>
+                            <a href="<?php echo $product->getProductUrl() . '#review-form'  ?>" title="<?php echo $this->stripTags($this->getImageLabel($product, 'small_image'), null, true) ?>" class="product-image" target="_blank">
+                        <?php endif; ?>
+                        <img id="product-collection-image-<?php echo $product->getId(); ?>"
+                             src="<?php echo $this->helper('catalog/image')->init($product, 'small_image')->resize(250, 250); ?>"
+                             alt="<?php echo $this->stripTags($this->getImageLabel($product, 'small_image'), null, true) ?>" />
+                        </a>
+                        <div class="product-shop">
+                            <div class="f-fix">
+                                <div class="product-primary">
+                                    <?php $productNameStripped = $this->stripTags($product->getName(), null, true); ?>
+                                    <h2 class="product-name"><a href="<?php echo $product->getProductUrl() ?>" title="<?php echo $productNameStripped; ?>"><?php echo $_helper->productAttribute($product, $product->getName() , 'name'); ?></a></h2>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <?php $count++ ?>
+                <?php endif; ?>
+            <?php endforeach ?>
+            <?php if(($count < 1)): ?>
+                <li><span class="error"><?php echo $this->__('There are no other products for review');?></span></li>
+            <?php endif; ?>
+        </ul>
+    </div>
+<?php endif; ?>

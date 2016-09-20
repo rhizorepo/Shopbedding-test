@@ -1,0 +1,647 @@
+<?php $_product = $this->getProduct();
+$currency_code = Mage::app()->getStore()->getCurrentCurrencyCode();
+$currency_symbol = Mage::app()->getLocale()->currency($currency_code)->getSymbol();
+$getParamProductId = $getParam = Mage::app()->getRequest()->getParam('product_id');
+?>
+<script type="text/javascript">
+    var productChildId = "<?php echo $getParamProductId; ?>";
+    var sizeChoice = document.getElementsByClassName("sizeChoicesList");
+    var lengthChoice = document.getElementsByClassName("dropLengthChoicesList");
+    var curentProduct = "<?php echo $_product->getId() ?>";
+    sizeTitle = '';
+    lengthTitle = '';
+    colorTitle = '';
+    DepthTitle= '';
+
+    setTimeout(function(){
+        if($$("div.product-color-options")){
+            var colorOptions = $$("div.product-color-options");
+            for (var k = 0; k < colorOptions.length; k++) {
+
+
+                if ($('byos-colorChoices_' + k)) {
+
+                    var colorChoice = $('byos-colorChoices_'+k).getElementsByClassName("productDtl-colorChip");
+                    multiRun(colorChoice,k)
+                }
+
+
+            }
+        }
+        if($$('div.color-swatches')){
+            if(typeof $$('div.text-choice')[0] == 'undefined'){
+                var color = getColor();
+                run(null,color.dataset.id);
+            }
+
+        }
+    }, 2000);
+
+
+
+    function setPrice(id,boys,price) {
+        price = price || null;
+
+        if(id){
+            window.currentProduct  = id;
+            if($('product_id_gm')) {
+                $('product_id_gm').value = id;
+            }
+        }
+
+        if (typeof boys != 'undefined' && boys != null) {
+
+            if(spConfig[boys]) {
+               // console.log(spConfig[boys].config.productId);
+                if ($('product-price-' + spConfig[boys].config.productId)) {
+                        $('product-price-' + spConfig[boys].config.productId).innerHTML = '<?php echo $currency_symbol; ?>' + parseFloat(spConfig[boys].config.childProducts[id].finalPrice).toFixed(2);
+
+
+                }
+                if ($('old-price-' + spConfig[boys].config.productId)) {
+                    $('old-price-' + spConfig[boys].config.productId).innerHTML = '<?php echo $currency_symbol; ?>' + parseFloat(spConfig[boys].config.childProducts[id].price).toFixed(2);
+                }
+
+                setStock(spConfig[boys].config.childProducts[id], boys);
+            }
+        } else {
+
+            if ($('product-price-' + curentProduct)) {
+
+                $('product-price-' + curentProduct).innerHTML = '<?php echo $currency_symbol; ?>' + parseFloat(spConfig.config.childProducts[id].finalPrice).toFixed(2);
+            }
+
+            if ($('old-price-' + curentProduct)) {
+                $('old-price-' + curentProduct).innerHTML = '<?php echo $currency_symbol; ?>' +  parseFloat(spConfig.config.childProducts[id].price).toFixed(2);
+            }
+            if ($('product-sku')) {
+                $('product-sku').innerHTML = 'Item# ' + spConfig.config.childProducts[id].sku;
+            }
+            setStock(spConfig.config.childProducts[id],boys);
+        }
+        if (sizeTitle) {
+            if (sizeTitle) {
+                var sTitle = sizeTitle + '/';
+            } else {
+                var sTitle = '';
+            }
+            if (lengthTitle) {
+                var lTitle = lengthTitle + '/';
+            } else {
+                var lTitle = '';
+            }
+            if (DepthTitle) {
+                var dTitle = DepthTitle + '/';
+            } else {
+                var dTitle = '';
+            }
+
+            var selectedActive = document.getElementsByClassName("review-selection");
+            if(lTitle == '' && dTitle=='' && colorTitle ==''){
+             
+                if (selectedActive[0]) {
+                    selectedActive[0].innerHTML = sizeTitle;
+                }
+            }else {
+                if (selectedActive[0]) {
+                    selectedActive[0].innerHTML = sTitle + lTitle + dTitle + colorTitle;
+                }
+            }
+        }
+
+    }
+
+    function setStock(sconfig,key) {
+
+        if($('magic-zoom-trigger')){
+            $('magic-zoom-trigger').href = sconfig.fullImageUrl;
+            if($('magic-zoom-trigger').getElementsByTagName("img")[0]) {
+                $('magic-zoom-trigger').getElementsByTagName("img")[0].src = sconfig.lightboxImageUrl;
+            }
+        }
+
+        if (document.getElementsByClassName("in-stock")[0]) {
+            if(typeof  sconfig != 'undefined') {
+                if (sconfig.availability > 0) {
+                    document.getElementsByClassName("in-stock")[0].show();
+                    document.getElementsByClassName("btn-cart")[0].show();
+                    document.getElementsByClassName("out-of-stock")[0].hide();
+                    document.getElementsByClassName("notify-me")[0].hide();
+                } else {
+                    document.getElementsByClassName("in-stock")[0].hide();
+                    document.getElementsByClassName("btn-cart")[0].hide();
+                    document.getElementsByClassName("out-of-stock")[0].show();
+                    document.getElementsByClassName("notify-me")[0].show();
+                }
+            }
+
+        }
+
+        if($('byos-product-'+key)){
+            if(typeof  sconfig != 'undefined') {
+                if (sconfig.qty > 0) {
+                    $('byos-product-' + key).getElementsByClassName("out-of-stock")[0].hide();
+                    $('byos-product-' + key).getElementsByClassName("add-to-set")[0].show();
+                } else {
+                    $('byos-product-' + key).getElementsByClassName("out-of-stock")[0].show();
+                    $('byos-product-' + key).getElementsByClassName("add-to-set")[0].hide();
+                }
+            }
+        }
+
+    }
+
+    function getSize() {
+
+        setSize();
+        var sizeChoiceActive = null;
+        for (var i = 0; i < sizeChoice.length; i++) {
+            var selectedActive = sizeChoice[i].getElementsByClassName("active");
+            for (var o = 0; o < selectedActive.length; o++) {
+                var sizeChoiceActive = selectedActive[o];
+                sizeTitle = selectedActive[o].getElementsByTagName("span")[0].innerHTML;
+            }
+
+        }
+        return sizeChoiceActive;
+    }
+
+    function setSize() {
+        if(productChildId != ''){
+            for (var i = 0; i < sizeChoice.length; i++) {
+                var sizeAll =   sizeChoice[i].getElementsByClassName("sizeChoice");
+                for (var q = 0; q < sizeAll.length; q++) {
+                    sizeAll[q].className = sizeAll[q].className.replace('active', '');
+                    sizeAll[q].parentElement.className = sizeAll[q].parentElement.className.replace('active', '');
+                    for (var i = 0; i < $$('div.color-swatches').length; i++) {
+                        var colorChoice = $$('div.color-swatches')[i].getElementsByClassName("product-colorChoice");
+                        if (colorChoice.length > 0) {
+                            for (var o = 0; o < colorChoice.length; o++) {
+                                if(colorChoice[o].dataset.id == productChildId ){
+                                    if (sizeAll[q].dataset.child == colorChoice[o].dataset.size) {
+                                        sizeAll[q].className = sizeAll[q].className + ' active';
+                                        sizeAll[q].parentElement.className = sizeAll[q].parentElement.className + ' active';
+                                    }
+
+                                }
+
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+    function getLength() {
+        var lengthChoiceActive = null;
+        for (var i = 0; i < lengthChoice.length; i++) {
+            var selectedActive = lengthChoice[i].getElementsByClassName("active");
+            for (var o = 0; o < selectedActive.length; o++) {
+                var lengthChoiceActive = selectedActive[o];
+                lengthTitle = selectedActive[o].getElementsByTagName("span")[0].innerHTML;
+
+            }
+        }
+        return lengthChoiceActive;
+    }
+
+    function setLength() {
+        if (lengthTitle) {
+            var selectedActive = lengthChoice[0].getElementsByClassName("dropLengthChoice");
+            for (var o = 0; o < selectedActive.length; o++) {
+                selectedActive[o].className = selectedActive[o].className.replace('active', '');
+                selectedActive[o].parentElement.className = selectedActive[o].parentElement.className.replace('active', '');
+                if (selectedActive[o].getElementsByTagName("span")[0].innerHTML === lengthTitle) {
+                    selectedActive[o].className = selectedActive[o].className + ' active';
+                    selectedActive[o].parentElement.className = selectedActive[o].parentElement.className + ' active';
+                }
+            }
+
+        }
+
+    }
+
+    function getColor(key) {
+        key = key || '';
+        if(key){
+
+            if($('byos-colorChoices_'+key)){
+              var  byosColor =  $('byos-colorChoices_'+key).getElementsByClassName("color-swatches")[0];
+                var activeMyltiColor =  byosColor.getElementsByClassName("selected")[0];
+                if(activeMyltiColor){
+                    return activeMyltiColor;
+                }
+               return byosColor.getElementsByClassName("selected")[0];
+
+
+            }
+        }else {
+            for (var i = 0; i < $$('div.color-swatches').length; i++) {
+                var selected = $$('div.color-swatches')[i].getElementsByClassName("selected");
+                for (var o = 0; o < selected.length; o++) {
+                    colorTitle = selected[o].getElementsByTagName("img")[0].title;
+                    return selected[o];
+                }
+
+            }
+        }
+
+    }
+
+    function getDepthChoice() {
+        for (var i = 0; i < $$('div.depthChoicesList').length; i++) {
+            var selected = $$('div.depthChoicesList')[i].getElementsByClassName("active");
+            for (var o = 0; o < selected.length; o++) {
+                DepthTitle = selected[o].getElementsByTagName("span")[0].innerHTML;
+                return selected[o];
+            }
+
+        }
+
+    }
+    function run(key,id) {
+        if(typeof id != "undefined"){
+            setPrice(id,key);
+        }
+
+
+        if(key){
+
+            if($('byos-colorChoices_' + key)){
+
+                var colorChoice = $('byos-colorChoices_' + key).getElementsByClassName("productDtl-colorChip");
+                multiRun(colorChoice,key);
+            }
+
+        }else {
+            oneRun(id,key);
+        }
+
+
+        jQuery('.color-swatches').show();
+
+        if ($$(".product-sizeChoices-swatches")) {
+            if (! $$(".product-sizeChoices-swatches").length) {
+                jQuery('.color-swatches a').show();
+            }
+        }
+    }
+
+    function oneRun(id,key) {
+
+        var sizeChoiceActive = '00';
+        var lengthActive = '00';
+        var depth = '00';
+        if (size= getSize()) {
+            sizeChoiceActive = size.dataset.child;
+        }
+        if (lenghtElement = getLength()) {
+            lengthActive = lenghtElement.dataset.child;
+        }
+        if (DepthElement = getDepthChoice()) {
+            DepthActive = DepthElement.dataset.child;
+        }
+        if(color = getColor()){
+            colorchild =color.dataset.child;
+        }
+        var continueLength = true;
+
+
+        var displayL = setColorDisplayHide(sizeChoiceActive,lengthActive);
+
+
+        if(typeof id == "undefined") {
+            var  arrayDepth = new Array();
+            for (var x = 0; x < $$('div.product-depthChoice').length; x++) {
+                var optins = spConfig.config.attributes[$$('div.product-depthChoice')[x].dataset.atr].options;
+                for (var y = 0; y < optins.length; y++) {
+                    for (var q = 0; q < optins[y].products.length; q++) {
+                        var com = spConfig.config.childProducts[optins[y].products[q]].combination.split('-')
+                        arrayDepth[y] = optins[y].products[q];
+                        if (com[0] == sizeChoiceActive) {
+                            setPrice(optins[y].products[q], null);
+                            break;
+                        }
+
+                    }
+
+                }
+            }
+        }
+
+
+        if(arrayDepth) {
+            arrayDepth = arrayDepth.filter(function (e, i, arr) {
+                return arrayDepth.lastIndexOf(e) === i;
+            });
+
+            for (var xi = 0; xi < arrayDepth.length; xi++) {
+                var optins = spConfig.config.attributes[$$('div.product-depthChoice')[xi].dataset.atr].options;
+
+                for (var yi = 0; yi < optins.length; yi++) {
+
+                    for (var qi = 0; qi < optins[yi].products.length; qi++) {
+
+                            if (optins[yi].products[qi] == arrayDepth[xi]) {
+
+                                $$('div.product-depthChoice')[xi].hide();
+
+                            } else {
+                                $$('div.product-depthChoice')[xi].show();
+                            }
+                    }
+                }
+            }
+        }
+
+
+        arr = displayL.filter(function (e, i, arr) {
+            return displayL.lastIndexOf(e) === i;
+        });
+
+        for (var i = 0; i < lengthChoice.length; i++) {
+
+            var selectedActive = lengthChoice[i].getElementsByClassName("dropLengthChoice");
+            for (var y = 0; y < selectedActive.length; y++) {
+                selectedActive[y].hide();
+                for (var l = 0; l < arr.length; l++) {
+
+                    if (arr[l] == selectedActive[y].dataset.child) {
+                        selectedActive[y].show();
+                            if(lenghtElement.style.display == 'none'){
+                                if (selectedActive[0]) {
+                                    lenghtElement.className = lenghtElement.className.replace('active', '');
+                                    lenghtElement.parentElement.className = lenghtElement.parentElement.className.replace('active', '');
+                                    selectedActive[0].className = selectedActive[0].className + ' active';
+                                    selectedActive[0].parentElement.className = selectedActive[0].parentElement.className + ' active';
+                                    setColorDisplayHide(sizeChoiceActive, selectedActive[0].dataset.child);
+                                }
+
+                            }
+
+                    }
+                }
+            }
+        }
+
+    }
+
+
+    function setColorDisplayHide(sizeChoiceActive,lengthActive) {
+        displayL = [];
+        if($$('div.color-swatches').length > 0) {
+            for (var i = 0; i < $$('div.color-swatches').length; i++) {
+
+                var colorChoice = $$('div.color-swatches')[i].getElementsByClassName("product-colorChoice");
+                if (colorChoice.length > 0) {
+                    for (var o = 0; o < colorChoice.length; o++) {
+                        var combination = sizeChoiceActive + '-' + lengthActive + '-' + colorChoice[o].dataset.child;
+                        /* console.log(combination);
+                         console.log(spConfig.config.childProducts[colorChoice[o].dataset.id].combination );*/
+
+                        if (spConfig.config.childProducts[colorChoice[o].dataset.id].combination != combination) {
+                            colorChoice[o].hide();
+                        } else {
+                            colorChoice[o].show();
+                            if (getSize()) {
+                                if (colorTitle) {
+                                    colorChoice[o].className = colorChoice[o].className.replace('selected', '');
+                                    if(productChildId != ''){
+
+                                        if(colorChoice[o].dataset.id == productChildId ){
+                                            colorChoice[o].className = colorChoice[o].className + ' selected';
+                                            colorChoice[o].click();
+                                            setPrice(colorChoice[o].dataset.id, null);
+                                            productChildId = '';
+                                        }
+                                    }else {
+                                        if (colorChoice[o].getElementsByTagName("img")[0].title == colorTitle) {
+                                            colorChoice[o].className = colorChoice[o].className + ' selected';
+                                            setPrice(colorChoice[o].dataset.id, null);
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+
+                        for (var i = 0; i < lengthChoice.length; i++) {
+
+                            var selectedActive = lengthChoice[i].getElementsByClassName("dropLengthChoice");
+                            for (var y = 0; y < selectedActive.length; y++) {
+
+                                var combination = sizeChoiceActive + '-' + selectedActive[y].dataset.child + '-' + colorChoice[o].dataset.child;
+                                if (colorChoice[o].dataset.droplength == selectedActive[y].dataset.child) {
+                                    if (colorChoice[o].dataset.size == sizeChoiceActive) {
+                                        displayL[o] = selectedActive[y].dataset.child;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }else {
+
+            var combination = sizeChoiceActive + '-' + lengthActive + '-' + '00';
+            if (size= getSize()) {
+                sizeAtr = size.dataset.child.atr;
+            }
+
+          if(spConfig.config.attributes[size.dataset.atr]){
+                for (var o = 0; o < spConfig.config.attributes[size.dataset.atr].options.length; o++) {
+                  var idproduct = spConfig.config.attributes[size.dataset.atr].options[o].products[0];
+                        if (spConfig.config.childProducts[idproduct].combination == combination) {
+                            setPrice(idproduct, null);
+                        }
+                }
+          }
+        }
+        return displayL;
+    }
+
+    function multiRun(colorChoice,key){
+        var displayL = [];
+        var colorset = false;
+        if (colorChoice.length > 0) {
+            var sizeChoiceActive = '00';
+            var lengthActive = '00';
+            displayNoneSize(colorChoice, key);
+            for (var o = 0; o < colorChoice.length; o++) {
+
+                if ($('product-sizeChoices' + key)) {
+                    var selectedActive = $('product-sizeChoices' + key).getElementsByClassName("active");
+                    if (selectedActive[0]) {
+                        if (activeChild = selectedActive[0].getElementsByClassName("active")) {
+                            if (activeChild[0].dataset.key == key) {
+                                if (activeChild[0].style.display != 'none') {
+                                    sizeChoiceActive = activeChild[0].dataset.child;
+                                    size = activeChild[0];
+                                } else {
+
+                                    size = getShowSize(key);
+                                    size.parentElement.className = size.parentElement.className + ' active';
+                                    size.className = size.className + ' active';
+                                    sizeChoiceActive = size.dataset.child;
+                                }
+                            }
+                        }
+                    }
+                }
+                if ($('product-dropLengthChoices' + key)) {
+                    var selectedActivedropLength = $('product-dropLengthChoices' + key).getElementsByClassName("active");
+                    if (selectedActivedropLength[0]) {
+                        if (activeChildDropL = selectedActivedropLength[0].getElementsByClassName("active")) {
+                            if (activeChildDropL[0].dataset.key == key) {
+                                lengthActive = activeChildDropL[0].dataset.child;
+                                length = activeChildDropL[0];
+                            }
+
+                        }
+                    }
+
+                    if (lengthActive == '00') {
+                        var selectedActivedropLength = $('product-dropLengthChoices' + key);
+                        selectedActivedropLength.childNodes[1].childNodes[0].className = selectedActivedropLength.childNodes[1].childNodes[0].className.replace('active', '');
+                        selectedActivedropLength.childNodes[1].childNodes[0].className = selectedActivedropLength.childNodes[1].childNodes[0].className + ' active';
+                        if (selectedActivedropLength.childNodes[1].childNodes[0].childNodes[0].dataset.child) {
+                            lengthActive = selectedActivedropLength.childNodes[1].childNodes[0].childNodes[0].dataset.child;
+                            selectedActivedropLength.childNodes[1].childNodes[0].childNodes[0].className = selectedActivedropLength.childNodes[1].childNodes[0].childNodes[0].className.replace('active', '');
+                            selectedActivedropLength.childNodes[1].childNodes[0].childNodes[0].className = selectedActivedropLength.childNodes[1].childNodes[0].childNodes[0].className + ' active';
+
+                        }
+
+                    }
+                    var selecteddropLengthChoices = $('product-dropLengthChoices' + key).getElementsByClassName("product-dropLengthChoice");
+                    for (var y = 0; y < selecteddropLengthChoices.length; y++) {
+                        if (colorChoice[o].dataset.droplength == selecteddropLengthChoices[y].dataset.child) {
+                            if (colorChoice[o].dataset.size == sizeChoiceActive) {
+                                displayL[o] = selecteddropLengthChoices[y].dataset.child;
+                            }
+                        }
+                    }
+                }
+
+
+                if (colorChoice[o].dataset.child < 10) {
+                    colorChild = '0' + colorChoice[o].dataset.child;
+                } else {
+
+                }
+                colorChild = colorChoice[o].dataset.child;
+
+                var combination = sizeChoiceActive + '-' + lengthActive + '-' + colorChild;
+
+
+                if (spConfig[colorChoice[o].dataset.key].config.childProducts[colorChoice[o].dataset.id].combination != combination) {
+                    colorChoice[o].hide();
+
+                    /*  if(key== 2) {
+                     console.log(colorChoice[o].dataset.child);
+                     console.log(spConfig[colorChoice[o].dataset.key].config.childProducts[colorChoice[o].dataset.id].combination);
+                     console.log(combination);
+                     }*/
+                } else {
+                    colorChoice[o].show();
+                    var color = getColor(key);
+                   // console.log(color);
+                    if (color) {
+                        colorChoice[o].className = colorChoice[o].className.replace('selected', '');
+                        if (colorChoice[o].getElementsByTagName("img")[0].title == color.getElementsByTagName("img")[0].title) {
+                            colorChoice[o].className = colorChoice[o].className + ' selected';
+                            var price = colorChoice[o].dataset.price;
+                            setPrice(colorChoice[o].dataset.id, key, price);
+                            colorset = true;
+
+                        }
+
+                    }
+                }
+
+            }
+
+            if(colorset == false){
+                for (var o = 0; o < colorChoice.length; o++) {
+
+                    if (colorChoice[o].style.display != 'none') {
+                        if (colorChoice[o].style.opacity) {
+                            colorChoice[o].className = colorChoice[o].className + ' selected';
+                            break;
+                        }
+                    }
+                }
+            }
+                    if(sizeChoiceActive != '00'){
+                    arr = displayL.filter(function (e, i, arr) {
+                        return displayL.lastIndexOf(e) === i;
+                    });
+
+                    if (displayL) {
+                        if (selecteddropLengthChoices) {
+                            for (var y = 0; y < selecteddropLengthChoices.length; y++) {
+                                selecteddropLengthChoices[y].hide();
+                                for (var l = 0; l < arr.length; l++) {
+                                    if (arr[l] == selecteddropLengthChoices[y].dataset.child) {
+                                        selecteddropLengthChoices[y].show();
+                                        if (length.style.display == 'none') {
+                                            length.className = length.className.replace('active', '');
+                                            length.parentElement.className = length.parentElement.className.replace('active', '');
+                                            selecteddropLengthChoices[0].className = selecteddropLengthChoices[0].className + ' active';
+                                            selecteddropLengthChoices[0].parentElement.className = selecteddropLengthChoices[0].parentElement.className + ' active';
+                                            multiRun(colorChoice, key)
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+        }
+
+    }
+
+
+
+    function displayNoneSize(colorChoice,key) {
+        if($('product-sizeChoices' + key)) {
+            var size = $('product-sizeChoices' + key).getElementsByClassName("product-sizeChoice");
+
+            for (var y = 0; y < size.length; y++) {
+                for (var o = 0; o < colorChoice.length; o++) {
+                    var sizeChildspConfig = spConfig[colorChoice[o].dataset.key].config.childProducts[colorChoice[o].dataset.id].combination.split('-');
+                    if (sizeChildspConfig[0] == size[y].dataset.child) {
+                        size[y].parentElement.show();
+                        size[y].show();
+                        break;
+                    } else {
+                        size[y].parentElement.hide();
+                        size[y].hide();
+                    }
+                }
+
+            }
+        }
+    }
+
+    function getShowSize(key) {
+        var size = $('product-sizeChoices' + key).getElementsByClassName("product-sizeChoice");
+        for (var y = 0; y < size.length; y++) {
+            size[y].className = size[y].className.replace('active', '');
+            size[y].parentElement.className = size[y].parentElement.className.replace('active', '');
+            if(size[y].style.display != 'none'){
+                var size = size[y];
+            }
+        }
+
+        return size;
+    }
+
+
+
+    function getcurrentProduct() {
+
+        return window.currentProduct;
+    }
+</script>

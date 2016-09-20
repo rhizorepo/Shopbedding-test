@@ -1,0 +1,41 @@
+<!--@subject Review for the Ordered Products @-->
+<!--@vars
+{
+"store url=\"\"":"Store Url",
+"skin url=\"images/logo_email.gif\" _area='frontend'":"Email Top Logo Image",
+"var customer_name":"Customer Name",
+"var store_name":"Store Name",
+"var products_for_review":"Ordered Products List For Review",
+"var unsubscribe_link":"Unsubscribe Link"
+}
+@-->
+<body style="font-family:Verdana, Arial, Helvetica, sans-serif; font-size:12px; margin:0; padding:0;">
+<div style="font-family:Verdana, Arial, Helvetica, sans-serif; font-size:12px; margin:0; padding:0;">
+    <table cellspacing="0" cellpadding="0" border="0" height="100%" width="100%">
+        <tr>
+            <td align="center" valign="top" style="padding:20px 0 20px 0">
+                <!-- [ header starts here] -->
+                <table cellspacing="0" cellpadding="10" border="0" width="100%" style="border:1px solid #E0E0E0;">
+                    <tr>
+                        <td valign="top"><a href="{{store url=""}}"><img src="{{skin url="images/logo_email.gif" _area='frontend'}}" alt="{{var store.getFrontendName()}}"  style="margin-bottom:10px;" border="0"/></a></td>
+                    </tr>
+                    <!-- [ middle starts here] -->
+                    <tr>
+                        <td valign="top">
+                            <p style="font-size:12px; line-height:16px; margin:0;">
+                                Hello, <strong>{{var customer_name}}</strong><br />
+                                <p>Thank you for your purchase. You can share your thoughts about the product by writing review on the product page. It can help other buyers.</p>
+                                <p>Your opinion is very important for us.</p>
+                                <p>{{var products_for_review}}</p>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" style=" text-align:center;"><p style="font-size:12px; margin:0;">Thank you again, <strong>{{var store_name}}</strong></p></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>

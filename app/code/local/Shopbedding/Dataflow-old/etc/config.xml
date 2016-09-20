@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Shopbedding_Dataflow>
+            <version>0.1.0</version>
+        </Shopbedding_Dataflow>
+    </modules>
+    <global>
+        <models>
+            <shopbedding_dataflow>
+                <class>Shopbedding_Dataflow_Model</class>
+            </shopbedding_dataflow>
+            <dataflow>
+                <rewrite>
+                    <profile>Shopbedding_Dataflow_Model_Dataflow_Profile</profile>
+                </rewrite>
+            </dataflow>
+        </models>
+    </global>
+</config>

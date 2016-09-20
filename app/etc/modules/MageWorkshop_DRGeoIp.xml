@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <MageWorkshop_DRGeoIp>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <MageWorkshop_Core/>
+                <MageWorkshop_DetailedReview/>
+
+            </depends>
+        </MageWorkshop_DRGeoIp>
+    </modules>
+</config>

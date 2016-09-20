@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Shopbedding_Sendfriend>
+            <version>0.1.0</version>
+        </Shopbedding_Sendfriend>
+    </modules>
+    
+    <frontend>
+        <routers>
+            <sendfriend>
+                <args>
+                    <modules>
+                        <anyname before="Mage_Sendfriend">Shopbedding_Sendfriend</anyname>
+                    </modules>
+                </args>
+            </sendfriend>
+        </routers>
+    </frontend>
+</config>

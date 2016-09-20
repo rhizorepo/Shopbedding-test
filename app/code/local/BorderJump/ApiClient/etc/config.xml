@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <BorderJump_ApiClient>
+            <version>1.0.1</version>
+        </BorderJump_ApiClient>
+    </modules>
+ 
+    <global>
+        <helpers>
+            <apiclient>
+                <class>BorderJump_ApiClient_Helper</class>
+            </apiclient>
+        </helpers>
+        <models>
+            <apiclient>
+                <class>BorderJump_ApiClient_Model</class>
+            </apiclient>
+        </models>
+    </global>
+</config>

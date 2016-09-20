@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <adminhtml_sales_order_view>
+        <reference name="content">
+            <block output="toHtml" type="bordership/adminhtml_sales_order_shipment_create" before="-" template="bordership/sales/order/shipment/create/hub_address.phtml" name="bordership.hub_address" />
+        </reference>
+    </adminhtml_sales_order_view>
+    <adminhtml_sales_order_shipment_new>
+        <reference name="content">
+            <block output="toHtml" type="bordership/adminhtml_sales_order_shipment_create" before="-" template="bordership/sales/order/shipment/create/hub_address.phtml" name="bordership.hub_address" />
+        </reference>
+    </adminhtml_sales_order_shipment_new>
+    <adminhtml_sales_order_shipment_view>
+        <reference name="content">
+            <block output="toHtml" type="bordership/adminhtml_sales_order_shipment_create" before="-" template="bordership/sales/order/shipment/create/hub_address.phtml" name="bordership.hub_address" />
+        </reference>
+    </adminhtml_sales_order_shipment_view>
+    <adminhtml_sales_order_invoice_new>
+        <reference name="content">
+            <block output="toHtml" type="bordership/adminhtml_sales_order_shipment_create" before="-" template="bordership/sales/order/shipment/create/hub_address.phtml" name="bordership.hub_address" />
+        </reference>
+    </adminhtml_sales_order_invoice_new>
+    <adminhtml_sales_order_invoice_view>
+        <reference name="content">
+            <block output="toHtml" type="bordership/adminhtml_sales_order_shipment_create" before="-" template="bordership/sales/order/shipment/create/hub_address.phtml" name="bordership.hub_address" />
+        </reference>
+    </adminhtml_sales_order_invoice_view>
+</layout>

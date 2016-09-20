@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+      <config>
+
+   <modules>
+      <Mage_Linkpoint>
+         <version>0.1.0</version>
+      </Mage_Linkpoint>
+   </modules>
+
+   <global>
+      <models>
+         <linkpoint>
+            <class>Mage_Linkpoint_Model</class>
+            <resourceModel>linkpoint_mysql4</resourceModel>
+         </linkpoint>
+         <linkpoint_mysql4>
+            <class>Mage_Linkpoint_Model_Mysql4</class>
+            <entities>
+                <authorizenet_debug><table>linkpoint_debug</table></authorizenet_debug>
+            </entities>
+         </linkpoint_mysql4>
+      </models>
+      <resources>
+         <linkpoint_setup>
+            <setup>
+               <module>Mage_Linkpoint</module>
+            </setup>
+            <connection>
+               <use>core_setup</use>
+            </connection>
+         </linkpoint_setup>
+         <linkpoint_write>
+            <connection>
+               <use>core_write</use>
+            </connection>
+         </linkpoint_write>
+         <linkpoint_read>
+            <connection>
+               <use>core_read</use>
+            </connection>
+         </linkpoint_read>
+      </resources>
+   </global>
+
+    <adminhtml>
+        <translate>
+            <modules>
+                <Mage_Linkpoint>
+                    <files>
+                        <default>Mage_Linkpoint.csv</default>
+                    </files>
+                </Mage_Linkpoint>
+            </modules>
+        </translate>
+    </adminhtml>
+
+    <frontend>
+        <translate>
+            <modules>
+                <Mage_Linkpoint>
+                    <files>
+                        <default>Mage_Linkpoint.csv</default>
+                    </files>
+                </Mage_Linkpoint>              
+            </modules>
+        </translate>
+    </frontend>          
+
+
+
+
+
+
+
+    <default>
+        <payment>
+            <linkpoint>
+                <active>0</active>
+                <cctypes>AE,VI,MC,DI</cctypes>
+                <cgi_url>https://secure.authorize.net/gateway/transact.dll</cgi_url>
+                <debug>0</debug>
+                <email_customer>0</email_customer>
+                <login backend_model="adminhtml/system_config_backend_encrypted"/>
+                <merchant_email></merchant_email>
+                <model>linkpoint/linkpoint</model>
+                <order_status>1</order_status>
+                <payment_action>authorize</payment_action>
+                <test>1</test>
+                <title>Credit Card (LinkPoint)</title>
+                <trans_key backend_model="adminhtml/system_config_backend_encrypted"/>
+                <allowspecific>0</allowspecific>
+            </linkpoint>
+        </payment>
+    </default>
+
+
+      </config>

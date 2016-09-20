@@ -1,0 +1,656 @@
+<?xml version="1.0"?>
+<!-- 
+/**
+ * Magmodules.eu - http://www.magmodules.eu - info@magmodules.eu
+ * =============================================================
+ * NOTICE OF LICENSE [Single domain license]
+ * This source file is subject to the EULA that is
+ * available through the world-wide-web at:
+ * http://www.magmodules.eu/license-agreement/
+ * =============================================================
+ * @category    Magmodules
+ * @package     Magmodules_Snippets
+ * @author      Magmodules <info@magmodules.eu>
+ * @copyright   Copyright (c) 2013 (http://www.magmodules.eu)
+ * @license     http://www.magmodules.eu/license-agreement/  
+ * =============================================================
+ */
+ -->
+<config>
+	<tabs>
+		<magmodules translate="label" module="snippets">
+			<label>Magmodules</label>
+			<sort_order>200</sort_order>
+		</magmodules>
+	</tabs>
+	<sections>
+		<snippets translate="label" module="snippets">
+			<label>Rich Snippets Suite</label>
+			<tab>magmodules</tab>
+			<header_css>mm-moduleheader</header_css>			
+			<frontend_type>text</frontend_type>
+			<sort_order>40</sort_order>
+			<show_in_default>1</show_in_default>
+			<show_in_website>1</show_in_website>
+			<show_in_store>1</show_in_store>
+			<groups>
+				<general translate="label" module="snippets">				
+					<label>Licence </label>
+					<frontend_type>text</frontend_type>
+					<sort_order>1</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+		            <expanded>1</expanded>					
+					<comment>
+  					 <![CDATA[
+						<script>
+						function showLicenseImg(message) {
+							if (Prototype.Browser.IE) {
+								$('snippets_general_license_key').next('p').outerHTML = message;
+							} else {
+								$('snippets_general_license_key').next('p').innerHTML = message;
+							}
+						}
+						Event.observe(window, 'load', function() {
+							if ($('row_snippets_general_server')) {
+								$('row_snippets_general_server').hide();
+							}	
+						showLicenseImg('<a href="http://www.magmodules.eu/" target="_blank"><img src="//www.magmodules.eu/license/?check='+$('snippets_general_server').value+'" border="0" style="margin-top: 4px;"/></a>');
+						});
+						</script>
+                    ]]>								
+					</comment>					
+					<fields>
+                        <license_key translate="label">
+                            <label>License Key</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Enter your license key here</comment>
+                        </license_key>
+                        <server translate="label">
+                            <label/>
+                            <frontend_type>hidden</frontend_type>
+                            <backend_model>snippets/system_config_model_license</backend_model>
+                            <sort_order>25</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </server>                                           
+                        <enabled translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <backend_model>snippets/system_config_model_enable</backend_model>                            
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <tooltip>A valid license key is required in order to enable the module.</tooltip>
+                        </enabled>                        
+					</fields>
+				</general>			
+				<system translate="label" module="snippets">
+					<label>Breadcrumbs configuration</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>2</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+		            <expanded>1</expanded>										
+					<fields>
+                        <breadcrumbs translate="label">
+                            <label>Use Breadcrumbs</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+						    <tooltip><![CDATA[This will overwrite your custom breadcrumbs.phtml, see manual]]></tooltip>                           
+                        </breadcrumbs>
+					</fields>                        
+				</system>		
+				<products translate="label" module="snippets">
+					<label>Product Page Configuration</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>4</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+		            <expanded>1</expanded>							
+					<comment><![CDATA[Enable the Rich Snippets on your product page to show your rich product data in Google, Yahoo and BING.]]></comment>         		            										            
+					<fields>
+                        <enabled translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </enabled>
+						<type translate="label">
+							<label>Type of display</label>                          
+							<frontend_type>select</frontend_type>
+							<source_model>snippets/source_type</source_model>
+							<sort_order>2</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<tooltip>The extension makes a little summary about your product. To implement the rich snippets the best way, we recommend to show this summary markup on your productpage or in your footer. You can also choose to use hidden tags, it's still working but it can take some more time for crawling your data.</tooltip>
+						</type>                             
+						<location translate="label">
+							<label>Location on Productpage</label>                          
+							<frontend_type>select</frontend_type>
+							<source_model>snippets/source_location</source_model>
+							<sort_order>3</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends><type>visible</type></depends>	
+							<tooltip>Select the location of the product summary block</tooltip>
+						</location>                             
+						<location_custom translate="label">
+							<label>Custom Location</label>                          
+							<frontend_type>text</frontend_type>
+							<sort_order>4</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends><location>advanced</location></depends>	
+							<tooltip>Select the location of the product summary block</tooltip>																			                        							
+						</location_custom>   
+						<position translate="label">
+							<label>Position</label>                          
+							<frontend_type>select</frontend_type>
+							<source_model>snippets/source_position</source_model>
+							<sort_order>5</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends><type>visible</type></depends>	
+							<tooltip>Select if you want to show the product summary before of after the content</tooltip>														
+						</position> 
+						<location_ft translate="label">
+							<label>Location in Footer</label>                          
+							<frontend_type>select</frontend_type>
+							<source_model>snippets/source_footer</source_model>
+							<sort_order>3</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends><type>footer</type></depends>	
+							<tooltip>Select the location of the product summary</tooltip>							
+						</location_ft>   
+						<position_ft translate="label">
+							<label>Position</label>                          
+							<frontend_type>select</frontend_type>
+							<source_model>snippets/source_position</source_model>
+							<sort_order>4</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends><type>footer</type></depends>	
+							<tooltip>Select the position of the product summary block</tooltip>														
+						</position_ft> 	
+									
+                       <heading_description translate="label">
+                            <label>Data: Description</label>
+                            <frontend_model>magmodules_core/system_config_form_field_heading</frontend_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </heading_description>                        					
+                        <description translate="label">
+                            <label>Display</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>11</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <tooltip><![CDATA[Display the description of your product in search result]]></tooltip>
+                        </description>   
+						<description_attribute translate="label">
+							<label>Attribute</label>
+							<frontend_type>select</frontend_type>
+							<source_model>snippets/source_textattribute</source_model>
+							<sort_order>12</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<tooltip><![CDATA[Select the attribute (text) used for product-description]]></tooltip>
+							<depends><description>1</description></depends>								
+						</description_attribute>
+                       <heading_stock translate="label">
+                            <label>Data: Stock</label>
+                            <frontend_model>magmodules_core/system_config_form_field_heading</frontend_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </heading_stock> 
+                        <stock translate="label">
+                            <label>Display</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>21</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <tooltip><![CDATA[Display in stock or out of stock in the search results]]></tooltip>
+                        </stock>
+                        <heading_reviews translate="label">
+                            <label>Data: Reviews</label>
+                            <frontend_model>magmodules_core/system_config_form_field_heading</frontend_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </heading_reviews>                   
+                        <reviews translate="label">
+                            <label>Display</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>31</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <tooltip><![CDATA[Display review score (stars) in the search results]]></tooltip>
+                        </reviews>    
+                        <reviews_type translate="label">
+                            <label>Reviews / Votes</label>
+							<frontend_type>select</frontend_type>
+							<source_model>snippets/source_reviewstype</source_model>
+                            <sort_order>32</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<depends><reviews>1</reviews></depends>								                            
+                            <tooltip><![CDATA[Select if you want to show the product reviews or product votes]]></tooltip>
+                        </reviews_type>    
+                        <reviews_metric translate="label">
+                            <label>Out of</label>
+							<frontend_type>select</frontend_type>
+							<source_model>snippets/source_metric</source_model>
+                            <sort_order>33</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<depends><reviews>1</reviews></depends>								                                                        
+                            <tooltip><![CDATA[Select the rating out of 100 or out of 5 (stars)]]></tooltip>
+                        </reviews_metric>                                                 
+
+                        <heading_brand translate="label">
+                            <label>Data: Brand</label>
+                            <frontend_model>magmodules_core/system_config_form_field_heading</frontend_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </heading_brand>                                                     
+                        <brand translate="label">
+                            <label>Display</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>41</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <tooltip><![CDATA[Display the productbrand in search results]]></tooltip>
+                        </brand>                  
+						<brand_attribute translate="label">
+							<label>Brand Attribute</label>
+							<frontend_type>select</frontend_type>
+							<source_model>snippets/source_attribute</source_model>
+							<sort_order>42</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends><brand>1</brand></depends>								                            							
+							<tooltip><![CDATA[Select the attribute used for brand (default: Manufacturer)]]></tooltip>
+                        </brand_attribute>                                                  
+
+                        <heading_color translate="label">
+                            <label>Data: Color</label>
+                            <frontend_model>magmodules_core/system_config_form_field_heading</frontend_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </heading_color>                                                     
+                        <color translate="label">
+                            <label>Display</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>51</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <tooltip><![CDATA[Display brand in search result]]></tooltip>
+                        </color>                  
+						<color_attribute translate="label">
+							<label>Color Attribute</label>
+							<frontend_type>select</frontend_type>
+							<source_model>snippets/source_attribute</source_model>
+							<sort_order>52</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends><color>1</color></depends>								                            														
+							<tooltip><![CDATA[Select the attribute used for color (default: Color)]]></tooltip>
+                        </color_attribute>                  
+                        <heading_model translate="label">
+                            <label>Data: Model</label>
+                            <frontend_model>magmodules_core/system_config_form_field_heading</frontend_model>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </heading_model>                                                     
+                        <model translate="label">
+                            <label>Display</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>71</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <tooltip><![CDATA[Display the model in the search results]]></tooltip>
+                        </model>                  
+						<model_attribute translate="label">
+							<label>Model Attribute</label>
+							<frontend_type>select</frontend_type>
+							<source_model>snippets/source_attribute</source_model>
+							<sort_order>72</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends><model>1</model></depends>								                            																					
+							<tooltip><![CDATA[Select the attribute used for model (default: model)]]></tooltip>
+                        </model_attribute>              
+                        <heading_ean translate="label">
+                            <label>Data: Product Identifier</label>
+                            <frontend_model>magmodules_core/system_config_form_field_heading</frontend_model>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </heading_ean>   
+                        <ean translate="label">
+                            <label>Display</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>81</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <tooltip><![CDATA[Use unique product id (EAN, UPC, ISBN, etc)]]></tooltip>
+                        </ean>
+						<ean_attribute translate="label">
+							<label>Attribute</label>
+							<frontend_type>select</frontend_type>
+							<source_model>snippets/source_attribute</source_model>
+							<sort_order>82</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends><ean>1</ean></depends>													                        
+							<tooltip><![CDATA[Select the attribute used as unique product id (default: SKU)]]></tooltip>
+						</ean_attribute>
+						<ean_type translate="label">
+							<label>Unique Type</label>                          
+							<frontend_type>select</frontend_type>
+							<source_model>snippets/source_uniqueid</source_model>
+							<sort_order>83</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends><ean>1</ean></depends>													                        							
+							<tooltip>The Global Trade Item Number (GTIN) is a 14-digit number which includes various EAN/UCC numbering structures and is used to uniquely identify a product worldwide. EAN/UCC product identification numbers allow a unique identifying GTIN number to be derived in the system. All EAN/UCC numbers are considered as 14-digit numbers, right justified and zero filled where necessary.</tooltip> 
+							<depends><snippets_ean>1</snippets_ean></depends>													
+						</ean_type>                                                                                                                                         
+					</fields>				
+				</products>		
+				<category translate="label" module="snippets">
+					<label>Category Page Configuration</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>5</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+		            <expanded>1</expanded>							
+					<comment><![CDATA[Generate Rich Snippets for your categegory page e.g. Our cell phones has been rated 2.4/5 based on 12 individual customer review(s).]]></comment>         		            								
+					<fields>
+                        <enabled translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </enabled>
+						<type translate="label">
+							<label>Type of display</label>                          
+							<frontend_type>select</frontend_type>
+							<source_model>snippets/source_type</source_model>
+							<sort_order>2</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<tooltip>The extension makes a little summary about your category. To implement the rich snippets the best way, we recommend to show this summary markup on your productpage or in your footer. You can also choose to use hidden tags, it's still working but it can take some more time for crawling your data.</tooltip>
+						</type>                             
+						<location translate="label">
+							<label>Location on Productpage</label>                          
+							<frontend_type>select</frontend_type>
+							<source_model>snippets/source_locationcat</source_model>
+							<sort_order>3</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends><type>visible</type></depends>	
+							<tooltip>Select if you want to manually add the code or if you want the code added automatically</tooltip>							
+						</location>   
+						<position translate="label">
+							<label>Position</label>                          
+							<frontend_type>select</frontend_type>
+							<source_model>snippets/source_position</source_model>
+							<sort_order>4</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends><type>visible</type></depends>			
+							<tooltip>Select if you want to show the category summary before of after the content</tooltip>												
+						</position> 
+						<location_ft translate="label">
+							<label>Location in Footer</label>                          
+							<frontend_type>select</frontend_type>
+							<source_model>snippets/source_footer</source_model>
+							<sort_order>3</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends><type>footer</type></depends>
+							<tooltip>Select the location of the Rich Snippet summary</tooltip>								
+						</location_ft>   
+						<position_ft translate="label">
+							<label>Position</label>                          
+							<frontend_type>select</frontend_type>
+							<source_model>snippets/source_position</source_model>
+							<sort_order>4</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends><type>footer</type></depends>	
+							<tooltip>Select if you want to show the category summary before of after the content</tooltip>														
+						</position_ft> 						
+
+						<heading_description translate="label">
+							<label>Data: Description</label>
+							<frontend_model>magmodules_core/system_config_form_field_heading</frontend_model>
+							<sort_order>20</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</heading_description> 
+						<description translate="label">
+							<label>Display</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>21</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<tooltip><![CDATA[Display the category description in the search results]]></tooltip>
+						</description>
+                        
+                        <heading_reviews translate="label">
+                            <label>Data: Reviews</label>
+                            <frontend_model>magmodules_core/system_config_form_field_heading</frontend_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </heading_reviews>                   
+                        <reviews translate="label">
+                            <label>Display</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>31</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                            
+                            <tooltip><![CDATA[Display the description of your category in search result]]></tooltip>
+                        </reviews>    
+                        <reviews_type translate="label">
+                            <label>Reviews / Votes</label>
+							<frontend_type>select</frontend_type>
+							<source_model>snippets/source_reviewstype</source_model>
+                            <sort_order>32</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<depends><reviews>1</reviews></depends>		                            
+                            <tooltip><![CDATA[Select if you want to show the product reviews or product votes]]></tooltip>
+                        </reviews_type>    
+                        <reviews_metric translate="label">
+                            <label>Out of</label>
+							<frontend_type>select</frontend_type>
+							<source_model>snippets/source_metric</source_model>
+                            <sort_order>33</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<depends><reviews>1</reviews></depends>		                                                        
+                            <tooltip><![CDATA[Select the rating out of 100 or out of 5 (stars)]]></tooltip>
+                        </reviews_metric>   
+   					</fields>                     					
+				</category>							
+				<pinterest translate="label" module="snippets">
+					<label>Pinterest Rich Product Pins</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>6</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+		            <expanded>1</expanded>		
+ 					<comment><![CDATA[The Rich Product Pins are now include pricing, availability and brand inside a Pin.]]></comment>         		            								
+					<fields>
+						<product translate="label">
+							<label>Enable on Product Page</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>1</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</product>
+						<category translate="label">
+							<label>Enable on Category Page</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>2</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</category>
+						<sitename translate="label" module="snippets">				
+							<label>Sitename</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>3</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<expanded>1</expanded>	    						
+						</sitename>	                    
+					</fields>      
+				</pinterest>	
+				<twitter translate="label" module="snippets">
+					<label>Twitter Cards</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>7</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+		            <expanded>1</expanded>		
+ 					<comment><![CDATA[This Twitter product Card type is designed to showcase your products via an image, a description, and allow you to highlight other key details about your product.]]></comment>         		            								
+					<fields>
+						<product translate="label">
+							<label>Enable on Product Page</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>1</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</product>
+						<category translate="label">
+							<label>Enable on Category Page</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>2</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</category>
+						<username translate="label" module="snippets">				
+							<label>Twitter Username</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>3</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<expanded>1</expanded>	   
+						</username>	                    
+					</fields>      
+				</twitter>	
+				
+				<links translate="label" module="snippets">
+					<label>Data Validation</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>8</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+		            <expanded>1</expanded>		
+ 					<comment><![CDATA[<p>Please click<a href="http://www.google.com/webmasters/tools/richsnippets" target="_blank">here</a> to validate your store with the Google Webmastertool<br>
+  Please click<a href="https://ssl.bing.com/webmaster/diagnostics/markup/validator?rflid=1" target="_blank">here</a> to validate your store with the BING Webmastertool<br>
+  
+</p>
+<p>Please click<a href="https://dev.twitter.com/docs/cards/validation/validator" target="_blank">here</a> to validate your store with the Twitter Card<br>
+Please click<a href="http://developers.pinterest.com/rich_pins/validator/" target="_blank">here</a> to validate your store with Pinterest </p>
+
+
+
+]]></comment>         		            								   
+				</links>					
+			</groups>
+		</snippets>
+	</sections>
+</config>

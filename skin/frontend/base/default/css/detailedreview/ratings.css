@@ -1,0 +1,36 @@
+/* Average and Separate ratings CSS */
+
+.reviews-container .ratings-table .rating-box {
+    height: 18px;
+    width: 100px;
+}
+.reviews-container .ratings-table .rating-box .rating {
+    height: 18px;
+    width: 100px;
+}
+.block-reviewed .rating-box{
+    height: 17px;
+    width: 85px;
+}
+.block-reviewed .rating-box .rating {
+    height: 17px;
+    width: 85px;
+}
+.review-top .average-rating .rating-box{
+    height: 23px;
+    width: 120px;
+}
+.review-top .average-rating .rating-box .rating {
+    height: 23px;
+    width: 120px;
+}
+.overall-raiting .overall-raiting-value li .separate-rating-star {
+    width: 32px;
+    height: 26px;
+}
+.overall-raiting .overall-raiting-value li.active .separate-rating-star {
+
+}
+.category-products .ratings .amount {
+    float:left;
+}

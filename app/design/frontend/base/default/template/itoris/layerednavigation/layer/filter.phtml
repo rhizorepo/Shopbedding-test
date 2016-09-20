@@ -1,0 +1,75 @@
+<?php 
+/**
+ * ITORIS
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the ITORIS's Magento Extensions License Agreement
+ * which is available through the world-wide-web at this URL:
+ * http://www.itoris.com/magento-extensions-license.html
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to sales@itoris.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade the extensions to newer
+ * versions in the future. If you wish to customize the extension for your
+ * needs please refer to the license agreement or contact sales@itoris.com for more information.
+ *
+ * @category   ITORIS
+ * @package    ITORIS_LAYEREDNAVIGATION
+ * @copyright  Copyright (c) 2012 ITORIS INC. (http://www.itoris.com)
+ * @license    http://www.itoris.com/magento-extensions-license.html  Commercial License
+ */
+?>
+<?php
+/** Itoris_LayeredNavigation_Block_Layer_MultiFilter_Attribute */
+/** Itoris_LayeredNavigation_Block_Layer_MultiFilter_Category */
+/** Itoris_LayeredNavigation_Block_Layer_MultiFilter_Price */
+?>
+<ol>
+<?php foreach($this->getItems() as $_item) { ?>
+	<?php /** @var $_item Mage_Catalog_Model_Layer_Filter_Item */
+		$id = $_item->getFilter()->getRequestVar().'_item_'.htmlentities($_item->getValue());
+		$colorSwatch = ($_item->getFilter()->getRequestVar() === 'color_family');
+	?>
+	<?php if ($colorSwatch): ?>
+	<li class="swatch-box">
+	<?php else: ?>
+    <li>
+	<?php endif ?>
+    	<?php if ($colorSwatch): ?>
+    		<?php if ($_item->getCount() > 0): ?>
+    		<div class="itoris_swatch">
+    			<input type="checkbox" class="itoris_laynav_checkbox" id="<?php echo $id; ?>"
+					   <?php if ($_item->getInState() && !Mage::helper('itoris_layerednavigation')->getNotUseFilter()) { ?> checked="checked" <?php } ?>
+					   name="<?php echo $_item->getFilter()->getRequestVar() ?>[]" value="<?php echo htmlentities($_item->getValue()) ?>" />
+				<label for="<?php echo $id; ?>">
+					<?php if ($src =  Mage::helper('attributeoptionimage')->getAttributeOptionImage($_item->getValue())): ?>
+					<div class="image-lbl"><img class="swatch"
+							src="<?php echo $src ?>" 
+	                        alt="<?php echo $_item->getLabel() ?>"
+	                        title="<?php echo $_item->getLabel() ?>"/>
+					</div>
+					<?php endif ?>
+					<div class="attr-lbl"><?php echo $_item->getLabel() ?></div>
+				</label>
+    		</div>
+			<?php endif; ?>
+    	<?php else: ?>
+	        <?php if ($_item->getCount() > 0): ?>
+				<?php $active = ($_item->getInState() && !Mage::helper('itoris_layerednavigation')->getNotUseFilter()) ?>
+				<label for="<?php echo $id; ?>" <?php echo ($active) ? 'class="active"' : '' ; ?>>
+					<input type="checkbox" class="itoris_laynav_checkbox" id="<?php echo $id; ?>" <?php echo ($active) ? 'checked="checked"' : '' ; ?>					   
+					   name="<?php echo $_item->getFilter()->getRequestVar() ?>[]" value="<?php echo htmlentities($_item->getValue()) ?>" />
+	        	<div class="styled-checkbox"></div>	<?php echo $_item->getLabel() ?> (<?php echo $_item->getCount() ?>)</label>
+	        <?php else: ?>
+	        	<label for="<?php echo $id; ?>">
+					<input type="checkbox" disabled="disabled" id="<?php echo $id; ?>" />
+	        		<div class="styled-checkbox"></div> <?php echo $_item->getLabel(); ?> (<?php echo $_item->getCount() ?>)</label>
+			<?php endif; ?>
+    	<?php endif ?>
+    </li>
+<?php } ?>
+</ol>

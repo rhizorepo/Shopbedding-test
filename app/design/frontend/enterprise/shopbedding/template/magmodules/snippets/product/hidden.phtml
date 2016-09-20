@@ -1,0 +1,36 @@
+<?php
+/**
+ * Magmodules.eu - http://www.magmodules.eu - info@magmodules.eu
+ * =============================================================
+ * NOTICE OF LICENSE [Single domain license]
+ * This source file is subject to the EULA that is
+ * available through the world-wide-web at:
+ * http://www.magmodules.eu/license-agreement/
+ * =============================================================
+ * @category    Magmodules
+ * @package     Magmodules_Snippets
+ * @author      Magmodules <info@magmodules.eu>
+ * @copyright   Copyright (c) 2014 (http://www.magmodules.eu)
+ * @license     http://www.magmodules.eu/license-agreement/  
+ * =============================================================
+ */
+?>
+<?php if($this->getSnippetsEnabled() && ($_snippets = $this->getSnippets())): ?>	
+	<!--BEGIN: Rich Snippets-->
+		<div itemscope itemtype="http://schema.org/Product">
+			<meta itemprop="name" content="<?php echo $this->escapeHtml($_snippets->getName()); ?>" />
+			<?php if($description = $this->getDescription()): ?>
+				<meta itemprop="description" content="<?php echo $description; ?>" />	
+			<?php endif; ?>
+			<?php echo $this->getOffers(); ?>
+			<?php if($reviews = $this->getReviewSnippets()): ?>
+				<?php echo $reviews; ?>
+			<?php endif; ?>	  					
+			<?php if($extafields = $this->getExtraFields()): ?>
+				<?php foreach($this->getExtraFields() as $field): ?>
+					<?php echo '<meta itemprop="' . $field['itemprop'] . '" content="' . $field['clean'] . '" />'; ?>
+				<?php endforeach; ?>
+			<?php endif; ?>								
+		</div>
+	<!--END: Rich Snippets-->		
+<?php endif; ?>

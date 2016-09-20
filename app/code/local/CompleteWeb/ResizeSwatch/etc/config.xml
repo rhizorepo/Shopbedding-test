@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <CompleteWeb_ResizeSwatch>
+      <version>0.1.0</version>
+    </CompleteWeb_ResizeSwatch>
+  </modules>
+  <global>
+    <helpers>
+      <resizeswatch>
+        <class>CompleteWeb_ResizeSwatch_Helper</class>
+      </resizeswatch>
+    </helpers>
+	<models>
+	  <resizeswatch>
+		<class>CompleteWeb_ResizeSwatch_Model</class>
+		<resourceModel>cronexample_mysql4</resourceModel>
+	  </resizeswatch>
+	</models>
+  </global>    
+    <crontab>
+        <jobs>            
+			<resizeswatch_resizeswatch>
+                <schedule><cron_expr>* * * * *</cron_expr></schedule>
+                <run><model>resizeswatch/cron::resizeSwatch</model></run>
+            </resizeswatch_resizeswatch>
+        </jobs>
+    </crontab>
+</config> 

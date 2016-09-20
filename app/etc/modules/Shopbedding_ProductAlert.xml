@@ -1,0 +1,8 @@
+<config>
+    <modules>
+        <Shopbedding_ProductAlert>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Shopbedding_ProductAlert>
+    </modules>
+</config>

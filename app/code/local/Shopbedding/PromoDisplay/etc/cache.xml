@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<config>
+    <placeholders>
+        <promodisplay_home>
+            <block>promodisplay/home</block>
+            <placeholder>PROMODISPLAY_HOME</placeholder>
+            <container>Shopbedding_PromoDisplay_Model_PageCache_Container_Promodisplaybanner</container>
+            <cache_lifetime>0</cache_lifetime>
+        </promodisplay_home>
+        <promodisplay_product>
+            <block>promodisplay/product</block>
+            <placeholder>PROMODISPLAY_PRODUCT</placeholder>
+            <container>Shopbedding_PromoDisplay_Model_PageCache_Container_Promodisplaybannerproduct</container>
+            <cache_lifetime>0</cache_lifetime>
+        </promodisplay_product>
+        <promodisplay_category>
+            <block>promodisplay/category</block>
+            <placeholder>PROMODISPLAY_CATEGORY</placeholder>
+            <container>Shopbedding_PromoDisplay_Model_PageCache_Container_Promodisplaybannercategory</container>
+            <cache_lifetime>0</cache_lifetime>
+        </promodisplay_category>
+    </placeholders>
+</config>

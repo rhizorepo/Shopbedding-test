@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<layout>
+    <byos_add_allcart>
+        <reference name="root">
+            <action method="setTemplate"><template>page/blank.phtml</template></action>
+        </reference>
+        <reference name="content">
+            <block type="byos/add_allcart" name="byos_addall" template="byos/addall.phtml">
+            </block>
+        </reference>
+    </byos_add_allcart>
+
+    <byos_index_set>
+        <reference name="root">
+            <action method="setTemplate"><template>page/byos-layout-modal.phtml</template></action>
+        </reference>
+        <reference name="head">
+            <action name="scp_js" method="addItem"><type>skin_js</type><name>js/scp_product_extension_byos.js</name></action>
+            <action method="addJs"><script>jquery/jquery.shopbedding.product.js</script></action>
+            <action method="addJs"><script>varien/byos.js</script></action>
+        </reference>
+        <reference name="content">
+                <!-- <block type="catalog/product_view" name="product.info" template="catalog/product/byos/modal.phtml"> -->
+                    <block type="catalog/product_view_type_grouped" name="product.info.byos" as="product_type_data" template="catalog/product/byos/byos.phtml">
+                        <block type="catalog/product_view_type_configurable" name="product.info.byos.products" as="byos_products" template="catalog/product/byos/configurable.phtml" />
+                    </block>
+                <!-- </block> -->
+            <block type="googleanalytics/ga" name="google_analytics" as="google_analytics" />
+        </reference>
+    </byos_index_set>
+</layout>

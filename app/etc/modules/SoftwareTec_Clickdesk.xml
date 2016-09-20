@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <SoftwareTec_Clickdesk>
+            <active>true</active>
+            <codePool>local</codePool>
+        </SoftwareTec_Clickdesk>
+    </modules>
+</config>

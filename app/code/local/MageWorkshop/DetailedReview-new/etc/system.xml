@@ -1,0 +1,1022 @@
+<?xml version="1.0"?>
+<config>
+    <sections>
+        <detailedreview translate="label comment">
+            <label>Detailed Review</label>
+            <tab>mw</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>300</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <license translate="label comment" module="detailedreview">
+                    <label>License</label>
+                    <frontend_model>detailedreview/adminhtml_system_config_license</frontend_model>
+                    <sort_order>8</sort_order>
+                    <expanded>0</expanded>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <key translate="label comment" module="detailedreview">
+                            <label>License key</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </key>
+                    </fields>
+                </license>
+                <settings translate="label comment">
+                    <label>Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <dr_version translate="label comment">
+                            <label>Version of Extension:</label>
+                            <frontend_type>text</frontend_type>
+                            <frontend_model>detailedreview/adminhtml_version</frontend_model>
+                            <sort_order>0</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </dr_version>
+                        <enable translate="label comment">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </enable>
+                        <enable_flag>
+                            <frontend_type>hidden</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>0</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </enable_flag>
+                        <enable_jquery translate="label comment">
+                            <label>Enable jQuery and Other Plugins</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[This option initializes JS libraries in local scope which will not intersect with external jQuery. Currently included libraries: jQuery 1.11.3 , jQuery.ui 1.11.4, jQuery Color Animations 2.1.2, jQuery.easing 1.3 , jQuery.spy, jQuery Placeholder 2.0.7, noUislider 7.0.10, jQuery Form, jQuery.Magnific Popup 1.0.0. If you do not need to load this libraries in one file (for example this libraries are already loaded on your website), you can disable this option. Also we define jQuery as global object 'DRjQuery' so you will have to assign your jQuery to it. For more information see <a target='_blank' href='https://mage-review.com/manual#ext-conf'>official manual</a>]]></comment>
+                        </enable_jquery>
+                        <auto_approve translate="label comment">
+                            <label>Auto Approve Reviews for Customer Group</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>detailedreview/review_autoApprove</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </auto_approve>
+                        <show_honeypot translate="label comment">
+                             <label>Enable Honeypot</label>
+                             <frontend_type>select</frontend_type>
+                             <source_model>adminhtml/system_config_source_yesno</source_model>
+                             <sort_order>60</sort_order>
+                             <show_in_default>1</show_in_default>
+                             <show_in_website>1</show_in_website>
+                             <show_in_store>1</show_in_store>
+                             <comment>Enable/disable a honeypot field that provides additional protection from bots (it is not visible for human visitors).</comment>
+                        </show_honeypot>
+                        <submit_review_ajax translate="label comment">
+                            <label>Review Post with AJAX</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </submit_review_ajax>
+                        <review_form_popup translate="label comment">
+                            <label>Display review form in pop-up</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </review_form_popup>
+                        <review_form_separate translate="label comment">
+                            <label>Display review form on separate page</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>75</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </review_form_separate>
+                        <reviews_in_tab translate="label comment">
+                            <label>Display reviews block in a tab</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </reviews_in_tab>
+                        <deny_change_polarity_group translate="label comment">
+                            <label>Deny Administrator to change Popularity</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Popularity is a attributes group in Product Entity. If allow change these attributes, they don't be update automatically</comment>
+                        </deny_change_polarity_group>
+                    </fields>
+                </settings>
+                <settings_customer translate="label comment">
+                    <label>Settings applied to Customers</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <email_field translate="label comment">
+                            <label>Email Field</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Enable/disable Email field on Review Form to Guest.</comment>
+                        </email_field>
+                        <only_verified_buyer translate="label comment">
+                            <label>Allow write review only for verified buyer</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>35</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </only_verified_buyer>
+                        <write_review_once translate="label comment">
+                            <label>Allow Customer to Write 1 Review per Product</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>37</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </write_review_once>
+                        <allow_guest_vote translate="label comment">
+                            <label>Allow Guests to Vote for Review</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allow_guest_vote>
+                        <show_verified_buyer_image translate="label comment">
+                            <label>Show Verified Buyer Image</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </show_verified_buyer_image>
+                    </fields>
+                </settings_customer>
+                <style translate="label comment">
+                    <label>Custom Style</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>30</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <css>
+                            <label>CSS</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>This area allows you to add your own style to Review. Please note embedding and presence of other styles on the page. Don't use this area to stylize the entire page.</comment>
+                        </css>
+                    </fields>
+                </style>
+                <rating_image translate="label ">
+                    <label>Rating Images</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>40</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <active translate="label comment">
+                            <label>Active</label>
+                            <frontend_type>image</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_image</backend_model>
+                            <upload_dir config="system/filesystem/media" scope_info="1">detailedreview</upload_dir>
+                            <base_url type="media" scope_info="1">detailedreview</base_url>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Image must be in PNG or JPEG format, image uses 32 x 26 pixels size</comment>
+                        </active>
+                        <unactive translate="label comment">
+                            <label>Inactive</label>
+                            <frontend_type>image</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_image</backend_model>
+                            <upload_dir config="system/filesystem/media" scope_info="1">detailedreview</upload_dir>
+                            <base_url type="media" scope_info="1">detailedreview</base_url>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Image must be in PNG or JPEG format, image uses 32 x 26 pixels size</comment>
+                        </unactive>
+                    </fields>
+                </rating_image>
+                <proscons translate="label comment">
+                    <label>Pros and Cons</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>50</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <pros translate="label comment">
+                            <label>Pros</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>detailedreview/category_attribute_source_pros</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </pros>
+                        <cons translate="label comment">
+                            <label>Cons</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>detailedreview/category_attribute_source_cons</source_model>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </cons>
+                    </fields>
+                </proscons>
+                <show_review_info_settings translate="label comment">
+                    <label>Enable/Disable Review Info Fields</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>60</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <allow_review_graph translate="label comment">
+                            <label>Show Review Graph</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allow_review_graph>
+                        <allow_product_preview translate="label comment">
+                            <label>Show Product Name and Image on Review Popup</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allow_product_preview>
+                        <allow_response translate="label comment">
+                            <label>Response</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Allow administrator posts comment for Review</comment>
+                        </allow_response>
+                        <allow_video_preview translate="label comment">
+                            <label>Video Preview</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Video Preview on list reviews</comment>
+                        </allow_video_preview>
+                        <allow_result_filters translate="label comment">
+                            <label>Enable Filters</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Filters for reviews</comment>
+                        </allow_result_filters>
+                        <allow_sorting_by translate="label comment">
+                            <label>Allow to Sort by</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>detailedreview/review_sorting</source_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allow_sorting_by>
+                        <qty_items_in_highest_contributors translate="label comment">
+                            <label>Min Number of Posted Reviews to assign a "Highest Contributor" Status to Reviewer</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </qty_items_in_highest_contributors>
+                    </fields>
+                </show_review_info_settings>
+                <show_review_form_settings translate="label comment">
+                    <label>Enable/Disable Review Form Fields</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>70</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <allow_good_and_bad_detail translate="label comment">
+                            <label>Good and Bad Details</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allow_good_and_bad_detail>
+                        <allow_pros_and_cons translate="label comment">
+                            <label>Pros and Cons</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allow_pros_and_cons>
+                        <allow_user_pros_and_cons translate="label comment">
+                            <label>User-defined Pros and Cons</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allow_user_pros_and_cons>
+                        <allow_image translate="label comment">
+                            <label>Image</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allow_image>
+                        <allow_video translate="label comment">
+                            <label>Video Link</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allow_video>
+                        <allow_sizing translate="label comment">
+                            <label>Choose Sizing</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allow_sizing>
+                        <allow_about_you translate="label comment">
+                            <label>About You Section</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allow_about_you>
+                    </fields>
+                </show_review_form_settings>
+                <captcha translate="label comment">
+                    <label>Captcha Options</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>80</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <enabled translate="label comment">
+                            <label>Enable</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </enabled>
+                        <public_key translate="label comment">
+                            <label>Public Key</label>
+                            <frontend_type>Text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Visit https://www.google.com/recaptcha/admin#list to receive public key for your domain</comment>
+                        </public_key>
+                        <private_key translate="label comment">
+                            <label>Private Key</label>
+                            <frontend_type>Text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Visit https://www.google.com/recaptcha/admin#list to receive private key for your domain</comment>
+                        </private_key>
+                    </fields>
+                </captcha>
+                <social_share_optios translate="label comment">
+                    <label>Social Share</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>90</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <share_review_to_facebook translate="label comment">
+                            <label>Share Review to Facebook</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </share_review_to_facebook>
+                        <twitt_review translate="label comment">
+                            <label>Twitt Review</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </twitt_review>
+                        <share_review_to_pinterest translate="label comment">
+                            <label>Share Review to Pinterest</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </share_review_to_pinterest>
+                        <recommended_product translate="label comment">
+                            <label>Recommend this product to a friend</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </recommended_product>
+                        <recommend_qty_available translate="label comment">
+                            <label>Options for recommendations</label>
+                            <frontend_type>text</frontend_type>
+                            <comment>Comma-separated values for dropdown 'Recommend this product'</comment>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </recommend_qty_available>
+                        <bitly translate="label comment">
+                            <label>
+                                <![CDATA[
+                                    Bitly (<a href='https://bitly.com' target='_blank'>Bitly is a URL shortening service</a>)
+                                ]]>
+                            </label>
+                            <frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </bitly>
+                        <bitly_enabled translate="label comment">
+                            <label>Enable</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </bitly_enabled>
+                        <bitly_login translate="label comment">
+                            <label>Login</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </bitly_login>
+                        <bitly_api_key translate="label comment">
+                            <label>Api key</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </bitly_api_key>
+                    </fields>
+                </social_share_optios>
+                <image_options translate="label comment">
+                    <label>Image Options</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>100</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <max_image_size translate="label comment">
+                            <label>Max Image Size (MB)</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Image must be in PNG, GIF or JPEG format</comment>
+                        </max_image_size>
+                        <min_image_width translate="label comment">
+                            <label>Min Image Width (px)</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </min_image_width>
+                        <min_image_height translate="label comment">
+                            <label>Min Image Height (px)</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </min_image_height>
+                        <images_max_count translate="label comment">
+                            <label>Images Max Count</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>'Images Max Count' should be more than 0. To disable the 'Upload Your Image' Field, use the 'Enable/Disable Fields' tab.</comment>
+                        </images_max_count>
+                    </fields>
+                </image_options>
+                <video_options translate="label comment">
+                    <label>Video Preview Options</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>110</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <width_video_preview translate="label comment">
+                            <label>Video Preview Width (px)</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </width_video_preview>
+                        <height_video_preview translate="label comment">
+                            <label>Video Preview Height (px)</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </height_video_preview>
+                    </fields>
+                </video_options>
+                <email_notify translate="label comment">
+                    <label>Email Admin Notification</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>120</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <enabled translate="label comment">
+                            <label>Enable</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </enabled>
+                        <receiver translate="label comment">
+                            <label>Default Email Receiver</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_identity</source_model>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </receiver>
+                        <sender translate="label comment">
+                            <label>New Review Email Sender</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_identity</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </sender>
+                        <template translate="label comment">
+                            <label>Review Email Template</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </template>
+                        <copy_to translate="label comment">
+                            <label>New Review Email Copy To</label>
+                            <frontend_type>Text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Comma-separated. If empty then email will be send to 'Customer Support'</comment>
+                        </copy_to>
+                        <copy_method translate="label comment">
+                            <label>New Review Copy Method</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_method</source_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </copy_method>
+                    </fields>
+                </email_notify>
+                <email_notify_to_customer translate="label comment">
+                    <label>Email Customer Notification</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>130</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <comment><![CDATA[<strong style='color:red'>This field depends on 'Settings applied to Customers -> Email Field' or it is necessary that the client has been logged in system.</strong>]]></comment>
+                    <fields>
+                        <enabled translate="label comment">
+                            <label>Enable</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </enabled>
+                        <sender translate="label comment">
+                            <label>Review Email Sender</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_identity</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </sender>
+                        <template translate="label comment">
+                            <label>Review Email Template</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </template>
+                        <blind_copy_to translate="label comment">
+                            <label>Review Email Blind Copy To</label>
+                            <frontend_type>Text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Comma-separated. If empty then email will be send to 'Customer Support'</comment>
+                        </blind_copy_to>
+                    </fields>
+                </email_notify_to_customer>
+                <sorting_options translate="label comment">
+                    <label>Sorting Options</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>140</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+
+                    </fields>
+                </sorting_options>
+                <list_options translate="label comment">
+                    <label>Reviews List Options</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>150</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <qty_available translate="label comment">
+                            <label>Reviews per Page</label>
+                            <frontend_type>text</frontend_type>
+                            <comment>Comma-separated values for dropdown 'Show X per page'</comment>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </qty_available>
+                        <qty_default translate="label comment">
+                            <label>Reviews per Page by Default</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </qty_default>
+                        <ordering translate="label comment">
+                            <label>Ordering</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>detailedreview/review_sorting</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </ordering>
+                    </fields>
+                </list_options>
+                <datetime_options translate="label comment">
+                    <label>Date and Time Display Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>160</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <enable_to_set_timezone translate="label comment">
+                            <label>Enable Timezone Setting</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Client's Timezone Setting</comment>
+                        </enable_to_set_timezone>
+                        <date_format translate="label comment">
+                            <label>Date Format</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>detailedreview/config_dateFormat</source_model>
+                            <sort_order>35</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </date_format>
+                        <time_format translate="label comment">
+                            <label>Time Format</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>detailedreview/config_timeFormat</source_model>
+                            <sort_order>39</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </time_format>
+                    </fields>
+                </datetime_options>
+                <category_options translate="label comment">
+                    <label>Recent Reviews in Category</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>170</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <all_reviews translate="label comment">
+                            <label>Display Recent Reviews</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </all_reviews>
+                        <category_reviews translate="label comment">
+                            <label>Display Recent Reviews In Category</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </category_reviews>
+                        <slider_effect translate="label comment">
+                            <label>Slider Effect</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>detailedreview/config_sliderEffect</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </slider_effect>
+                        <qty_items translate="label comment">
+                            <label>Number of Reviews in Slideshow</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </qty_items>
+                        <qty_visible_items translate="label comment">
+                            <label>Number of Visible Reviews in Slideshow</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </qty_visible_items>
+                        <pause translate="label comment">
+                            <label>Rotation Speed</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>In seconds</comment>
+                        </pause>
+                        <product_image translate="label comment">
+                            <label>Show Product Image</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </product_image>
+                    </fields>
+                </category_options>
+                <statistics_options translate="label comment">
+                    <label>Statistics Options</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>180</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <chart_type translate="label comment">
+                            <label>Chart Type</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>detailedreview/config_chartType</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </chart_type>
+                        <qty_items_in_reviewed_grid translate="label comment">
+                            <label>Number of Items in Most Reviewed Products Grids</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </qty_items_in_reviewed_grid>
+                        <qty_items_in_liked_grid translate="label comment">
+                            <label>Number of Items in Most Liked Products Grids</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </qty_items_in_liked_grid>
+                        <qty_items_in_disliked_grid translate="label comment">
+                            <label>Number of Items in Most Disliked Products Grids</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </qty_items_in_disliked_grid>
+                        <qty_items_in_customer_grid translate="label comment">
+                            <label>Number of Items in Most Active Customers Grids</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </qty_items_in_customer_grid>
+                        <qty_items_in_most_helpful_grid translate="label comment">
+                            <label>Number of Items in Most Helpful Review Grids</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </qty_items_in_most_helpful_grid>
+                    </fields>
+                </statistics_options>
+                <reindex_data translate="label comment">
+                    <label>Reindex Data</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>190</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <reindex_data_info translate="label comment">
+                            <label>Reindex</label>
+                            <frontend_type>button</frontend_type>
+                            <frontend_model>detailedreview/adminhtml_reindex_button</frontend_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Updating data for 'Bestselling', 'Most Reviewed' and 'Highly Rated' types of sorting.</comment>
+                        </reindex_data_info>
+                    </fields>
+                </reindex_data>
+                <purchase_data translate="label comment">
+                    <label>Purchase Data</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>200</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <comment>
+                        <![CDATA[
+                            <strong style='color:red'>
+                                If you have large "sales_flat_order" table. (Magento has many orders). Please enable Maintenance mode on your store and after that run this command. <br />
+                                Disable Maintenance mode after updates.
+                            </strong>
+                        ]]>
+                    </comment>
+                    <fields>
+                        <reindex_data_info translate="label comment">
+                            <label>Update Data about Purchases</label>
+                            <frontend_type>button</frontend_type>
+                            <frontend_model>detailedreview/adminhtml_purchase_button</frontend_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Updating data about Orders.</comment>
+                        </reindex_data_info>
+                    </fields>
+                </purchase_data>
+                <uninstall_plugin translate="label comment">
+                    <label>Uninstall Extension</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>210</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <uninstall_plugin_info translate="label comment">
+                            <label>Uninstall Extension</label>
+                            <frontend_type>button</frontend_type>
+                            <frontend_model>detailedreview/adminhtml_uninstall_button</frontend_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Be careful. This button will completely uninstall extension and delete all related information. Reviews will get back to original (standard) state.</comment>
+                        </uninstall_plugin_info>
+                    </fields>
+                </uninstall_plugin>
+            </groups>
+        </detailedreview>
+    </sections>
+</config>

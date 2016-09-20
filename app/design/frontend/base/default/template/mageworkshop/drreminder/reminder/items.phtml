@@ -1,0 +1,23 @@
+<?php
+/**
+ * MageWorkshop
+ * Copyright (C) 2016 MageWorkshop <mageworkshophq@gmail.com>
+ *
+ * @category   MageWorkshop
+ * @package    MageWorkshop_DRReminder
+ * @copyright  Copyright (c) 2016 MageWorkshop Co. (http://mage-workshop.com)
+ * @license    http://opensource.org/licenses/gpl-3.0.html GNU General Public License, version 3 (GPL-3.0)
+ * @author     MageWorkshop <mageworkshophq@gmail.com>
+ */
+
+/* @var $this MageWorkshop_DRReminder_Block_ItemsForReminder */
+
+$reminder = $this->getData('reminder');
+$order = Mage::getModel('sales/order')->load($reminder->getOrderId());
+
+$hash = md5($reminder->getOrderId() . $order->getCreatedAt());
+
+?>
+
+<a href="<?php echo Mage::getUrl("drreminder/index/products/", array('order' => $hash, '_store'=> $order->getStore())) ?>" style="color:#203548;"><strong><?php echo $this->__('Post a review for my purchased products '); ?></strong></a>
+

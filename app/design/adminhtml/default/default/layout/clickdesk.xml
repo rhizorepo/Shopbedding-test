@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<layout>
+    <clickdesk_adminhtml_dash_index>
+        <update handle="clickdesk_dash_index"/>
+        <reference name="content">
+            <block type="adminhtml/template" name="dash" template="clickdesk/dash.phtml"/>
+        </reference>
+    </clickdesk_adminhtml_dash_index>
+</layout>

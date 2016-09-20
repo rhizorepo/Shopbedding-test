@@ -1,0 +1,50 @@
+<?php
+/**
+ * MageWorkshop
+ * Copyright (C) 2016 MageWorkshop <mageworkshophq@gmail.com>
+ *
+ * @category   MageWorkshop
+ * @package    MageWorkshop_DetailedReview
+ * @copyright  Copyright (c) 2016 MageWorkshop Co. (http://mage-workshop.com)
+ * @license    http://opensource.org/licenses/gpl-3.0.html GNU General Public License, version 3 (GPL-3.0)
+ * @author     MageWorkshop <mageworkshophq@gmail.com>
+ */
+?>
+<?php $product = $this->getProductData(); ?>
+<div class="reviews-wrapper">
+    <div class="reviews-container" id="feedback">
+        <div>
+            <div class="product-review">
+                <div class="product-name">
+                    <h1><?php echo $product->getName(); ?></h1>
+                </div>
+                <div class="product-image">
+                    <img id="image-main"
+                         class="gallery-image visible"
+                         src="<?php echo $this->helper('catalog/image')->init($product, 'small_image')->resize(250, 250); ?>"
+                         alt="<?php echo $this->escapeHtml($this->getImageLabel()) ?>"
+                         title="<?php echo $this->escapeHtml($this->getImageLabel()); ?>" />
+                </div>
+            </div>
+
+            <?php if(Mage::getStoreConfig('detailedreview/settings_customer/only_verified_buyer')): ?>
+                <?php $buyerProducts = Mage::helper('detailedreview')->getAllProductsIdForVerifiedBuyer() ?>
+                <?php if (in_array($product->getId(), $buyerProducts)): ?>
+                    <?php if($this->getReviewsPerProductByCustomer($product->getId())): ?>
+                        <span class="error"><?php echo $this->__('Product already reviewed by You');?></span>
+                    <?php else: ?>
+                        <?php echo $this->getChildHtml() ?>
+                    <?php endif; ?>
+                <?php else: ?>
+                    <span class="error"><?php echo $this->__('Only verified buyer can write review');?></span>
+                <?php endif; ?>
+            <?php else: ?>
+                <?php if($this->getReviewsPerProductByCustomer($product->getId())): ?>
+                    <span class="error"><?php echo $this->__('Product already reviewed by You');?></span>
+                <?php else: ?>
+                    <?php echo $this->getChildHtml() ?>
+                <?php endif; ?>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>

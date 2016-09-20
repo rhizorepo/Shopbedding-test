@@ -1,0 +1,16 @@
+<config>
+    <global>
+        <cms>
+            <layouts>
+                <cms_template_1>
+                    <label>Home Page</label>
+                    <template>page/home-layout.phtml</template>
+                </cms_template_1>
+                 <cms_template_2>
+                    <label>Product Detail</label>
+                    <template>page/product-detail-layout.phtml</template>
+                </cms_template_2>
+            </layouts>
+        </cms>
+    </global>
+</config>

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <ChannelBrain_BizSyncXL>
+            <active>true</active>
+            <codePool>community</codePool>
+        </ChannelBrain_BizSyncXL>
+    </modules>
+</config>

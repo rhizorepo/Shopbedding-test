@@ -1,0 +1,17 @@
+<?php $bordership = Mage::getModel('bordership/carrier_bordership'); ?>
+<?php $address = $this->getHubAddressHtml($this->getOrder()); ?>
+<?php if ($address): ?>
+    <div class="box-left">
+        <!--Billing Address-->
+        <div class="entry-edit">
+            <div class="entry-edit-head">
+                <h4 class="icon-head head-payment-method"><?php echo Mage::helper('sales')->__('BorderJump Hub Address (ship parcels to this address)') ?></h4>
+            </div>
+            <fieldset>
+                <?php echo $address; ?>
+            </fieldset>
+        </div>
+    </div>
+<?php endif; ?>
+
+<div class="clear"></div>

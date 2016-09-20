@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Shopbedding_UpdateFeed>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Shopbedding_UpdateFeed>
+    </modules>
+</config>

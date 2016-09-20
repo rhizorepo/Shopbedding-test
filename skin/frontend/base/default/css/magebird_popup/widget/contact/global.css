@@ -1,0 +1,67 @@
+.contactPopup{
+  /*text-align:center;*/                
+}
+
+.cssLoadedChecker.moctod-dribegam{
+  display:none; /*DONT CHANGE THIS LINE! jQuery use this to check if css is loaded*/            
+}
+
+.contactPopup form {                  
+    height:auto;
+    display:inline-block;
+    position: relative;
+}
+
+.contactPopup form input {
+  margin:0; 
+  padding:0; 
+  -webkit-box-sizing:border-box;
+  box-sizing:content-box;
+}
+
+.contactPopup form button {
+  background-image:none;
+  white-space:nowrap;    
+}
+
+.contactPopup form button:hover{ 
+  cursor: pointer;
+  opacity:0.8;
+  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+  filter: alpha(opacity=80);
+  -moz-opacity:0.8;
+  -khtml-opacity: 0.8;
+  opacity: 0.8;   
+}
+
+.contactPopup form  button:active,
+.contactPopup form  button:focus{  
+    /*background: #c42f2f;*/
+  	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+  	filter: alpha(opacity=100);
+  	-moz-opacity:1;
+  	-khtml-opacity: 1;
+  	opacity: 1;
+    outline: 0;  
+}
+
+.dialogBody #thankMsg{
+  text-align:center; 
+  margin-top:40px;      
+  margin-bottom:30px;   
+} 
+
+.contactPopup input::-webkit-input-placeholder,.contactPopup input:-moz-placeholder,input:-ms-input-placeholder,.moctoddribegam:-ms-input-placeholder {
+   color: #999;
+   font-weight: normal;
+   font-style: italic; 
+}
+
+.contactPopup form table {              
+    border-spacing:0 !important;
+    border-collapse:separate;
+} 
+
+.contactPopup form input::-ms-clear {
+    display: none;
+}

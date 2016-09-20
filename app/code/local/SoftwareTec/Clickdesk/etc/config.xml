@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<SoftwareTec_Clickdesk>
+			<version>0.2.3</version>
+		</SoftwareTec_Clickdesk>
+	</modules>
+	<global>
+		<blocks>
+			<clickdesk>
+				<class>SoftwareTec_Clickdesk_Block</class>
+			</clickdesk>
+		</blocks>
+		<helpers>
+			<clickdesk>
+				<class>SoftwareTec_Clickdesk_Helper</class>
+			</clickdesk>  
+		</helpers>
+
+
+        <models>
+            <clickdesk>
+                <class>SoftwareTec_Clickdesk_Model</class>
+                <resourceModel>clickdesk_mysql4</resourceModel>
+            </clickdesk>
+            <clickdesk_mysql4>
+                <class>SoftwareTec_Clickdesk_Model_Mysql4</class>
+                <entities>
+                    <clickdesk>
+                        <table>clickdesk</table>
+                    </clickdesk>
+                </entities>
+            </clickdesk_mysql4>
+        </models>
+
+        <resources>
+            <clickdesk_setup>
+                <setup>
+                    <module>SoftwareTec_Clickdesk</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </clickdesk_setup>
+            <clickdesk_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+ 
+ 
+            </clickdesk_write>
+            <clickdesk_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </clickdesk_read>
+        </resources>
+
+	</global>
+
+	<admin>
+		<routers>
+			<clickdesk>
+			<use>admin</use>
+			<args>
+				<module>SoftwareTec_Clickdesk</module>
+				<frontName>Clickdesk</frontName>
+			</args>
+			</clickdesk>
+		</routers>
+	</admin>
+
+
+
+	<adminhtml>
+		<translate>
+			<modules>
+				<mage_adminhtml>
+				<files>
+					<clickdesk>SoftwareTec_Clickdesk.csv</clickdesk>
+				</files>
+				</mage_adminhtml>
+			</modules>
+		</translate>
+        
+		<menu>
+			<catalog>
+			<children>
+				<clickdesk_dash translate="title" module="clickdesk">
+				<title>Clickdesk</title>
+				<action>clickdesk/adminhtml_dash</action>
+				</clickdesk_dash>
+			</children>
+			</catalog>
+		</menu>
+
+		<layout>
+			<updates>
+				<clickdesk>
+					<file>clickdesk.xml</file>
+				</clickdesk>
+			</updates>
+		</layout>
+    </adminhtml>
+
+    <frontend>
+		<layout>
+			<updates>
+				<clickdesk>
+					<file>clickdesk.xml</file>
+				</clickdesk>
+			</updates>
+		</layout>
+
+    </frontend>
+</config>

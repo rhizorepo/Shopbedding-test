@@ -1,0 +1,46 @@
+<?php
+/**
+ * MageWorkshop
+ * Copyright (C) 2016 MageWorkshop <mageworkshophq@gmail.com>
+ *
+ * @category   MageWorkshop
+ * @package    MageWorkshop_DetailedReview
+ * @copyright  Copyright (c) 2016 MageWorkshop Co. (http://mage-workshop.com)
+ * @license    http://opensource.org/licenses/gpl-3.0.html GNU General Public License, version 3 (GPL-3.0)
+ * @author     MageWorkshop <mageworkshophq@gmail.com>
+ */
+?>
+
+<?php $ratingsEnabled = Mage::helper('detailedreview')->checkEnabledRatings(); ?>
+
+<div class="customer-review-info">
+    <ul>
+        <li>
+            <p class="info-title"><?php echo $this->__('Reviews') ?></p>
+            <p><?php echo $this->getCollection()->count(); ?></p>
+
+        </li>
+        <?php if ($ratingsEnabled): ?>
+            <li>
+                <p class="info-title"><?php echo $this->__('Average Rating') ?></p>
+                <p><?php echo $this->getAverageRating(); ?></p>
+
+            </li>
+        <?php endif; ?>
+        <li>
+            <p class="info-title"><?php echo $this->__('Helpful Votes') ?></p>
+            <p><?php echo $this->getHelpfulVotes(); ?></p>
+
+        </li>
+        <li>
+            <p class="info-title"><?php echo $this->__('Active Since') ?></p>
+            <p><?php echo $this->dateFormat($this->getCollection()->getLastItem()->getReviewCreatedAt()); ?></p>
+
+        </li>
+        <li>
+            <p class="info-title"><?php echo $this->__('Last Review') ?></p>
+            <p><?php echo $this->dateFormat($this->getCollection()->getFirstItem()->getReviewCreatedAt()); ?></p>
+
+        </li>
+    </ul>
+</div>

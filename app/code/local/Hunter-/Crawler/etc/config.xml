@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Hunter_Crawler>
+            <version>0.1.3</version>
+        </Hunter_Crawler>
+    </modules>
+	
+    <global>
+        <models>
+            <hunter_crawler>
+                <class>Hunter_Crawler_Model</class>
+                <resourceModel>hunter_crawler_resource</resourceModel>
+            </hunter_crawler>
+			
+            <hunter_crawler_resource>
+                <class>Hunter_Crawler_Model_Resource</class>
+                <entities>
+                    <crawler_queue>
+                        <table>crawler_queue</table>
+                    </crawler_queue>
+                    <crawler_result>
+                        <table>crawler_result</table>
+                    </crawler_result>
+                </entities>
+            </hunter_crawler_resource>
+        </models>
+		
+        <blocks>
+            <hunter_crawler>
+                <class>Hunter_Crawler_Block</class>
+            </hunter_crawler>
+        </blocks>
+		
+        <helpers>
+            <hunter_crawler>
+                <class>Hunter_Crawler_Helper</class>
+            </hunter_crawler>
+        </helpers>
+		
+        <resources>
+            <hunter_crawler_setup>
+                <setup>
+                    <module>Hunter_Crawler</module>
+                </setup>
+            </hunter_crawler_setup>
+        </resources>
+		
+        <events>
+            <hunter_crawler_queue_run_cleaning>
+                <observers>
+                    <hunter_crawler_queue_process>
+                        <type>singleton</type>
+                        <class>hunter_crawler/observer_refresh</class>
+                        <method>run</method>
+                    </hunter_crawler_queue_process>
+                </observers>
+            </hunter_crawler_queue_run_cleaning>
+        </events>
+    </global>
+	
+    <adminhtml>
+        <events>
+            <cms_page_save_after>
+                <observers>
+                    <hunter_crawler_cms_page_save>
+                        <class>hunter_crawler/adminhtml_observer</class>
+                        <method>cmsPageSaveAfter</method>
+                    </hunter_crawler_cms_page_save>
+                </observers>
+            </cms_page_save_after>
+			
+            <catalog_category_save_after>
+                <observers>
+                    <hunter_crawler_category_save>
+                        <class>hunter_crawler/adminhtml_observer</class>
+                        <method>catalogCategorySaveAfter</method>
+                    </hunter_crawler_category_save>
+                </observers>
+            </catalog_category_save_after>
+			
+            <catalog_product_save_after>
+                <observers>
+                    <hunter_crawler_product_save>
+                        <class>hunter_crawler/adminhtml_observer</class>
+                        <method>catalogProductSaveAfter</method>
+                    </hunter_crawler_product_save>
+                </observers>
+            </catalog_product_save_after>
+        </events>
+    </adminhtml>
+	
+    <admin>
+        <routers>
+            <hunter_crawler_queue>
+                <use>admin</use>
+                <args>
+                    <frontName>crawlerqueue</frontName>
+                    <module>Hunter_Crawler_Adminhtml</module>
+                </args>
+            </hunter_crawler_queue>
+        </routers>
+    </admin>
+	
+    <default>
+        <hunter_fpc_crawler>
+            <general_settings>
+                <processing_items_count>100</processing_items_count>
+                <manual_processing_items_count>100</manual_processing_items_count>
+                <cron_lock>0</cron_lock>
+            </general_settings>
+        </hunter_fpc_crawler>
+    </default>
+</config>

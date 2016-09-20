@@ -1,0 +1,8 @@
+<config>
+    <modules>
+        <Aschroder_SetStartOrderNumber>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Aschroder_SetStartOrderNumber>
+    </modules>
+</config>

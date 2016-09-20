@@ -1,0 +1,102 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition License
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magentocommerce.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     enterprise_default
+ * @copyright   Copyright (c) 2010 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://www.magentocommerce.com/license/enterprise-edition
+ */
+
+/**
+ * Product media data template
+ *
+ * @see Mage_Catalog_Block_Product_View_Media
+ */
+?>
+<?php
+    $_product = $this->getProduct();
+    $_helper = $this->helper('catalog/output');
+    $_nativeZoom = false;
+?>
+
+<?php /* --------- jqZoom --------- */ ?>
+<?php if ($_product->getImage() != 'no_selection' && $_product->getImage()): ?>
+    <?php list($_imgWidth, $_imgHeight) = $this->helper('catalog/image')->init($_product, 'image')->getOriginalSizeArray(); ?>
+        <div class="main-product-image">
+            <a class="product-image image-zoom" id="magic-zoom-trigger" title="<?php echo $this->htmlEscape($_product->getImageLabel()); ?>" href="<?php echo $this->helper('catalog/image')->init($_product, 'image')->resize(700); ?>">
+                <?php
+                    $_img = '<img src="'.$this->helper('catalog/image')->init($_product, 'image')->resize(315).'" width="315" height="315" alt="'.$this->htmlEscape($_product->getImageLabel()).'" title="'.$this->htmlEscape($_product->getImageLabel()).'" />';
+                    echo $_helper->productAttribute($_product, $_img, 'image-thumb');
+                ?>
+            </a>
+        </div>
+<?php else: ?>
+    <?php
+        $_img = '<img src="'.$this->helper('catalog/image')->init($_product, 'image')->resize(458, 458).'" alt="'.$this->htmlEscape($_product->getImageLabel()).'" title="'.$this->htmlEscape($_product->getImageLabel()).'" />';
+        echo $_helper->productAttribute($_product, $_img, 'image');
+    ?>
+<?php endif; ?>
+
+
+
+<?php if (count($this->getGalleryImages()) > 0): ?>
+<div class="more-views enlarge-image-triggers">
+    <ul>
+    <?php foreach ($this->getGalleryImages() as $_image): ?>
+        <li>
+            <a href="#" class="product-image-thumb" title="<?php echo $this->htmlEscape($_image->getLabel()) ?>">
+                <input type="hidden" class="zoom-view" value="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->resize(700); ?>" />
+                <input type="hidden" class="main-view" value="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->resize(315); ?>" />
+                <img src="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->resize(64, 48); ?>" width="64" height="48" alt="<?php echo $this->htmlEscape($_image->getLabel()) ?>" />
+            </a>
+        </li>
+    <?php endforeach; ?>
+
+    <?php if($_product->getVideo()) : ?>
+        <li>
+            <div id="product-video" onClick="_gaq.push(['_trackEvent', 'Videos', 'Launched', '<?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?>']);">
+                <p><img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) ?>video/images/<?php echo $_product->getVideoPreviewImage() ?>"  id="popup__toggle" height="48px" width="64px" /></p>
+                <!--[if lt IE 9]><div class="popup__overlay popup__overlay_ie"></div><![endif]-->
+                <div class="popup__overlay">
+                    <div class="popup">
+                        <span class="popup__close">X</span>
+                        <div id="video-iframe">
+                            <?php echo $_product->getVideo(); ?>
+                        </div>
+
+                    </div>
+                    <!--[if lt IE 9]><div class="popup__valignfix"></div><![endif]-->
+                </div>
+
+            </div>
+        </li>
+            <?php endif; ?>
+
+    </ul>
+
+    <div class="actions">
+        <div class="zoom-button">
+            <input id="image-zoom-src" type="hidden" value="<?php echo $this->helper('catalog/image')->init($_product, 'image')->resize(700) ?>" />
+            <a id="image-zoom" href="javascript:void(0);"></a>
+        </div>
+        <div class="email-to-friend"><a id="email-to-friend" href="<?php echo $this->helper('catalog/product')->getEmailToFriendUrl($_product) ?>"></a></div>
+    </div>
+</div>
+<?php endif; ?>

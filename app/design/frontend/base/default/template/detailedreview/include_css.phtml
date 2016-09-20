@@ -1,0 +1,36 @@
+<?php
+/**
+ * MageWorkshop
+ * Copyright (C) 2016 MageWorkshop <mageworkshophq@gmail.com>
+ *
+ * @category   MageWorkshop
+ * @package    MageWorkshop_DetailedReview
+ * @copyright  Copyright (c) 2016 MageWorkshop Co. (http://mage-workshop.com)
+ * @license    http://opensource.org/licenses/gpl-3.0.html GNU General Public License, version 3 (GPL-3.0)
+ * @author     MageWorkshop <mageworkshophq@gmail.com>
+ */
+
+$urlCss = Mage::getDesign()->getSkinUrl('css/detailedreview');
+$detailedreview = "<link rel='stylesheet' type='text/css' href='" . $urlCss . "/detailedreview.css'/>";
+$detailedreviewIe8 = "<link rel='stylesheet' type='text/css' href='" . $urlCss . "/deteiledreview-ie8.css'/>";
+$ie7 = "<link rel='stylesheet' type='text/css' href='". $urlCss . "/detailedreview-ie7.css'/>";
+$ie8 = "<link rel='stylesheet' type='text/css' href='". $urlCss . "/styles-ie8.css'/>";
+
+?>
+<script type="text/javascript">
+    //<![CDATA[
+    document.write("<?php echo $detailedreview; ?>");
+    //]]>
+</script>
+<!--[if IE 7]>
+<script type="text/javascript">
+    document.write("<?php echo $ie7; ?>");
+</script>
+<![endif]-->
+
+<!--[if IE 8]>
+<script type="text/javascript">
+    document.write("<?php echo $ie8; ?>");
+    document.write("<?php echo $detailedreviewIe8; ?>");
+</script>
+<![endif]-->

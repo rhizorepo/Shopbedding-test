@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<config>
+    <sections>
+        <drreminder translate="label">
+            <label>Detailed Review Reminder</label>
+            <tab>mw</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>400</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <settings translate="label">
+                    <label>Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <remind_enable translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </remind_enable>
+                        <remind_choice_status translate="label">
+                            <label>Order Status</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <comment>Choose order status which is triggered to create review reminders</comment>
+                            <source_model>adminhtml/system_config_source_order_status</source_model>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </remind_choice_status>
+                        <remind_send_email translate="label comment">
+                            <label>Send E-mails</label>
+                            <frontend_type>select</frontend_type>
+                            <comment>If set to "No", alert emails will be generated, but will not be sent automatically, while manual sending will be allowed</comment>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </remind_send_email>
+                        <remind_redirect_to_product translate="label comment">
+                            <label>Redirect to the product page</label>
+                            <frontend_type>select</frontend_type>
+                            <comment>Redirects directly to the product page if only one product was purchased in corresponding order</comment>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>25</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </remind_redirect_to_product>
+                        <remind_delay_period translate="label comment">
+                            <label>Delay Period (days)</label>
+                            <frontend_type>text</frontend_type>
+                            <comment>Please enter period after notification email will be sent format is Xd Xh Xm Xs. For example: 1d 5h, 3h, 3h 20m 10s. If set to 0 or empty, email will be sent immediately.</comment>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </remind_delay_period>
+                        <remind_email_sender translate="label">
+                            <label>Email Sender</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_identity</source_model>
+                            <sort_order>35</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </remind_email_sender>
+                        <remind_email_template translate="label">
+                            <label>Email Template</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </remind_email_template>
+                        <uninstall_plugin_info translate="label comment">
+                            <label>Uninstall Extension</label>
+                            <frontend_type>button</frontend_type>
+                            <frontend_model>drreminder/adminhtml_uninstall_button</frontend_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>This button will completely uninstall extension and delete all related information.</comment>
+                        </uninstall_plugin_info>
+                    </fields>
+                </settings>
+            </groups>
+        </drreminder>
+    </sections>
+</config>

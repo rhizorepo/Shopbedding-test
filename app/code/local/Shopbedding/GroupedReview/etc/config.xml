@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Shopbedding_GroupedReview>
+            <version>0.0.1</version>
+        </Shopbedding_GroupedReview>
+    </modules>
+    <global>
+        <blocks>
+            <grouped_review>Shopbedding_GroupedReview_Block</grouped_review>
+            <review>
+                <rewrite>
+                    <helper>Shopbedding_GroupedReview_Block_Helper</helper>
+                </rewrite>
+            </review>
+        </blocks>
+    </global>
+</config>

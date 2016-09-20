@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<layout>
+    <set_admin_index>
+      <reference name="content">
+        <block type="set/page_index" name="set_page_index"></block>
+      </reference>
+    </set_admin_index>
+
+    <set_admin_edit>
+      <reference  name="head">
+        <action method="addJs">
+          <script>shopbedding/Gallery.js</script>
+        </action>
+      </reference>
+      <reference name="left">
+        <block type="set/tabs" name="set_tabs"></block>
+      </reference>
+      <reference name="content">
+        <block type="set/page_edit" name="set_page_edit"/>
+      </reference>
+    </set_admin_edit>
+</layout>

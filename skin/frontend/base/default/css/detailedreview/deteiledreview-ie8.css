@@ -1,0 +1,6 @@
+body #feedback .review-top .review-left .attr-rating li input[type="checkbox"],
+body .review-dialog-block #review-form .right .pros li input[type=checkbox],
+body .review-dialog-block #review-form .right .cons li input[type=checkbox],
+body .review-dialog-block #review-form .right .more-images .image_field {
+    filter: alpha(opacity=0);
+}

@@ -1,0 +1,8 @@
+<config>
+    <modules>
+		<Gorilla_Heartbeat>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Gorilla_Heartbeat>
+    </modules>
+</config>

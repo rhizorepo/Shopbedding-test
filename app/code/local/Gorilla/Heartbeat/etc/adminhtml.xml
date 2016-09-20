@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<config>
+		
+		<menu>
+	        <gorilla module="heartbeat">
+				<title>Gorilla InStore</title>
+				<sort_order>999</sort_order>               
+				<children>
+					<heartbeat module="heartbeat">
+						<title>Heart Beat (Pingdom Integration)</title>
+						<sort_order>0</sort_order>
+						<children>
+							<configuration module="adminhtml">
+								<title>Configuration</title>
+								<sort_order>1</sort_order>
+								<action>adminhtml/system_config/edit/section/heartbeat</action>
+							</configuration>
+						</children>
+					</heartbeat>
+				</children>
+			</gorilla>
+		</menu>
+		<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+				<admin>
+					<children>
+						<Gorilla_Heartbeat>
+							<title>Gorilla InStore - Heart Beat (Pingdom Integration) - Module</title>
+							<sort_order>10</sort_order>
+						</Gorilla_Heartbeat>
+						<system>
+	                        <children>
+	                            <config>
+	                                <children>
+	                                    <heartbeat>
+	                                        <title>Gorilla InStore - Heart Beat (Pingdom Integration) - Config</title>
+	                                    </heartbeat>
+	                                </children>
+	                            </config>
+	                        </children>
+                    	</system>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+</config>

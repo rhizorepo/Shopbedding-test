@@ -1,0 +1,299 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition License
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magentocommerce.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    Mage
+ * @package     Mage_GoogleAnalytics
+ * @copyright   Copyright (c) 2010 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://www.magentocommerce.com/license/enterprise-edition
+ */
+
+
+/**
+ * GoogleAnalitics Page Block
+ *
+ * @category   Mage
+ * @package    Mage_GoogleAnalytics
+ * @author     Magento Core Team <core@magentocommerce.com>
+ */
+class Mage_GoogleAnalytics_Block_Ga extends Mage_Core_Block_Text
+{
+    /**
+     * Retrieve Quote Data HTML
+     *
+     * @return string
+     */
+    public function getQuoteOrdersHtml()
+    {
+        $orderIds = $this->getOrderIds();
+        if (!$orderIds) {
+            return '';
+        }
+
+
+        $orders = Mage::getResourceModel('sales/order_collection')
+            ->addAttributeToFilter('entity_id', array(
+                'in' => $orderIds
+            ))
+            ->load();
+
+        $html = '';
+        foreach ($orders as $order) {
+            $html .= $this->setOrder($order)->getOrderHtml();
+        }
+
+        return $html;
+    }
+
+    /**
+     * Retrieve Order Data HTML
+     *
+     * @return string
+     */
+    public function getOrderHtml()
+    {
+
+        $order = $this->getOrder();
+        if (!$order) {
+            return '';
+        }
+
+        if (!$order instanceof Mage_Sales_Model_Order) {
+            $order = Mage::getModel('sales/order')->load($order);
+        }
+
+        if (!$order) {
+            return '';
+        }
+
+        $address = $order->getBillingAddress();
+
+        $html  = '<script type="text/javascript">' . "\n";
+        $html .= "//<![CDATA[\n";
+        $html .= '_gaq.push(["_addTrans",';
+        $html .= '"' . $order->getIncrementId() . '",';
+        $html .= '"' . $order->getAffiliation() . '",';
+        $html .= '"' . $order->getBaseGrandTotal() . '",';
+        $html .= '"' . $order->getBaseTaxAmount() . '",';
+        $html .= '"' . $order->getBaseShippingAmount() . '",';
+        $html .= '"' . $this->jsQuoteEscape($address->getCity(), '"') . '",';
+        $html .= '"' . $this->jsQuoteEscape($address->getRegion(), '"') . '",';
+        $html .= '"' . $this->jsQuoteEscape($address->getCountry(), '"') . '"';
+        $html .= ']);' . "\n";
+
+        foreach ($order->getAllItems() as $item) {
+            if ($item->getParentItemId()) {
+                continue;
+            }
+
+            $html .= '_gaq.push(["_addItem",';
+            $html .= '"' . $order->getIncrementId() . '",';
+            $html .= '"' . $this->jsQuoteEscape($item->getSku(), '"') . '",';
+            $html .= '"' . $this->jsQuoteEscape($item->getName(), '"') . '",';
+            $html .= '"' . $item->getCategory() . '",';
+            $html .= '"' . $item->getBasePrice() . '",';
+            $html .= '"' . $item->getQtyOrdered() . '"';
+            $html .= ']);' . "\n";
+        }
+
+        $html .= '_gaq.push(["_trackTrans"]);' . "\n";
+        $html .= '//]]>';
+        $html .= '</script>';
+
+        return $html;
+    }
+
+    /**
+     * @deprecated after 1.4.1.1
+     * @see _toHtml()
+     * @return string
+     */
+    public function getAccount()
+    {
+        return '';
+    }
+
+    /**
+     * Retrieve current page URL
+     *
+     * @return string
+     */
+    public function getPageName()
+    {
+        if (!$this->hasData('page_name')) {
+            //$queryStr = '';
+            //if ($this->getRequest() && $this->getRequest()->getQuery()) {
+            //    $queryStr = '?' . http_build_query($this->getRequest()->getQuery());
+            //}
+            $this->setPageName(Mage::getSingleton('core/url')->escape($_SERVER['REQUEST_URI']));
+        }
+        return $this->getData('page_name');
+    }
+
+    /**
+     * Prepare and return block's html output
+     *
+     * @return string
+     */
+    protected function _toHtml()
+    {
+        if (!Mage::getStoreConfigFlag('google/analytics/active')) {
+            return '';
+        }
+
+
+        $pageTrackingCode = $this->_getPageTrackingCode(Mage::getStoreConfig(Mage_GoogleAnalytics_Helper_Data::XML_PATH_ACCOUNT) );
+
+        /*
+        $this->addText('
+<!-- BEGIN GOOGLE ANALYTICS CODE -->
+<script type="text/javascript">
+//<![CDATA[
+    (function() {
+        var ga = document.createElement(\'script\'); ga.type = \'text/javascript\'; ga.async = true;
+        ga.src = (\'https:\' == document.location.protocol ? \'https://ssl\' : \'http://www\') + \'.google-analytics.com/ga.js\';
+        (document.getElementsByTagName(\'head\')[0] || document.getElementsByTagName(\'body\')[0]).appendChild(ga);
+    })();
+
+    var _gaq = _gaq || [];
+    _gaq.push(["_setAccount", "' . $this->getAccount() . '"]);
+    _gaq.push(["_trackPageview", "'.$this->getPageName().'"]);
+//]]>
+</script>
+<!-- END GOOGLE ANALYTICS CODE -->
+        ');
+        */
+
+        $this->addText('
+<!-- BEGIN GOOGLE ANALYTICS CODE123 -->
+<script type="text/javascript">
+//<![CDATA[
+   var _gaq = _gaq || [];
+    '.$pageTrackingCode.'
+	
+    (function() {
+        var ga = document.createElement(\'script\'); ga.type = \'text/javascript\'; ga.async = true;
+        ga.src = (\'https:\' == document.location.protocol ? \'https://ssl\' : \'http://www\') + \'.google-analytics.com/ga.js\';
+        (document.getElementsByTagName(\'head\')[0] || document.getElementsByTagName(\'body\')[0]).appendChild(ga);
+    })();
+//]]>
+</script>
+<!-- END GOOGLE ANALYTICS CODE -->
+        ');
+
+        $this->addText($this->getQuoteOrdersHtml());
+
+        if ($this->getGoogleCheckout()) {
+            $protocol = Mage::app()->getStore()->isCurrentlySecure() ? 'https' : 'http';
+            $this->addText('<script src="'.$protocol.'://checkout.google.com/files/digital/ga_post.js" type="text/javascript"></script>');
+        }
+
+        return parent::_toHtml();
+    }
+
+
+    /**
+     * Render regular page tracking javascript code
+     * The custom "page name" may be set from layout or somewhere else. It must start from slash.
+     *
+     * @link http://code.google.com/apis/analytics/docs/gaJS/gaJSApiBasicConfiguration.html#_gat.GA_Tracker_._trackPageview
+     * @link http://code.google.com/apis/analytics/docs/gaJS/gaJSApi_gaq.html
+     * @param string $accountId
+     * @return string
+     */
+    protected function _getPageTrackingCode($accountId)
+    {
+        $pageName   = trim($this->getPageName());
+        $optPageURL = '';
+        if(Mage::registry("current_product")) {
+            $Googleproductvisitor_slot = "1";
+            $Googleproductvisitor = "Product Page";
+            $Googleproductvisitor_page = $this->getLayout()->getBlock('head')->getTitle();
+        } elseif (Mage::registry("current_category")) {
+            $Googleproductvisitor_slot = "2";
+            $Googleproductvisitor = "Category Page";
+            $Googleproductvisitor_page = Mage::registry('current_category')->getName();
+        //} elseif (Mage::getSingleton("cms/page")){
+		} elseif ($this->getRequest()->getModuleName() == 'cms' ){
+            $Googleproductvisitor_slot = "3";
+            $Googleproductvisitor = "CMS Page";
+            $Googleproductvisitor_page = Mage::getSingleton('cms/page')->getTitle();
+        }
+
+		if (isset($Googleproductvisitor_slot))
+			$GoogleVarCustom = "_gaq.push(['_setCustomVar', " . $Googleproductvisitor_slot . ", '" . $Googleproductvisitor . "', '" . addslashes($Googleproductvisitor_page) . "', 3]);";
+		else $GoogleVarCustom = '';
+
+        if ($pageName && preg_match('/^\/.*/i', $pageName)) {
+            $optPageURL = ", '{$this->jsQuoteEscape($pageName)}'";
+        }
+        return "
+         _gaq.push(['_setAccount', '{$this->jsQuoteEscape($accountId)}']);
+         $GoogleVarCustom
+         _gaq.push(['_setSiteSpeedSampleRate', 10]);
+		 _gaq.push(['_setCustomVar', 4, 'Yottaa Control', 'yottaa_test_control']);
+         _gaq.push(['_trackPageview'{$optPageURL}]);
+         ";
+    }
+
+    /**
+     * Render information about specified orders and their items
+     *
+     * @link http://code.google.com/apis/analytics/docs/gaJS/gaJSApiEcommerce.html#_gat.GA_Tracker_._addTrans
+     * @return string
+     */
+    protected function _getOrdersTrackingCode()
+    {
+        $orderIds = $this->getOrderIds();
+        if (empty($orderIds) || !is_array($orderIds)) {
+            return;
+        }
+        $collection = Mage::getResourceModel('sales/order_collection')
+            ->addFieldToFilter('entity_id', array('in' => $orderIds))
+        ;
+        $result = array();
+        foreach ($collection as $order) {
+            if ($order->getIsVirtual()) {
+                $address = $order->getBillingAddress();
+            } else {
+                $address = $order->getShippingAddress();
+            }
+            $result[] = sprintf("_gaq.push(['_addTrans', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s']);",
+                $order->getIncrementId(),
+                $this->jsQuoteEscape(Mage::app()->getStore()->getFrontendName()),
+                $order->getBaseGrandTotal(),
+                $order->getBaseTaxAmount(),
+                $order->getBaseShippingAmount(),
+                $this->jsQuoteEscape(Mage::helper('core')->escapeHtml($address->getCity())),
+                $this->jsQuoteEscape(Mage::helper('core')->escapeHtml($address->getRegion())),
+                $this->jsQuoteEscape(Mage::helper('core')->escapeHtml($address->getCountry()))
+            );
+            foreach ($order->getAllVisibleItems() as $item) {
+                $result[] = sprintf("_gaq.push(['_addItem', '%s', '%s', '%s', '%s', '%s', '%s']);",
+                    $order->getIncrementId(),
+                    $this->jsQuoteEscape($item->getSku()), $this->jsQuoteEscape($item->getName()),
+                    null, // there is no "category" defined for the order item
+                    $item->getBasePrice(), $item->getQtyOrdered()
+                );
+            }
+            $result[] = "_gaq.push(['_trackTrans']);";
+        }
+        return implode("\n", $result);
+    }
+}

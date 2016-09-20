@@ -1,0 +1,18 @@
+"%s extension has been completely uninstalled.","%s extension has been completely uninstalled."
+"%s extension has been %s.","%s extension has been %s."
+"Advanced Options","Advanced Options"
+"Cannot find package file for %s plugin.","Cannot find package file for %s plugin."
+"Cannot find package file.","Cannot find package file."
+"Cannot find package file for MageWorkshop Core plugin.","Cannot find package file for MageWorkshop Core plugin."
+"Disable","Disable"
+"Enable","Enable"
+"Info","Info"
+"This will completely uninstall extension and delete all related information. Are you sure?","This will completely uninstall extension and delete all related information. Are you sure?"
+"There are dependent MageWorkshop modules installed. You can not uninstall MageWorkshop Core module now.","There are dependent MageWorkshop modules installed. You can not uninstall MageWorkshop Core module now."
+"There was a problem with changing module configuration.","There was a problem with changing module configuration."
+"There was a problem with uninstalling: %s","There was a problem with uninstalling: %s"
+"There was a problem with uninstalling.","There was a problem with uninstalling."
+"Uninstall","Uninstall"
+"Uninstall Extension","Uninstall Extension"
+
+

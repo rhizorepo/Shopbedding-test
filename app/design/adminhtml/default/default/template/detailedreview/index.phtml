@@ -1,0 +1,185 @@
+<?php $chartType = Mage::getStoreConfig('detailedreview/statistics_options/chart_type'); ?>
+<?php if (is_array($this->getChild('diagrams')->getTabsIds())) : ?>
+    <script type="text/javascript">
+        //<![CDATA[
+        currentMehthodCount = 0;
+        function changeDiagramsPeriod(periodObj) {
+            var periodParam = periodObj.value ? 'period/' + periodObj.value + '/' : '';
+            <?php foreach ($this->getChild('diagrams')->getTabsIds() as $tabId): ?>
+            var ajaxBlockParam = 'block/tab_<?php echo $tabId ?>/';
+            var ajaxBlockUrl = '<?php echo $this->getUrl('*/*/ajaxBlock', array('_current' => true, 'block' => '', 'period' => '')) ?>' + ajaxBlockParam + periodParam;
+            new Ajax.Request(ajaxBlockUrl, {
+                parameters: {isAjax: 'true', form_key: FORM_KEY},
+                onSuccess: function(transport) {
+                    var tabContentElementId = '<?php echo $this->getChild('diagrams')->getId() ?>_<?php echo $tabId ?>_content';
+                    try {
+                        if (transport.responseText.isJSON()) {
+                            var response = transport.responseText.evalJSON();
+                            if (response.error) {
+                                alert(response.message);
+                            }
+                            if(response.ajaxExpired && response.ajaxRedirect) {
+                                setLocation(response.ajaxRedirect);
+                            }
+                        } else {
+                            window.isFunctionUpdated = false;
+                            $(tabContentElementId).update(transport.responseText);
+                            <?php if ( $chartType && $chartType != 'mage' ): ?>
+                            (function callDrawChart() {
+                                if (isFunctionUpdated) {
+                                    drawChart();
+                                } else {
+                                    setTimeout(function() {
+                                        callDrawChart();
+                                    }, 1);
+                                }
+                            })();
+                            <?php endif; ?>
+                        }
+                    }
+                    catch (e) {
+                        $(tabContentElementId).update(transport.responseText);
+                    }
+                }
+            });
+            <?php endforeach; ?>
+        }
+
+
+        function changeMostHelpfulPeriod() {
+
+            var most_helpful_start_time = document.getElementById('most_helpful_start_time'),
+                most_helpful_end_time = document.getElementById('most_helpful_end_time'),
+                fromParam = most_helpful_start_time.value ? 'from/' + most_helpful_start_time.value + '/' : '',
+                toParam = most_helpful_end_time.value ? 'to/' + most_helpful_end_time.value + '/' : '',
+                ajaxMostHelpfulBlockUrl = '<?php echo $this->getUrl('*/*/ajaxMostHelpfulBlock', array('_current' => true, 'from' => '', 'to' => '')) ?>' + fromParam + toParam;
+
+            new Ajax.Request(ajaxMostHelpfulBlockUrl, {
+                parameters: {isAjax: 'true'},
+                onSuccess: function(transport) {
+                    var contentElementId = '<?php echo $this->getChild('mostHelpfulReview')->getId() ?>_table';
+                    try {
+                        if (transport.responseText.isJSON()) {
+                            var response = transport.responseText.evalJSON();
+                            if (response.error) {
+                                alert(response.message);
+                            }
+                            if(response.ajaxExpired && response.ajaxRedirect) {
+                                setLocation(response.ajaxRedirect);
+                            }
+                        } else {
+                            window.isFunctionUpdated = false;
+                            $(contentElementId).update(transport.responseText);
+                        }
+                    }
+                    catch (e) {
+                        $(tabContentElementId).update(transport.responseText);
+                    }
+                }
+            });
+        }
+
+        function toggleCal(id) {
+            $('dashboard_'+id+'_cal_div').toggle();
+            $('dashboard_'+id+'_range_div').toggle();
+        }
+        //]]>
+    </script>
+<?php endif; ?>
+<div class="content-header">
+    <table cellspacing="0">
+        <tr>
+            <td><h3 class="head-dashboard"><?php echo $this->__('Reviews Statistics') ?></h3></td>
+        </tr>
+    </table>
+</div>
+<div class="dashboard-container">
+    <table cellspacing="25" width="100%">
+        <tr>
+            <td><?php echo $this->getChildHtml('sales') ?>
+                <div class="entry-edit">
+                    <div class="entry-edit-head"><h4><?php echo $this->__('%s Most Reviewed Products', Mage::getStoreConfig('detailedreview/statistics_options/qty_items_in_reviewed_grid') ) ?></h4></div>
+                    <fieldset class="np"><?php echo $this->getChildHtml('mostReviewedProducts'); ?></fieldset>
+                </div>
+                <div class="entry-edit">
+                    <div class="entry-edit-head"><h4><?php echo $this->__('%s Most Liked Products', Mage::getStoreConfig('detailedreview/statistics_options/qty_items_in_liked_grid') ) ?></h4></div>
+                    <fieldset class="np"><?php echo $this->getChildHtml('mostLikedProducts'); ?></fieldset>
+                </div>
+                <div class="entry-edit">
+                    <div class="entry-edit-head"><h4><?php echo $this->__('%s Most Disliked Products', Mage::getStoreConfig('detailedreview/statistics_options/qty_items_in_disliked_grid') ) ?></h4></div>
+                    <fieldset class="np"><?php echo $this->getChildHtml('mostDislikedProducts'); ?></fieldset>
+                </div>
+                <div class="entry-edit">
+                    <div class="entry-edit-head"><h4><?php echo $this->__('%s Most Active Customers', Mage::getStoreConfig('detailedreview/statistics_options/qty_items_in_customer_grid') ) ?></h4></div>
+                    <fieldset class="np"><?php echo $this->getChildHtml('mostActiveUsers'); ?></fieldset>
+                </div>
+                <div class="entry-edit">
+                    <div class="entry-edit-head"><h4><?php echo $this->__('%s Most Helpful Review', Mage::getStoreConfig('detailedreview/statistics_options/qty_items_in_customer_grid')); ?></h4></div>
+
+                    <div class="date-set" style="margin: 5px 0">
+                        <div class="field" style="display: inline-block; margin-right: 15px;">
+                            <label for="_start_time"><?php echo $this->__('Start date') ?> </label>
+                            <div class="input-box">
+                                <input name="start_time" id="most_helpful_start_time" value="<?php echo date('d-m-Y', strtotime("-1 month")); ?>" type="text" class="input-text" style="width:110px !important;"> <img src="<?php echo $this->getSkinUrl() . 'images/fam_calendar.gif';?>" alt="" class="v-middle" id="most_helpful_start_time_trig" title="Select Date" style="">
+                                <script type="text/javascript">
+                                    //<![CDATA[
+                                    Calendar.setup({
+                                        inputField: "most_helpful_start_time",
+                                        ifFormat: "%d-%m-%Y",
+                                        showsTime: false,
+                                        button: "most_helpful_start_time_trig",
+                                        align: "Bl",
+                                        singleClick : true
+                                    });
+                                    //]]>
+                                </script>
+                            </div>
+                        </div>
+
+                        <div class="field" style="display: inline-block; margin-right: 15px;">
+                            <label for="end_time"><?php echo $this->__('End date') ?> </label>
+                            <div class="input-box">
+                                <input name="end_time" id="most_helpful_end_time" value="<?php echo date('d-m-Y'); ?>" type="text" class=" required-entry input-text" style="width:110px !important;"> <img src="<?php echo $this->getSkinUrl() . 'images/fam_calendar.gif';?>" alt="" class="v-middle" id="most_helpful_end_time_trig" title="Select Date" style="">
+                                <script type="text/javascript">
+                                    //<![CDATA[
+                                    Calendar.setup({
+                                        inputField: "most_helpful_end_time",
+                                        ifFormat: "%d-%m-%Y",
+                                        showsTime: false,
+                                        button: "most_helpful_end_time_trig",
+                                        align: "Bl",
+                                        singleClick : true
+                                    });
+                                    //]]>>
+                                </script>
+                            </div>
+                        </div>
+
+                        <button id="updateMostHelpful" onclick="changeMostHelpfulPeriod()"><?php echo $this->__('Update Statistic'); ?></button>
+
+                    </div>
+
+                    <fieldset class="np mostHelpful"><?php echo $this->getChildHtml('mostHelpfulReview'); ?></fieldset>
+                </div>
+            </td>
+            <td>
+                <div class="entry-edit" style="border:1px solid #ccc;">
+                    <?php echo $this->getChildHtml('diagrams') ?>
+                    <?php if (is_array($this->getChild('diagrams')->getTabsIds())) : ?>
+                        <div id="diagram_tab_content"></div>
+                    <?php endif; ?>
+                    <div style="margin:20px;">
+                        <?php echo $this->getChildHtml('totals') ?>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+<?php if ( $chartType && $chartType != 'mage' ): ?>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+        google.load("visualization", "1", {packages:["corechart"]});
+        google.setOnLoadCallback(drawChart);
+    </script>
+<?php endif; ?>

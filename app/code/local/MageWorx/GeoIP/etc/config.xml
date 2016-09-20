@@ -1,0 +1,232 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * MageWorx
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the MageWorx EULA that is bundled with
+ * this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.mageworx.com/LICENSE-1.0.html
+ *
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@mageworx.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade the extension
+ * to newer versions in the future. If you wish to customize the extension
+ * for your needs please refer to http://www.mageworx.com/ for more information
+ * or send an email to sales@mageworx.com
+ *
+ * @category   MageWorx
+ * @package    MageWorx_GeoIP
+ * @copyright  Copyright (c) 2009 MageWorx (http://www.mageworx.com/)
+ * @license    http://www.mageworx.com/LICENSE-1.0.html
+ */
+
+/**
+ * GeoIP extension
+ *
+ * @category   MageWorx
+ * @package    MageWorx_GeoIP
+ * @author     MageWorx Dev Team <dev@mageworx.com>
+ */
+-->
+<config>
+    <modules>
+        <MageWorx_GeoIP>
+            <version>1.0.9</version>
+        </MageWorx_GeoIP>
+    </modules>
+    
+    <frontend>
+        <translate>
+            <modules>
+                <MageWorx_GeoIP>
+                    <files>
+                        <default>MageWorx_GeoIP.csv</default>
+                    </files>
+                </MageWorx_GeoIP>
+            </modules>
+        </translate>
+        <routers>
+            <geoip>
+                <use>standard</use>
+                <args>
+                    <module>MageWorx_GeoIP</module>
+                    <frontName>geoip</frontName>
+                </args>
+            </geoip>
+        </routers>
+        <layout>
+            <updates>
+                <geoip>
+                    <file>geoip.xml</file>
+                </geoip>
+            </updates>
+        </layout>
+        <events>
+            <controller_action_predispatch>
+                <observers>
+                    <geoip>
+                        <type>singleton</type>
+                        <class>MageWorx_GeoIP_Model_Observer</class>
+                        <method>geoipAutoswitcher</method>
+                    </geoip>
+                </observers>
+            </controller_action_predispatch>
+			<controller_action_predispatch_directory_currency_switch>
+                <observers>
+                    <geoip>
+                        <type>singleton</type>
+                        <class>MageWorx_GeoIP_Model_Observer</class>
+                        <method>setCurrency</method>
+                    </geoip>
+                </observers>
+            </controller_action_predispatch_directory_currency_switch>
+        </events>
+    </frontend>
+    
+    <global>
+        <models>
+            <geoip>
+                <class>MageWorx_GeoIP_Model</class>
+                <resourceModel>geoip_mysql4</resourceModel>
+            </geoip>
+            <geoip_mysql4>
+                <class>MageWorx_GeoIP_Model_Mysql4</class>
+            </geoip_mysql4>
+			<core>
+                <rewrite>
+                    <store>MageWorx_GeoIP_Model_Core_Store</store>
+                </rewrite>
+            </core>
+        </models>
+        <resources>
+            <geoip_setup>
+                <setup>
+                    <module>MageWorx_GeoIP</module>
+                    <class>MageWorx_GeoIP_Model_Mysql4_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </geoip_setup>
+            <geoip_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </geoip_write>
+            <geoip_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </geoip_read>
+        </resources>
+        <blocks>
+            <geoip>
+                <class>MageWorx_GeoIP_Block</class>
+            </geoip>
+            <adminhtml>
+            	<rewrite>
+              		<sales_order_view_info>MageWorx_Adminhtml_Block_Geoip_Adminhtml_Sales_Order_View_Info</sales_order_view_info>
+              		<customer_online_grid>MageWorx_Adminhtml_Block_Geoip_Adminhtml_Customer_Online_Grid</customer_online_grid>
+              		<system_store_edit_form>MageWorx_Adminhtml_Block_Geoip_Adminhtml_System_Store_Edit_Form</system_store_edit_form>
+        		</rewrite> 
+        	</adminhtml>
+        	<checkout>
+            	<rewrite>
+              		<onepage_billing>MageWorx_GeoIP_Block_Checkout_Onepage_Billing</onepage_billing>
+              		<onepage_shipping>MageWorx_GeoIP_Block_Checkout_Onepage_Shipping</onepage_shipping>
+            	</rewrite>
+			</checkout>
+			<customer>
+				<rewrite>
+					<address_edit>MageWorx_GeoIP_Block_Customer_Address_Edit</address_edit>
+				</rewrite>
+			</customer>
+        </blocks>
+        <helpers>
+            <geoip>
+                <class>MageWorx_GeoIP_Helper</class>
+            </geoip>
+        </helpers>
+        <events>
+            <store_edit>
+                <observers>
+                    <geoip>
+                        <type>singleton</type>
+                        <class>MageWorx_GeoIP_Model_Observer</class>
+                        <method>saveStoreCountries</method>
+                    </geoip>
+                </observers>
+            </store_edit>
+            <store_add>
+                <observers>
+                    <geoip>
+                        <type>singleton</type>
+                        <class>MageWorx_GeoIP_Model_Observer</class>
+                        <method>saveStoreCountries</method>
+                    </geoip>
+                </observers>
+            </store_add>
+        </events>
+    </global>
+    
+    <adminhtml>
+        <acl>
+			<resources>
+				<all><title>Allow Everything</title></all>
+				<admin>
+					<children>
+						<system>
+                            <children>
+                                <config>
+                                    <children>
+                                    	<mageworx_customers translate="title" module="mageworx">
+                                    	<title>MageWorx &gt; Customers</title>
+                                        <sort_order>1</sort_order> 
+	                                    	<children>
+		                                        <geoip translate="title" module="geoip">
+		                                            <title>GeoIP Location</title>
+		                                        </geoip>
+	                                        </children>
+                                        </mageworx_customers>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+               		</children>
+            	</admin>
+			</resources>
+		</acl>
+        <layout>
+            <updates>
+                <geoip>
+                    <file>geoip.xml</file>
+                </geoip>
+            </updates>
+        </layout>
+    </adminhtml>
+    
+    <default>
+    	<mageworx_customers>
+	    	<geoip>
+	    	    <enable_store_switcher>1</enable_store_switcher>
+	    	    <enable_currency_switcher>1</enable_currency_switcher>
+	    	    <force_store_view>1</force_store_view>
+	    	    <store_switcher_scope>1</store_switcher_scope>
+	    	    <disable_store_switcher_key>off</disable_store_switcher_key>
+	    	    <store_switcher_exception_urls>/paypal/*</store_switcher_exception_urls>
+	    		<db_type>1</db_type>
+	    		<db_path>lib/GeoIP/GeoIP.dat</db_path>
+	    		<enable_billing_country>1</enable_billing_country>
+	    		<enable_shipping_country>1</enable_shipping_country>
+	    		<enable_address_country>1</enable_address_country>
+	    	</geoip>
+    	</mageworx_customers>
+    </default>
+</config>

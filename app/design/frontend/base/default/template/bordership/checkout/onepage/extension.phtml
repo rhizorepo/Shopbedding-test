@@ -1,0 +1,16 @@
+<script>
+var hasBordershipRun = false;
+jQuery(document).ready(function($) {
+    if (hasBordershipRun) {
+        return;
+    }
+    hasBordershipRun = true;
+    
+    if ($("input[id^='s_method_bordership']")) {
+        termsUrl = '<?php echo Mage::getUrl(Mage::getModel('bordership/carrier_bordership')->getConfigData('terms_url')); ?>';
+        termsLink = '<a id="terms-link" target="_blank" href="' + termsUrl + '">Terms and Conditions for International Orders</a>';
+        $("input[id^='s_method_bordership']").parent().parent().after(termsLink);
+        $termsLink = $('#terms-link');
+    }
+});
+</script>

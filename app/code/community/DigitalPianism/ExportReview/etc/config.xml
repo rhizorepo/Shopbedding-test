@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<config>
+ 
+    <modules>
+		<DigitalPianism_ExportReview>
+			<version>0.0.2</version>
+		</DigitalPianism_ExportReview>
+    </modules>
+	
+	<global>
+		<blocks>
+			<adminhtml>
+				<rewrite>
+					<review_grid>DigitalPianism_ExportReview_Block_Review_Grid</review_grid>
+				</rewrite>
+			</adminhtml>
+		</blocks>
+	</global>
+ 
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <DigitalPianism_ExportReview before="Mage_Adminhtml">DigitalPianism_ExportReview</DigitalPianism_ExportReview>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+ 
+</config>

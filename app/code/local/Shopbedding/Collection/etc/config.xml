@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Shopbedding_Collection>
+            <version>0.1.5</version>
+        </Shopbedding_Collection>
+    </modules>
+
+    <global>
+        <blocks>
+            <collection>
+                <class>Shopbedding_Collection_Block</class>
+            </collection>
+			<adminhtml>
+				<rewrite>
+					<catalog_product_helper_form_gallery_content>Shopbedding_Collection_Block_Adminhtml_Catalog_Helper_Form_Gallery_Content</catalog_product_helper_form_gallery_content>
+				</rewrite>
+			</adminhtml>	
+        </blocks>
+
+        <models>
+            <collection>
+                <class>Shopbedding_Collection_Model</class>
+            </collection>    
+			<catalog>
+				<rewrite>
+					<product_attribute_backend_media>Shopbedding_Collection_Model_Catalog_Product_Attribute_Backend_Media</product_attribute_backend_media>
+				</rewrite>
+			</catalog>	
+			<catalog_resource_eav_mysql4>
+				<rewrite>
+					<product_attribute_backend_media>Shopbedding_Collection_Model_Catalog_Resource_Eav_Mysql4_Product_Attribute_Backend_Media</product_attribute_backend_media>
+				</rewrite>
+			</catalog_resource_eav_mysql4>
+        </models>
+
+        <resources>
+            <collection_setup>
+                <setup>
+                    <module>Shopbedding_Collection</module>
+                    <class>Mage_Catalog_Model_Resource_Eav_Mysql4_Setup</class>
+                </setup>
+            </collection_setup>
+        </resources>     
+    </global>
+	<!--frontend>
+		<layout>
+			<updates>
+				<collection>
+					<file>Shopbedding/collection.xml</file>
+				</collection>
+			</updates>
+		</layout>
+	</frontend-->
+    <!-- admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <collection before="Mage_Adminhtml">Shopbedding_Collection</collection>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin -->
+    <adminhtml>
+        <layout>
+            <updates>
+                <collection>
+                    <file>collection.xml</file>
+                </collection>
+                <test>
+                    <file>test.xml</file>
+                </test>
+            </updates>
+        </layout>
+        <!-- menu>
+            <system>
+                <children>
+                    <collection>
+                        <title>Upload Images for Grouped Products</title>
+                        <action>adminhtml/collection</action>
+                        <sort_order>9999</sort_order>
+                    </collection>
+                </children>
+            </system>
+        </menu -->
+    </adminhtml>
+</config>

@@ -1,0 +1,19 @@
+<config>
+    <modules>
+        <Shopbedding_PromoDisplay>
+            <version>0.0.1</version>
+        </Shopbedding_PromoDisplay>
+    </modules>
+    <global>
+        <models>
+            <promodisplay>
+                <class>Shopbedding_PromoDisplay_Model</class>
+            </promodisplay>
+        </models>
+        <blocks>
+            <promodisplay>
+                <class>Shopbedding_PromoDisplay_Block</class>
+            </promodisplay>
+        </blocks>
+    </global>
+</config>

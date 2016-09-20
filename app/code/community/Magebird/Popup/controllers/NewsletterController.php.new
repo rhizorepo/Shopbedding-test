@@ -1,0 +1,110 @@
+<?php
+/**
+ * Magebird.com
+ *
+ * @category   Magebird
+ * @package    Magebird_Popup
+ * @copyright  Copyright (c) 2014 Magebird (http://www.Magebird.com)
+ * @license    http://www.magebird.com/licence
+ * Any form of ditribution, sell, transfer forbidden see licence above 
+ */
+class Magebird_Popup_NewsletterController extends Mage_Core_Controller_Front_Action
+{
+    
+    public function SubscribeAction() {        
+        $ajaxExceptions  = array();  
+        $coupon          = ''; 
+        $confirmNeed     = $this->getRequest()->getParam('confirm_need');
+        $ruleId          = $this->getRequest()->getParam('rule_id');
+        $couponType      = $this->getRequest()->getParam('coupon_type');
+        $mailChimpOption = Mage::getStoreConfig('popup/services/mailchimp_option');
+        $email           = (string) $this->getRequest()->getParam('email'); 
+        $popupId         = $this->getRequest()->getParam('popupId');
+        $firstName       = $this->getRequest()->getParam('first_name');
+        $lastName        = $this->getRequest()->getParam('last_name');
+        $source			 = $this->getRequest()->getParam('source');
+		
+        $alreadyConfirmed = false;
+        $customer = Mage::getModel('customer/customer')->setWebsiteId(Mage::app()->getStore()->getWebsiteId())->loadByEmail($email);
+        $customerSession = Mage::getSingleton('customer/session');
+        $isSubscribeOwnEmail = $customerSession->isLoggedIn() && $customer->getData('entity_id') == $customerSession->getId();
+        if($customer->getData('entity_id') && !$customer->getData('confirmation') && $isSubscribeOwnEmail!==false){
+          $alreadyConfirmed = true;
+        }
+                
+        //If $confirmNeed is 1, coupon will be generated on confirm        
+        if($couponType!=0 && ($confirmNeed!=1 || $alreadyConfirmed) && $ruleId){        
+          $coupon = Mage::helper('popup/coupon')->generateCoupon($ruleId);                                                      
+        }elseif($this->getRequest()->getParam('coupon_code')){
+          $coupon = $this->getRequest()->getParam('coupon_code');
+        }                         
+        
+        //Mailchimp subscription
+        if($this->getRequest()->getParam('list_id') && ($mailChimpOption==2 || $mailChimpOption==3)){
+            $api = Mage::getModel('popup/subscriber')->subscribeMailchimp($this->getRequest()->getParam('list_id'),$email,$firstName,$lastName,$source,$coupon,$ruleId,$confirmNeed);
+            if($api->errorCode){
+              $ajaxExceptions['exceptions'][] = $api->errorMessage;
+              $response = json_encode($ajaxExceptions);
+              $this->getResponse()->setBody($response);  
+              return;           
+            }                                                                                                    
+        } 
+                
+        //Magento native subscription
+        if($mailChimpOption==1 || $mailChimpOption==3){
+            $isSubscribed = Mage::getModel('newsletter/subscriber')->loadByEmail($email); 
+            if(!$isSubscribed->getSubscriberId()){
+              $status = Mage::getModel('newsletter/subscriber')->subscribe($email);
+              //$subscriber = Mage::getModel('newsletter/subscriber')->loadByEmail($email);
+              //$subscriber->setCountry($this->getRequest()->getParam('country'));
+              //$subscriber->setSecondField($this->getRequest()->getParam('secondField'));
+              //$subscriber->setThirdField($this->getRequest()->getParam('thirdField'));
+              //$subscriber->save();
+            }else{
+              $ajaxExceptions['exceptions'][] = $this->__('You are already subscribed to our newsletter');
+              $response = json_encode($ajaxExceptions);
+              $this->getResponse()->setBody($response);  
+              return;              
+            }                                                               
+        }         
+        
+        if((!$confirmNeed || $alreadyConfirmed) && $coupon){
+          if($this->getRequest()->getParam('send_coupon')==1){
+            Mage::getModel('popup/subscriber')->mailCoupon($email,$coupon);                                                                 
+          }
+          
+          //if apply coupon to cart automatically
+          if($this->getRequest()->getParam('apply_coupon')==1 || $alreadyConfirmed){        
+            Mage::getSingleton("checkout/session")->setData("coupon_code",$coupon);
+            Mage::getSingleton('checkout/cart')->getQuote()->setCouponCode($coupon)->save();        
+          } 
+          if($alreadyConfirmed){
+            Mage::getSingleton('core/session')->addSuccess('Your coupon code is: '.$coupon);        
+          }        
+        }elseif($confirmNeed && !$alreadyConfirmed){                    
+          $model = Mage::getModel('popup/subscriber');
+          $model->setSubscriberEmail($email);   
+          $model->setDateCreated(time());
+          if($this->getRequest()->getParam('send_coupon')){
+            $model->setSendCoupon(1);            
+          }     
+          if($ruleId = $this->getRequest()->getParam('rule_id')){
+            $model->setCartRuleId($ruleId);                            
+          }elseif($this->getRequest()->getParam('coupon_code')){
+            $model->setCouponCode($coupon);
+          }     
+          if($this->getRequest()->getParam('apply_coupon')==1){        
+            $model->setApplyCoupon(1);                      
+          }                                       
+          $model->save();
+                           
+        }                 
+                                 
+        
+        $_popup = Mage::getModel('popup/popup')->load($popupId);
+        $_popup->setPopupData($_popup->getData('popup_id'),'goal_complition',$_popup->getData('goal_complition')+1);                            
+        $response = json_encode(array('success' => 'success', 'coupon' => $coupon));
+        $this->getResponse()->setBody($response);  
+                     
+    }        
+}

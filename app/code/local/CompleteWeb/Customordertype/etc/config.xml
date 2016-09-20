@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <CompleteWeb_Customordertype>
+      <version>0.1.0</version>
+    </CompleteWeb_Customordertype>
+  </modules>
+  <global>
+    <helpers>
+      <customordertype>
+        <class>CompleteWeb_Customordertype_Helper</class>
+      </customordertype>
+    </helpers>
+	<models>
+	  <customordertype>
+		<class>CompleteWeb_Customordertype_Model</class>
+		<resourceModel>customordertype_mysql4</resourceModel>
+	  </customordertype>
+	</models>
+	<resources>
+	  <salesattribute_setup>
+		<setup>
+		  <module>CompleteWeb_Customordertype</module>
+		  <class>Mage_Sales_Model_Mysql4_Setup</class>
+		</setup>
+		<connection>
+		  <use>core_setup</use>
+		</connection>
+	  </salesattribute_setup>
+	  <salesattribute_write>
+		<connection>
+		  <use>core_write</use>
+		</connection>
+	  </salesattribute_write>
+	  <salesattribute_read>
+		<connection>
+		  <use>core_read</use>
+		</connection>
+	  </salesattribute_read>
+	</resources>
+	
+		<events>
+			<adminhtml_sales_order_create_process_data_before>
+				<observers>
+					<customordertype>
+						<type>singleton</type>
+						<class>customordertype/observer</class> 
+						<method>saveCustomData</method>
+					</customordertype>
+				</observers>
+			</adminhtml_sales_order_create_process_data_before>
+        </events>
+
+        <blocks>
+			<adminhtml>
+				<rewrite>
+					<sales_order_grid>CompleteWeb_Customordertype_Block_Adminhtml_Order_Grid</sales_order_grid>
+				</rewrite>
+			</adminhtml>
+        </blocks>
+		
+		<fieldsets>
+            <sales_convert_quote>                           
+                <order_type><to_order>*</to_order></order_type>
+            </sales_convert_quote>
+
+            <sales_convert_order>                                              
+                <order_type><to_quote>*</to_quote></order_type>
+            </sales_convert_order>
+        </fieldsets>
+  </global>
+</config> 

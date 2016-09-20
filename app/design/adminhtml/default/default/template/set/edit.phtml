@@ -1,0 +1,20 @@
+<div class="content-header">
+  <table cellspacing="0">
+    <tr>
+      <td>
+        <h3 class="icon-head head-products">
+          <?php echo $this->getHeaderText() ?>
+        </h3>
+      </td>
+      <td class="form-buttons">
+        <?php echo $this->getButtonsHtml() ?>
+      </td>
+    </tr>
+  </table>
+</div>
+<form action="<?php echo $this->getSaveUrl() ?>" method="post" id="set_form">
+  <?php echo $this->getBlockHtml('formkey')?>
+</form>
+<script type="text/javascript">
+  var setForm = new varienForm('set_form');
+</script>

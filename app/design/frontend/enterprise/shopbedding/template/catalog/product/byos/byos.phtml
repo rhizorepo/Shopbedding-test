@@ -1,0 +1,56 @@
+<script type="text/javascript">
+    //<![CDATA[
+    var optionsPrice = new Array();
+    var spConfig = new Array();
+    //]]>
+</script>
+<?php
+    $_products = $this->getAssociatedProducts();
+    Mage::register('byos-products', $_products);
+?>
+<a name="top"></a>
+<div id="byos-block">
+    <div class="byos-header">
+        <div class="byos-modal-header">
+            <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('BYOS_POPUP_HEADER')->toHtml() ?>
+        </div>
+        <div class="byos-instructions">
+            <ul>
+                <li class="orange-large"><?php echo $this->__('For each item:') ?></li>
+                <li class="grey-large"><span class="one"></span><?php echo $this->__('select size') ?></li>
+                <li class="grey-large"><span class="two"></span><?php echo $this->__('select color') ?></li>
+                <li class="grey-large"><span class="three"></span><?php echo $this->__('select quantity') ?></li>
+                <li class="grey-large"><span class="four"></span><?php echo $this->__('click &quot;Add to Set&quot; button') ?></li>
+            </ul>
+             <div>
+                <p class="grey-large"><?php echo $this->__('Once you have selected the items you want to purchase, click &quot;Add Set to Cart&quot;') ?></p>
+                <button class="button btn-add-to-set"></button>
+            </div>
+        </div>
+    </div>
+    <?php echo $this->getChildHtml('byos_products'); ?>
+</div>
+
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+        jQuery('.btn-add-to-set').click(function(){
+            var sku = ''; var skugroup = ''; var qty = ''; var qtyGroup = 0;
+            jQuery('#byos-cart-items').find('.item-number').each(function(){
+               sku = jQuery(this).text();
+                if(sku.length >0){
+                    skugroup += sku.replace("Item # ", "")+', ';
+                }
+
+            });
+            qty = jQuery('#byos-totals').find('.grand-total').text();
+            qty = qty.replace("$", "");
+                if(qty.length > 0) {
+                    qtyGroup = Math.round(qty) ;
+                }
+            if(!jQuery('.breadcrumbs').html()) {
+                _gaq.push(['_trackEvent', 'lightbox', 'add_set_to_cart', skugroup, qtyGroup]);
+            }
+
+        });
+    })
+</script>
