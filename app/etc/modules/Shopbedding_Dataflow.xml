@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<config>
-    <modules>
-        <Shopbedding_Dataflow>
-            <active>true</active>
-            <codePool>local</codePool>
-        </Shopbedding_Dataflow>
-    </modules>
-</config>

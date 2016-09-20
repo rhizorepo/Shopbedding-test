@@ -1,5 +1,0 @@
-<?php
-class BorderJump_BorderShip_Model_Mysql4_Carrier_Tablerate_Collection extends BorderJump_BorderShip_Model_Resource_Carrier_Tablerate_Collection
-{
-    
-}

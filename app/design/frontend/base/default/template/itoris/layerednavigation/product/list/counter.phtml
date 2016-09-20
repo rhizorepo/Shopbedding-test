@@ -1,9 +1,0 @@
-<?php $category = Mage::registry('current_category'); ?>
-<?php if (is_object($category) && $category->getId()):?>
-<?php $collection = $this->getLayout()
-        ->getBlockSingleton('catalog/product_list')
-        ->getLoadedProductCollection() ?>
-<div class="itoris-items-counter">
-	<span><span class="category-name">"<?php echo $category->getName() ?>"</span> <?php echo $this->__('we found') ?> <span id="items-count"><?php //echo $collection->count() ?></span> <?php echo $this->__('items') ?>!</span>
-</div>
-<?php endif?>

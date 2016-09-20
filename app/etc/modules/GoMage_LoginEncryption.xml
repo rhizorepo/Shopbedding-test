@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<config>
-    <modules>
-        <GoMage_LoginEncryption>
-            <active>true</active>
-            <codePool>local</codePool>
-        </GoMage_LoginEncryption>
-    </modules>
-</config>

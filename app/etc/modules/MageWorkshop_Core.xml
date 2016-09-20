@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<config>
-    <modules>
-        <MageWorkshop_Core>
-            <active>true</active>
-            <codePool>local</codePool>
-        </MageWorkshop_Core>
-    </modules>
-</config>
